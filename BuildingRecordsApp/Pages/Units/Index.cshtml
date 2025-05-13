@@ -1,0 +1,28 @@
+@page
+@model BuildingRecordsApp.Pages.Units.IndexModel
+@{
+    ViewData["Title"] = "Units";
+}
+
+<h1>Unit List</h1>
+
+<p>
+    <a asp-page="/Units/Create">Add New Unit</a>
+</p>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Unit Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var unit in Model.Units)
+        {
+            <tr>
+                <td>@unit.UnitNumber</td>
+            </tr>
+        }
+    </tbody>
+</table>

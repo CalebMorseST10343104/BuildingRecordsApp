@@ -1,0 +1,68 @@
+@page
+@model BuildingRecordsApp.Pages.Units.CreateModel
+@{
+    ViewData["Title"] = "Create Unit";
+}
+
+<h1>Create New Unit</h1>
+
+<form method="post">
+    @* Unit has following fields:
+    int UnitId (Primary Key)
+    int UnitNumber
+    int Bedrooms
+    bool DbInverter
+    bool Housekeeping
+    bool PetFriendly
+    bool SublettingAllowed
+    int AirconditioningUnits *@
+    <div>
+        <label asp-for="Unit.UnitNumber"></label>
+        <input asp-for="Unit.UnitNumber" />
+        <span asp-validation-for="Unit.UnitNumber" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Unit.Bedrooms"></label>
+        <input asp-for="Unit.Bedrooms" />
+        <span asp-validation-for="Unit.Bedrooms" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Unit.DbInverter"></label>
+        <input asp-for="Unit.DbInverter" type="checkbox" />
+        <span asp-validation-for="Unit.DbInverter" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Unit.Housekeeping"></label>
+        <input asp-for="Unit.Housekeeping" type="checkbox" />
+        <span asp-validation-for="Unit.Housekeeping" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Unit.PetFriendly"></label>
+        <input asp-for="Unit.PetFriendly" type="checkbox" />
+        <span asp-validation-for="Unit.PetFriendly" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Unit.SublettingAllowed"></label>
+        <input asp-for="Unit.SublettingAllowed" type="checkbox" />
+        <span asp-validation-for="Unit.SublettingAllowed" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Unit.AirconditioningUnits"></label>
+        <input asp-for="Unit.AirconditioningUnits" />
+        <span asp-validation-for="Unit.AirconditioningUnits" class="text-danger"></span>
+    </div>    
+
+    <button type="submit">Create</button>
+</form>
+
+<a asp-page="/Units/Index">Back to Unit List</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
