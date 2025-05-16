@@ -2,6 +2,8 @@ namespace BuildingRecordsApp.Models
 {
     public class ParkingBay
     {
+        internal object Building;
+
         public int ParkingBayID { get; set; }
         public int ParkingBayNumber { get; set; }
         

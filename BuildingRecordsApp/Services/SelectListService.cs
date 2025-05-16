@@ -19,9 +19,14 @@ namespace BuildingRecordsApp.Services
         {
             var units = await _context.Units
                 .Include(u => u.Building)
+                .Select(u => new
+                {
+                    u.UnitId,
+                    Display = $"[{u.Building.Name}] {u.UnitNumber}"
+                })
                 .ToListAsync();
 
-            return new SelectList(units, "Id", u => $"[{u.Building.Name}] {u.UnitNumber}");
+            return new SelectList(units, "Id", "Display");
         }
 
         public async Task<SelectList> GetBuildingSelectListAsync()
@@ -33,10 +38,15 @@ namespace BuildingRecordsApp.Services
         public async Task<SelectList> GetParkingBaySelectListAsync()
         {
             var parkingBays = await _context.ParkingBays
-                .Include(pb => pb.Building)
+                .Include(pb => pb.Unit.Building)
+                .Select(pb => new
+                {
+                    pb.ParkingBayID,
+                    Display = $"[{pb.Unit.Building.Name}] {pb.ParkingBayNumber}"
+                })
                 .ToListAsync();
 
-            return new SelectList(parkingBays, "Id", pb => $"[{pb.Building.Name}] {pb.ParkingBayNumber}");
+            return new SelectList(parkingBays, "Id", "Display");
         }
 
         public async Task<SelectList> GetAgentCompanySelectListAsync()
@@ -49,9 +59,14 @@ namespace BuildingRecordsApp.Services
         {
             var agents = await _context.Agents
                 .Include(a => a.AgentCompany)
+                .Select(a => new
+                {
+                    a.AgentId,
+                    Display = $"{a.AgentCompany.CompanyName} - {a.FirstName} {a.LastName}"
+                })
                 .ToListAsync();
 
-            return new SelectList(agents, "AgentId", a => $"{a.AgentCompany.CompanyName} - {a.FirstName} {a.LastName}");
+            return new SelectList(agents, "Id", "Display");
         }
 
         public async Task<SelectList> GetPersonSelectListAsync()
@@ -64,9 +79,14 @@ namespace BuildingRecordsApp.Services
         {
             var ownerships = await _context.Ownerships
                 .Include(o => o.Unit)
+                .Select(o => new
+                {
+                    o.OwnershipId,
+                    Display = $"{o.Unit.Building.Name} - {o.Unit.UnitNumber}"
+                })
                 .ToListAsync();
 
-            return new SelectList(ownerships, "Id", o => $"{o.Unit.Building.Name} - {o.Unit.UnitNumber}");
+            return new SelectList(ownerships, "Id", "Display");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
         [BindProperty]
         public TagRemoteRecord TagRemoteRecord { get; set; } = new();
 
-        public SelectList UnitSelectList { get; set; } = new();
+        public SelectList? UnitSelectList { get; set; }
 
         public IActionResult OnGet()
         {

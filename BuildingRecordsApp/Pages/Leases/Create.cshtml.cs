@@ -14,6 +14,8 @@ namespace BuildingRecordsApp.Pages.Leases
         [BindProperty]
         public Lease Lease { get; set; } = new();
 
+        public SelectList? UnitSelectList { get; set; }
+
         public IActionResult OnGet()
         {
             return Page();

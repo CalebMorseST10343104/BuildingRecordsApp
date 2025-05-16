@@ -27,7 +27,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             return Page();
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             UnitSelectList = await _selectListService.GetUnitSelectListAsync();
             return Page();

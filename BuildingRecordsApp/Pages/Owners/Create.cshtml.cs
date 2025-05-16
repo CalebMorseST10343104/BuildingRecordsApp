@@ -13,7 +13,7 @@ namespace BuildingRecordsApp.Pages.Owners
         [BindProperty]
         public Owner Owner { get; set; } = new();
 
-        public SelectList? UnitSelectList { get; set; }
+        public SelectList? OwnershipSelectList { get; set; }
         public SelectList? PersonSelectList { get; set; }
 
         public IActionResult OnGet()

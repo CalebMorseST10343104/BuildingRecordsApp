@@ -30,7 +30,7 @@ Person Occupant // Navigation property for occupant
     </div>
     <div class="form-group">
         <label asp-for="Occupancy.OccupantId" class="control-label"></label>
-        <select asp-for="Occupancy.OccupantId" class="form-control" asp-items="@Model.OccupantSelectList">
+        <select asp-for="Occupancy.OccupantId" class="form-control" asp-items="@Model.PersonSelectList">
             <option value="">Select Occupant</option>
         </select>
         <span asp-validation-for="Occupancy.OccupantId" class="text-danger"></span>
