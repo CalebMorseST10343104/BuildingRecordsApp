@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/BuildingRecordsApp.csproj": {}
+    "/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/BuildingRecordsApp.csproj": {}
   },
   "projects": {
-    "/Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/BuildingRecordsApp.csproj": {
+    "/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/BuildingRecordsApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/BuildingRecordsApp.csproj",
+        "projectUniqueName": "/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/BuildingRecordsApp.csproj",
         "projectName": "BuildingRecordsApp",
-        "projectPath": "/Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/BuildingRecordsApp.csproj",
+        "projectPath": "/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/BuildingRecordsApp.csproj",
         "packagesPath": "/Users/calebmorse/.nuget/packages/",
-        "outputPath": "/Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/obj/",
+        "outputPath": "/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/calebmorse/.nuget/NuGet/NuGet.Config"

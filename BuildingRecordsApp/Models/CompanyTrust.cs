@@ -1,10 +1,13 @@
-public class CompanyTrust
+namespace BuildingRecordsApp.Models
 {
-    public int CompanyTrustId { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Address { get; set; } = string.Empty;
-    public string RegistrationNumber { get; set; } = string.Empty;
+    public class CompanyTrust
+    {
+        public int CompanyTrustId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string RegistrationNumber { get; set; } = string.Empty;
 
-    public ICollection<Ownership> Ownerships { get; set; } = [];
-    
+        public ICollection<Ownership> Ownerships { get; set; } = [];
+        
+    }
 }

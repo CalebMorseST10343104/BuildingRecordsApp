@@ -1,0 +1,46 @@
+@page
+@model BuildingRecordsApp.Pages.TagRemoteRecords.IndexModel
+@{
+    ViewData["Title"] = "Tag Remote Records";
+}
+
+<h1>Tag Remote Records</h1>
+
+<p>
+    <a asp-page="./Create" class="btn btn-primary">Create New Tag Remote Record</a>
+</p>
+
+@* 
+TagRemoteRecord has the following properties:
+int TagRemoteRecordId
+int TagsOwner
+int RemotesOwner
+int TagsOccupant
+int RemotesOccupant
+int TagsAgent
+int RemotesAgent
+ *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].TagsOwner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].RemotesOwner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].TagsOccupant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].RemotesOccupant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].TagsAgent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].RemotesAgent)
+            </th>
+            <th></th>
+        </tr>

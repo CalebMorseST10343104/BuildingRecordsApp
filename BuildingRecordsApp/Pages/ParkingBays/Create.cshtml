@@ -1,0 +1,35 @@
+@page
+@model BuildingRecordsApp.Pages.ParkingBays.CreateModel
+@{
+    ViewData["Title"] = "Create Parking Bay";
+}
+
+<h1>Create New Agent</h1>
+
+@* 
+ParkingBay has following fields:
+int ParkingBayID
+int ParkingBayNumber
+int UnitID // Foreign key
+Unit Unit // Navigation property
+ *@
+
+<form method="post">
+    <div>
+        <label asp-for="ParkingBay.ParkingBayNumber"></label>
+        <input asp-for="ParkingBay.ParkingBayNumber" />
+        <span asp-validation-for="ParkingBay.ParkingBayNumber" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="ParkingBay.UnitID"></label>
+        <select asp-for="ParkingBay.UnitID" asp-items="@Model.UnitSelectList">
+            <option value="">Select Unit</option>
+        </select>
+        <span asp-validation-for="ParkingBay.UnitID" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Create</button>
+
+    <a asp-page="./Index">Back to List</a>
+</form>

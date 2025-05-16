@@ -6,16 +6,19 @@
 
 <h1>Create New Unit</h1>
 
+@* 
+Unit has following fields:
+int UnitId (Primary Key)
+int UnitNumber
+int Bedrooms
+bool DbInverter
+bool Housekeeping
+bool PetFriendly
+bool SublettingAllowed
+int AirconditioningUnits 
+*@
+
 <form method="post">
-    @* Unit has following fields:
-    int UnitId (Primary Key)
-    int UnitNumber
-    int Bedrooms
-    bool DbInverter
-    bool Housekeeping
-    bool PetFriendly
-    bool SublettingAllowed
-    int AirconditioningUnits *@
     <div>
         <label asp-for="Unit.UnitNumber"></label>
         <input asp-for="Unit.UnitNumber" />

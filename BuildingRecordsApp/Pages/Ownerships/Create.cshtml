@@ -1,0 +1,32 @@
+@page
+@model BuildingRecordsApp.Pages.Ownerships.CreateModel
+@{
+    ViewData["Title"] = "Create Ownership";
+}
+<h1>Create New Ownership</h1>
+
+@* 
+Ownership has following fields:
+int OwnershipId
+string OwnershipType // e.g., "Natural", "Juristic"
+string UnitId // Foreign key for Unit
+Unit Unit // Navigation property for Unit
+ *@
+
+<form method="post">
+    <div>
+        <label asp-for="Ownership.OwnershipType"></label>
+        <input asp-for="Ownership.OwnershipType" />
+        <span asp-validation-for="Ownership.OwnershipType" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Ownership.UnitId"></label>
+        <input asp-for="Ownership.UnitId" />
+        <span asp-validation-for="Ownership.UnitId" class="text-danger"></span>
+    </div>
+
+    <div>
+        <button type="submit">Create</button>
+    </div>
+</form>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8YyE57FRJLI=",
+  "dgSpecHash": "E4H1urN6U5g=",
   "success": true,
-  "projectFilePath": "/Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/BuildingRecordsApp.csproj",
+  "projectFilePath": "/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/BuildingRecordsApp.csproj",
   "expectedPackageFiles": [
     "/Users/calebmorse/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/calebmorse/.nuget/packages/microsoft.bcl.asyncinterfaces/7.0.0/microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",

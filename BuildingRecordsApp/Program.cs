@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Services;
 
 
 internal class Program
@@ -12,6 +13,9 @@ internal class Program
         builder.Services.AddRazorPages();
         
         builder.Services.AddDbContext<BuildingContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+        
+        builder.Services.AddScoped<ISelectListService, SelectListService>();
+
 
         var app = builder.Build();
 

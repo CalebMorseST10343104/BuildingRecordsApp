@@ -1,0 +1,73 @@
+@page
+@model BuildingRecordsApp.Pages.Leases.IndexModel
+@{
+    ViewData["Title"] = "Leases";
+}
+
+<h1>Lease List</h1>
+
+<p>
+    <a asp-page="./Create" class="btn btn-primary">Create New Lease</a>
+</p>
+
+@* 
+Lease has the following properties:
+int LeaseId
+string LeaseHolderName
+DateTime StartDate
+DateTime EndDate
+int PersonsOccupying
+bool SignedRules
+bool AllowedPets
+string EmergencyContactNumber
+Unit Unit // Navigation property
+int UnitNumber // Foreign key to Unit
+ *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Leases[0].LeaseHolderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leases[0].StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leases[0].EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leases[0].PersonsOccupying)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leases[0].SignedRules)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leases[0].AllowedPets)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leases[0].EmergencyContactNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Leases)
+        {
+            <tr>
+                <td>@item.LeaseHolderName</td>
+                <td>@item.StartDate.ToShortDateString()</td>
+                <td>@item.EndDate.ToShortDateString()</td>
+                <td>@item.PersonsOccupying</td>
+                <td>@item.SignedRules</td>
+                <td>@item.AllowedPets</td>
+                <td>@item.EmergencyContactNumber</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.LeaseId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.LeaseId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.LeaseId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

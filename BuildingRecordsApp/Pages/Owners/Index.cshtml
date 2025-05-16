@@ -1,0 +1,56 @@
+@page
+@model BuildingRecordsApp.Pages.Owners.IndexModel
+@{
+    ViewData["Title"] = "Owners";
+}
+<h1>Owners</h1>
+<p>
+    <a asp-page="./Create" class="btn btn-primary">Create New Owner</a>
+</p>
+
+@* 
+Owner has following fields:
+int OwnerId 
+Person Person // Navigation property for the person
+int PersonId // Foreign key for Person
+Ownership Ownership // Navigation property for ownership
+int OwnershipId // Foreign key for Ownership
+ *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Owners[0].Person.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Owners[0].Person.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Owners[0].Ownership.Unit.UnitNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Owners)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Person.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Person.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ownership.Unit.UnitNumber)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.OwnerId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.OwnerId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.OwnerId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

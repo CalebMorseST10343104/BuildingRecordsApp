@@ -1,0 +1,51 @@
+@page
+@model BuildingRecordsApp.Pages.StoreRooms.IndexModel
+@{
+    ViewData["Title"] = "Store Rooms";
+}
+
+<h1>Store Rooms</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+@* 
+StoreRoom has following fields:
+int StoreRoomId
+string StoreRoomNumber
+Unit Unit // Navigation property
+int UnitId // Foreign key property
+ *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreRooms[0].StoreRoomNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreRooms[0].Unit.UnitNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.StoreRooms)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StoreRoomNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit.UnitNumber)
+                </td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@item.StoreRoomId">Edit</a> |
+                    <a asp-page="Details" asp-route-id="@item.StoreRoomId">Details</a> |
+                    <a asp-page="Delete" asp-route-id="@item.StoreRoomId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

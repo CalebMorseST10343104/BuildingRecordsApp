@@ -1,0 +1,70 @@
+@page
+@model BuildingRecordsApp.Pages.Leases.CreateModel
+@{
+    ViewData["Title"] = "Create Lease";
+}
+<h1>Create Lease</h1>
+@* 
+Lease has the following properties:
+int LeaseId
+string LeaseHolderName
+DateTime StartDate
+DateTime EndDate
+int PersonsOccupying
+bool SignedRules
+bool AllowedPets
+string EmergencyContactNumber
+Unit Unit // Navigation property
+int UnitNumber // Foreign key to Unit
+ *@
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Lease.LeaseHolderName"></label>
+        <input asp-for="Lease.LeaseHolderName" class="form-control" />
+        <span asp-validation-for="Lease.LeaseHolderName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lease.StartDate"></label>
+        <input asp-for="Lease.StartDate" class="form-control" />
+        <span asp-validation-for="Lease.StartDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lease.EndDate"></label>
+        <input asp-for="Lease.EndDate" class="form-control" />
+        <span asp-validation-for="Lease.EndDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lease.PersonsOccupying"></label>
+        <input asp-for="Lease.PersonsOccupying" class="form-control" />
+        <span asp-validation-for="Lease.PersonsOccupying" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lease.SignedRules"></label>
+        <input asp-for="Lease.SignedRules" class="form-control" />
+        <span asp-validation-for="Lease.SignedRules" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lease.AllowedPets"></label>
+        <input asp-for="Lease.AllowedPets" class="form-control" />
+        <span asp-validation-for="Lease.AllowedPets" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lease.EmergencyContactNumber"></label>
+        <input asp-for="Lease.EmergencyContactNumber" class="form-control" />
+        <span asp-validation-for="Lease.EmergencyContactNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lease.UnitNumber"></label>
+        <select asp-for="Lease.UnitNumber" class="form-control" asp-items="@Model.UnitSelectList">
+            <option value="">Select Unit</option>
+        </select>
+        <span asp-validation-for="Lease.UnitNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

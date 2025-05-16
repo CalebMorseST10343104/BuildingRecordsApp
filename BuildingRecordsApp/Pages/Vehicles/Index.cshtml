@@ -1,0 +1,70 @@
+@page
+@model BuildingRecordsApp.Pages.Vehicles.IndexModel
+@{
+    ViewData["Title"] = "Vehicles";
+}
+
+<h1>Vehicles</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+@* 
+int VehicleId
+string VehicleRegistration
+string VehicleModel
+string VehicleMake
+string VehicleColor
+Unit Unit // Navigation property to Unit
+int UnitId // Foreign key to Unit
+ *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleRegistration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleMake)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleColor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Vehicles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleRegistration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleModel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleMake)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleColor)
+                </td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@item.VehicleId">Edit</a> |
+                    <a asp-page="Delete" asp-route-id="@item.VehicleId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

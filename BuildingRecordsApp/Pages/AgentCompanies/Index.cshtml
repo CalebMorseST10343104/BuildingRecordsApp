@@ -1,0 +1,57 @@
+@page
+@model BuildingRecordsApp.Pages.AgentCompanies.IndexModel
+@{
+    ViewData["Title"] = "Agent Companies";
+}
+
+<h1>Agent Companies</h1>
+
+<p>
+    <a asp-page="./Create" class="btn btn-primary">Create New Agent Company</a>
+</p>
+
+@* 
+AgentCompany has following fields:
+int AgentCompanyId
+string CompanyName
+string Address
+string RegistrationNumber
+ICollection<Person> Agents // Navigation property
+ *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AgentCompanies[0].CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgentCompanies[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgentCompanies[0].RegistrationNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AgentCompanies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.AgentCompanyId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.AgentCompanyId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.AgentCompanyId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>

@@ -1,0 +1,36 @@
+@page
+@model BuildingRecordsApp.Pages.CompanyTrusts.CreateModel
+@{
+    ViewData["Title"] = "Create Company Trust";
+}
+<h1>Create Company Trust</h1>
+
+@* 
+CompanyTrust has the following properties:
+int CompanyTrustId
+string Name
+string Address
+string RegistrationNumber
+ICollection<Ownership> Ownerships
+ *@
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="CompanyTrust.Name" class="control-label"></label>
+        <input asp-for="CompanyTrust.Name" class="form-control" />
+        <span asp-validation-for="CompanyTrust.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CompanyTrust.Address" class="control-label"></label>
+        <input asp-for="CompanyTrust.Address" class="form-control" />
+        <span asp-validation-for="CompanyTrust.Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CompanyTrust.RegistrationNumber" class="control-label"></label>
+        <input asp-for="CompanyTrust.RegistrationNumber" class="form-control" />
+        <span asp-validation-for="CompanyTrust.RegistrationNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>

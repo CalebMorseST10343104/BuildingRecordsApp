@@ -219,3 +219,12 @@
 /Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.pdb
 /Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.genruntimeconfig.cache
 /Users/calebmorse/Documents/Projects/chelsea/buildingapp/BuildingRecordsApp/obj/Debug/net9.0/ref/BuildingRecordsApp.dll
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.csproj.AssemblyReference.cache
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.AssemblyInfoInputs.cache
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.AssemblyInfo.cs
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.csproj.CoreCompileInputs.cache
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.MvcApplicationPartsAssemblyInfo.cache
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.RazorAssemblyInfo.cache
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.RazorAssemblyInfo.cs
+/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/obj/Debug/net9.0/BuildingRecordsApp.sourcelink.json

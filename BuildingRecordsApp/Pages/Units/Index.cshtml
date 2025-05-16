@@ -7,21 +7,67 @@
 <h1>Unit List</h1>
 
 <p>
-    <a asp-page="/Units/Create">Add New Unit</a>
+    <a asp-page="./Create" class="btn btn-primary">Create New Unit</a>
 </p>
 
+@* 
+Unit has following fields:
+int UnitId (Primary Key)
+int UnitNumber
+int Bedrooms
+bool DbInverter
+bool Housekeeping
+bool PetFriendly
+bool SublettingAllowed
+int AirconditioningUnits 
+*@
 
-<table>
+<table class="table">
     <thead>
         <tr>
-            <th>Unit Number</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units[0].UnitId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units[0].UnitNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units[0].Bedrooms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units[0].DbInverter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units[0].Housekeeping)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units[0].PetFriendly)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units[0].SublettingAllowed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Units[0].AirconditioningUnits)
+            </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var unit in Model.Units)
+        @foreach (var item in Model.Units)
         {
             <tr>
-                <td>@unit.UnitNumber</td>
+                <td>@item.UnitId</td>
+                <td>@item.UnitNumber</td>
+                <td>@item.Bedrooms</td>
+                <td>@item.DbInverter</td>
+                <td>@item.Housekeeping</td>
+                <td>@item.PetFriendly</td>
+                <td>@item.SublettingAllowed</td>
+                <td>@item.AirconditioningUnits</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.UnitId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.UnitId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.UnitId">Delete</a>
+                </td>
             </tr>
         }
     </tbody>

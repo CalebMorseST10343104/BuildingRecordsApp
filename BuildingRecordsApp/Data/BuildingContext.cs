@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Models;
 
 public class BuildingContext(DbContextOptions<BuildingContext> options) : DbContext(options)
 {
     public DbSet<Unit> Units { get; set; }
     public DbSet<Building> Buildings { get; set; }
     public DbSet<Person> Persons { get; set; }
+    public DbSet<Ownership> Ownerships { get; set; }
+    public DbSet<Owner> Owners { get; set; }
     public DbSet<Agent> Agents { get; set; }
     public DbSet<AgentCompany> AgentCompanies { get; set; }
     public DbSet<CompanyTrust> CompanyTrusts { get; set; }

@@ -1,0 +1,33 @@
+@page
+@model BuildingRecordsApp.Pages.StoreRooms.CreateModel
+@{
+    ViewData["Title"] = "Store Rooms";
+}
+
+<h1>Create New Agent</h1>
+
+@* 
+StoreRoom has following fields:
+int StoreRoomId
+string StoreRoomNumber
+Unit Unit // Navigation property
+int UnitId // Foreign key property
+ *@
+
+<form method="post">
+    <div>
+        <label asp-for="StoreRoom.StoreRoomNumber"></label>
+        <input asp-for="StoreRoom.StoreRoomNumber" />
+        <span asp-validation-for="StoreRoom.StoreRoomNumber" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="StoreRoom.UnitId"></label>
+        <select asp-for="StoreRoom.UnitId" asp-items="@Model.UnitSelectList">
+            <option value="">Select Unit</option>
+        </select>
+        <span asp-validation-for="StoreRoom.UnitId" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Create</button>
+</form>

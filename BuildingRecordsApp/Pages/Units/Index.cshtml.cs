@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Models;
 
 namespace BuildingRecordsApp.Pages.Units
 {

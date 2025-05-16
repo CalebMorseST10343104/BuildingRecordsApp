@@ -1,0 +1,38 @@
+@page
+@model BuildingRecordsApp.Pages.AgentCompanies.CreateModel
+@{
+    ViewData["Title"] = "Create Agent Company";
+}
+
+<h1>Create Agent Company</h1>
+
+@* 
+AgentCompany has following fields:
+int AgentCompanyId
+string CompanyName
+string Address
+string RegistrationNumber
+ICollection<Person> Agents // Navigation property
+ *@
+
+<form method="post">
+    <div>
+        <label asp-for="AgentCompany.CompanyName"></label>
+        <input asp-for="AgentCompany.CompanyName" />
+        <span asp-validation-for="AgentCompany.CompanyName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="AgentCompany.Address"></label>
+        <input asp-for="AgentCompany.Address" />
+        <span asp-validation-for="AgentCompany.Address" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="AgentCompany.RegistrationNumber"></label>
+        <input asp-for="AgentCompany.RegistrationNumber" />
+        <span asp-validation-for="AgentCompany.RegistrationNumber" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Create</button>
+</form>

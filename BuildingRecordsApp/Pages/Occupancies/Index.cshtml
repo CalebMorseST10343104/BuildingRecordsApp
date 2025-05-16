@@ -1,0 +1,59 @@
+@page
+@model BuildingRecordsApp.Pages.Occupancies.IndexModel
+@{
+    ViewData["Title"] = "Occupancies";
+}
+
+<h1>Occupancy List</h1>
+
+<p>
+    <a asp-page="./Create" class="btn btn-primary">Create New Occupancy</a>
+</p>
+
+@* 
+Occupancy has the following properties:
+int OccupancyId
+string OccupationType
+int UnitNumber // Foreign key for Unit
+Unit Unit // Navigation property for the unit
+int OccupantId // Foreign key for Person
+Person Occupant // Navigation property for occupants
+ *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupancies[0].OccupationType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupancies[0].UnitNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupancies[0].OccupantId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Occupancies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OccupationType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OccupantId)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.OccupancyId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.OccupancyId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.OccupancyId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
