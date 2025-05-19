@@ -22,17 +22,17 @@ namespace BuildingRecordsApp.Services
                 .Select(u => new
                 {
                     u.UnitId,
-                    Display = $"[{u.Building.Name}] {u.UnitNumber}"
+                    Display = $"[{u.Building!.Name}] {u.UnitNumber}"
                 })
                 .ToListAsync();
 
-            return new SelectList(units, "Id", "Display");
+            return new SelectList(units, "UnitId", "Display");
         }
 
         public async Task<SelectList> GetBuildingSelectListAsync()
         {
             var buildings = await _context.Buildings.ToListAsync();
-            return new SelectList(buildings, "Id", "Name");
+            return new SelectList(buildings, "BuildingId", "Name");
         }
 
         public async Task<SelectList> GetParkingBaySelectListAsync()
@@ -42,11 +42,11 @@ namespace BuildingRecordsApp.Services
                 .Select(pb => new
                 {
                     pb.ParkingBayID,
-                    Display = $"[{pb.Unit.Building.Name}] {pb.ParkingBayNumber}"
+                    Display = $"[{pb.Unit.Building!.Name}] {pb.ParkingBayNumber}"
                 })
                 .ToListAsync();
 
-            return new SelectList(parkingBays, "Id", "Display");
+            return new SelectList(parkingBays, "ParkingBayID", "Display");
         }
 
         public async Task<SelectList> GetAgentCompanySelectListAsync()
@@ -66,13 +66,20 @@ namespace BuildingRecordsApp.Services
                 })
                 .ToListAsync();
 
-            return new SelectList(agents, "Id", "Display");
+            return new SelectList(agents, "AgentId", "Display");
         }
 
         public async Task<SelectList> GetPersonSelectListAsync()
         {
-            var persons = await _context.Persons.ToListAsync();
-            return new SelectList(persons, "PersonId", "Name", "Surname");
+            var persons = await _context.Persons
+            .Select(p => new
+            {
+                p.PersonId,
+                Display = $"{p.Name} {p.Surname}"
+            })
+            .ToListAsync();
+
+            return new SelectList(persons, "PersonId", "Display");
         }
 
         public async Task<SelectList> GetOwnershipSelectListAsync()
@@ -82,11 +89,11 @@ namespace BuildingRecordsApp.Services
                 .Select(o => new
                 {
                     o.OwnershipId,
-                    Display = $"{o.Unit.Building.Name} - {o.Unit.UnitNumber}"
+                    Display = $"{o.Unit!.Building!.Name} - {o.Unit.UnitNumber}"
                 })
                 .ToListAsync();
 
-            return new SelectList(ownerships, "Id", "Display");
+            return new SelectList(ownerships, "OwnershipId", "Display");
         }
     }
 }

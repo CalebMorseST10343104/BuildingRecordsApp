@@ -1,23 +1,110 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Units";
+    ViewData["Title"] = "Home Page";
 }
 
 <h1>Building Records App</h1>
 
-<div>
-    <a asp-page="/Units/Index" class="btn btn-primary">Units</a>
-    <a asp-page="/Persons/Index" class="btn btn-primary">Persons</a>
-    <a asp-page="/AgentCompanies/Index" class="btn btn-primary">Agent Companies</a>
-    <a asp-page="/Agents/Index" class="btn btn-primary">Agents</a>
-    <a asp-page="/CompanyTrusts/Index" class="btn btn-primary">Company Trusts</a>
-    <a asp-page="/Leases/Index" class="btn btn-primary">Leases</a>
-    <a asp-page="/Occupancies/Index" class="btn btn-primary">Occupancies</a>
-    <a asp-page="/Owners/Index" class="btn btn-primary">Owners</a>
-    <a asp-page="/Ownerships/Index" class="btn btn-primary">Ownerships</a>
-    <a asp-page="/ParkingBays/Index" class="btn btn-primary">Parking Bays</a>
-    <a asp-page="/StoreRooms/Index" class="btn btn-primary">Store Rooms</a>
-    <a asp-page="/TagRemoteRecords/Index" class="btn btn-primary">Tag Remote Records</a>
-    <a asp-page="/Vehicles/Index" class="btn btn-primary">Vehicles</a>
+<div class="container mt-5">
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+
+        <!-- Buildings -->
+        <div class="col">
+            <a asp-page="/Buildings/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-building"></i></span> Buildings
+            </a>
+        </div>
+
+        <!-- Units -->
+        <div class="col">
+            <a asp-page="/Units/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-door-closed"></i></span> Units
+            </a>
+        </div>
+
+        <!-- Persons -->
+        <div class="col">
+            <a asp-page="/Persons/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-person"></i></span> Persons
+            </a>
+        </div>
+
+        <!-- Agents -->
+        <div class="col">
+            <a asp-page="/Agents/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-person-add"></i></span> Agents
+            </a>
+        </div>
+
+        <!-- Agent Companies -->
+        <div class="col">
+            <a asp-page="/AgentCompanies/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-building-add"></i></span> Agent Companies
+            </a>
+        </div>
+
+        <!-- Owners -->
+        <div class="col">
+            <a asp-page="/Owners/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-person-check"></i></span> Owners
+            </a>
+        </div>
+
+        <!-- Ownerships -->
+        <div class="col">
+            <a asp-page="/Ownerships/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-people"></i></span> Ownerships
+            </a>
+        </div>
+
+        <!-- Companies/Trusts -->
+        <div class="col">
+            <a asp-page="/Companies/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-building-check"></i></span> Companies/Trusts
+            </a>
+        </div>
+
+        <!-- Occupancies -->
+        <div class="col">
+            <a asp-page="/Occupancies/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-house-fill"></i></span> Occupancies
+            </a>
+        </div>
+
+        <!-- Leases -->
+        <div class="col">
+            <a asp-page="/Leases/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-file-earmark-text"></i></span> Leases
+            </a>
+        </div>
+
+        <!-- Tag & Remote Records -->
+        <div class="col">
+            <a asp-page="/TagRemoteRecords/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-tags"></i></span> Tag & Remote Records
+            </a>
+        </div>
+
+        <!-- Store Rooms -->
+        <div class="col">
+            <a asp-page="/StoreRooms/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-box-seam"></i></span> Store Rooms
+            </a>
+        </div>
+
+        <!-- Parking Spaces -->
+        <div class="col">
+            <a asp-page="/ParkingSpaces/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-p-circle"></i></span> Parking Spaces
+            </a>
+        </div>
+
+        <!-- Vehicles -->
+        <div class="col">
+            <a asp-page="/Vehicles/Index" class="btn btn-outline-primary w-100 d-flex align-items-center">
+                <span class="me-2"><i class="bi bi-car-front-fill"></i></span> Vehicles
+            </a>
+        </div>
+    </div>
 </div>

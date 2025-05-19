@@ -28,7 +28,7 @@ Unit Unit // Navigation property for Unit
                 @Html.DisplayNameFor(model => model.Ownerships[0].OwnershipType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ownerships[0].UnitId)
+                @Html.DisplayNameFor(model => model.Ownerships[0].Unit!.UnitNumber)
             </th>
             <th></th>
         </tr>
@@ -44,7 +44,7 @@ Unit Unit // Navigation property for Unit
                     @Html.DisplayFor(modelItem => item.OwnershipType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UnitId)
+                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.OwnershipId">Edit</a> |

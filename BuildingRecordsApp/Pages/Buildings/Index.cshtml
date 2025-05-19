@@ -1,0 +1,58 @@
+@page
+@model BuildingRecordsApp.Pages.Buildings.IndexModel
+@{
+    ViewData["Title"] = "Buildings";
+}
+<h1>Building List</h1>
+<p>
+    <a asp-page="./Create" class="btn btn-primary">Create New Building</a>
+</p>
+
+@* 
+Building has the following properties:
+int BuildingId
+string Name
+string Address
+int NumberOfUnits
+int NumberOfFloors
+ *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Buildings[0].BuildingId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Buildings[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Buildings[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Buildings[0].NumberOfUnits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Buildings[0].NumberOfFloors)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Buildings)
+        {
+            <tr>
+                <td>@item.BuildingId</td>
+                <td>@item.Name</td>
+                <td>@item.Address</td>
+                <td>@item.NumberOfUnits</td>
+                <td>@item.NumberOfFloors</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.BuildingId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.BuildingId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.BuildingId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

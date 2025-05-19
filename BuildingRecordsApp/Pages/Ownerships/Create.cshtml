@@ -14,15 +14,19 @@ Unit Unit // Navigation property for Unit
  *@
 
 <form method="post">
-    <div>
-        <label asp-for="Ownership.OwnershipType"></label>
-        <input asp-for="Ownership.OwnershipType" />
+    <div class="form-group">
+        <label asp-for="Ownership.OwnershipType" class="control-label"></label>
+        <select asp-for="Ownership.OwnershipType" class="form-control">
+            <option value="">-- Select Ownership Type --</option>
+            <option value="Natural">Natural</option>
+            <option value="Juristic">Juristic</option>
+        </select>
         <span asp-validation-for="Ownership.OwnershipType" class="text-danger"></span>
     </div>
 
     <div>
         <label asp-for="Ownership.UnitId"></label>
-        <input asp-for="Ownership.UnitId" />
+        <select asp-for="Ownership.UnitId" asp-items="@Model.UnitSelectList"></select>
         <span asp-validation-for="Ownership.UnitId" class="text-danger"></span>
     </div>
 
@@ -30,3 +34,7 @@ Unit Unit // Navigation property for Unit
         <button type="submit">Create</button>
     </div>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

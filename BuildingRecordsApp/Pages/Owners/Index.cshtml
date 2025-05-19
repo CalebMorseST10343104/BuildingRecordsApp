@@ -27,7 +27,7 @@ int OwnershipId // Foreign key for Ownership
                 @Html.DisplayNameFor(model => model.Owners[0].Person.Surname)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Owners[0].Ownership.Unit.UnitNumber)
+                @Html.DisplayNameFor(model => model.Owners[0].Ownership.UnitId)
             </th>
             <th></th>
         </tr>
@@ -43,7 +43,7 @@ int OwnershipId // Foreign key for Ownership
                     @Html.DisplayFor(modelItem => item.Person.Surname)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ownership.Unit.UnitNumber)
+                    @Html.DisplayFor(modelItem => item.Ownership.UnitId)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.OwnerId">Edit</a> |

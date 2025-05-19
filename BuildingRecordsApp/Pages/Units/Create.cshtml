@@ -9,6 +9,7 @@
 @* 
 Unit has following fields:
 int UnitId (Primary Key)
+int BuildingId (Foreign Key)
 int UnitNumber
 int Bedrooms
 bool DbInverter
@@ -19,6 +20,13 @@ int AirconditioningUnits
 *@
 
 <form method="post">
+    <div>
+        <label asp-for="Unit.BuildingId"></label>
+        <select asp-for="Unit.BuildingId" asp-items="@Model.BuildingSelectList">
+            <option value="">Select Building</option>
+        </select>
+        <span asp-validation-for="Unit.BuildingId" class="text-danger"></span>
+    </div>
     <div>
         <label asp-for="Unit.UnitNumber"></label>
         <input asp-for="Unit.UnitNumber" />
@@ -61,10 +69,12 @@ int AirconditioningUnits
         <span asp-validation-for="Unit.AirconditioningUnits" class="text-danger"></span>
     </div>    
 
-    <button type="submit">Create</button>
-</form>
+    <div>
+        <input type="submit" value="Create" />
+        <a asp-page="./Index">Back to List</a>
+    </div>
 
-<a asp-page="/Units/Index">Back to Unit List</a>
+</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

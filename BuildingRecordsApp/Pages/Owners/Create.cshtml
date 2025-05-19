@@ -17,7 +17,7 @@ int OwnershipId // Foreign key for Ownership
 <form method="post">
     <div>
         <label asp-for="Owner.PersonId"></label>
-        <input asp-for="Owner.PersonId" />
+        <select asp-for="Owner.PersonId" asp-items="@Model.PersonSelectList"></select>
         <span asp-validation-for="Owner.PersonId" class="text-danger"></span>
     </div>
 

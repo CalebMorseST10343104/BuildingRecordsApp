@@ -5,21 +5,21 @@ using BuildingRecordsApp.Models;
 
 namespace BuildingRecordsApp.Pages.Leases
 {
-    public class CreateModel(BuildingContext context, ISelectListService selectListService) : PageModel
+    public class CreateModel : PageModel
     {
-        private readonly BuildingContext _context = context;
-        private readonly ISelectListService _selectListService = selectListService;
+        private readonly BuildingContext _context;
+        private readonly ISelectListService _selectListService;
 
+        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        {
+            _context = context;
+            _selectListService = selectListService;
+        }
 
         [BindProperty]
         public Lease Lease { get; set; } = new();
 
         public SelectList? UnitSelectList { get; set; }
-
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
 
         public async Task<IActionResult> OnGetAsync()
         {

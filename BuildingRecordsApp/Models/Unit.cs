@@ -11,21 +11,21 @@ namespace BuildingRecordsApp.Models
         public int AirconditioningUnits { get; set; }
 
         //Navigation properties
-        public Building Building { get; set; } = new();
-        public Person PrimaryContactPerson { get; set; } = new();
-        public Ownership Ownership { get; set; } = new();
+        public Building? Building { get; set; }
+        public Person? PrimaryContactPerson { get; set; }
+        public Ownership? Ownership { get; set; }
         public Agent? Agent { get; set; }
         public Lease? Lease { get; set; }
-        public TagRemoteRecord TagRemoteRecord { get; set; } = new();
+        public TagRemoteRecord? TagRemoteRecord { get; set; }
 
 
         //Foreign keys
-        public int BuildingId { get; set; }
-        public int PrimaryContactPersonId { get; set; }
-        public int OwnershipId { get; set; }
+        public int? BuildingId { get; set; }
+        public int? PrimaryContactPersonId { get; set; }
+        public int? OwnershipId { get; set; }
         public int? AgentId { get; set; }
         public int? LeaseId { get; set; }
-        public int TagRemoteRecordId { get; set; }
+        public int? TagRemoteRecordId { get; set; }
         
     }
 }

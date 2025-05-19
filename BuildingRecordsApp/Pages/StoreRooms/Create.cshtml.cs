@@ -15,11 +15,6 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         
         public SelectList? UnitSelectList { get; set; }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
         public async Task<IActionResult> OnGetAsync()
         {
             UnitSelectList = await _selectListService.GetUnitSelectListAsync();

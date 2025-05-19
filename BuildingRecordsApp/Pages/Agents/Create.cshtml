@@ -53,4 +53,7 @@ ICollection<Unit> Units // Navigation property
 
     <button type="submit">Create</button>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

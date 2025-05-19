@@ -11,6 +11,5 @@ namespace BuildingRecordsApp.Models
         public int RemotesAgent { get; set; }
 
         public int UnitId { get; set; } // Foreign key
-        public Unit Unit { get; set; } = new(); // Navigation property
     }
 }

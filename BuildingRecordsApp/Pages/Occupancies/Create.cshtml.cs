@@ -23,11 +23,6 @@ namespace BuildingRecordsApp.Pages.Occupancies
         public SelectList? UnitSelectList { get; set; }
         public SelectList? PersonSelectList { get; set; }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
         public async Task<IActionResult> OnGetAsync()
         {
             UnitSelectList = await _selectListService.GetUnitSelectListAsync();

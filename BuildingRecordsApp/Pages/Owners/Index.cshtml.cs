@@ -13,7 +13,7 @@ namespace BuildingRecordsApp.Pages.Owners
             _context = context;
         }
 
-        public List<Owner> Owners { get; set; } = new();
+        public List<Owner> Owners { get; set; } = [];
 
         public async Task OnGetAsync()
         {

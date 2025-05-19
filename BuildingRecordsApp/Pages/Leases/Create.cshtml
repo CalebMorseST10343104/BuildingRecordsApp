@@ -14,8 +14,8 @@ int PersonsOccupying
 bool SignedRules
 bool AllowedPets
 string EmergencyContactNumber
-Unit Unit // Navigation property
-int UnitNumber // Foreign key to Unit
+
+int UnitId // Foreign key to Unit
  *@
 
 <form method="post">
@@ -55,16 +55,13 @@ int UnitNumber // Foreign key to Unit
         <span asp-validation-for="Lease.EmergencyContactNumber" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Lease.UnitNumber"></label>
-        <select asp-for="Lease.UnitNumber" class="form-control" asp-items="@Model.UnitSelectList">
+        <label asp-for="Lease.UnitId"></label>
+        <select asp-for="Lease.UnitId" class="form-control" asp-items="@Model.UnitSelectList">
             <option value="">Select Unit</option>
         </select>
-        <span asp-validation-for="Lease.UnitNumber" class="text-danger"></span>
+        <span asp-validation-for="Lease.UnitId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

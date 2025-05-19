@@ -22,11 +22,6 @@ namespace BuildingRecordsApp.Pages.ParkingBays
 
         public SelectList UnitSelectList { get; set; } = default!;
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
         public async Task<IActionResult> OnGetAsync()
         {
             UnitSelectList = await _selectListService.GetUnitSelectListAsync();

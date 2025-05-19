@@ -17,4 +17,38 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
     public DbSet<StoreRoom> StoreRooms { get; set; }
     public DbSet<TagRemoteRecord> TagRemoteRecords { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Unit>()
+            .HasOne(u => u.TagRemoteRecord)
+            .WithOne()
+            .HasForeignKey<TagRemoteRecord>(tr => tr.UnitId);
+
+        modelBuilder.Entity<Unit>()
+            .HasOne(u => u.Lease)
+            .WithOne()
+            .HasForeignKey<Lease>(l => l.UnitId);
+
+        modelBuilder.Entity<Unit>()
+            .HasOne(u => u.Agent)
+            .WithMany(a => a.Units)
+            .HasForeignKey(u => u.AgentId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Unit>()
+            .HasOne(u => u.Building)
+            .WithMany(b => b.Units)
+            .HasForeignKey(u => u.BuildingId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Unit>()
+            .HasOne(u => u.Ownership)
+            .WithOne(o => o.Unit)
+            .HasForeignKey<Ownership>(o => o.UnitId)
+            .OnDelete(DeleteBehavior.Cascade);
+            
+    }
 }
