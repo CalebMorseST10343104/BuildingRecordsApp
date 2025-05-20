@@ -20,6 +20,7 @@ namespace BuildingRecordsApp.Pages.Leases
             // Load the leases from the database
             Leases = await _context.Leases
             .Include(l => l.Unit)
+            .ThenInclude(u => u!.Building)
             .ToListAsync();
         }
     }

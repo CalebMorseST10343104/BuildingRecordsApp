@@ -23,7 +23,7 @@ namespace BuildingRecordsApp.Pages.Leases
 
         public async Task<IActionResult> OnGetAsync()
         {
-            await _selectListService.GetUnitSelectListAsync();
+            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
             return Page();
         }
 

@@ -17,7 +17,9 @@ namespace BuildingRecordsApp.Pages.Units
 
         public async Task OnGetAsync()
         {
-            Units = await _context.Units.ToListAsync();
+            Units = await _context.Units
+            .Include(u => u.Building)
+            .ToListAsync();
         }
     }
 }

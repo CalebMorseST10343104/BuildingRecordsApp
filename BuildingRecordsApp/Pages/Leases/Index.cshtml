@@ -28,6 +28,9 @@ int UnitId // Foreign key to Unit
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Leases[0].Unit!.Building!.Name)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Leases[0].Unit!.UnitNumber)
             </th>
             <th>
@@ -42,15 +45,6 @@ int UnitId // Foreign key to Unit
             <th>
                 @Html.DisplayNameFor(model => model.Leases[0].PersonsOccupying)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Leases[0].SignedRules)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Leases[0].AllowedPets)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Leases[0].EmergencyContactNumber)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -58,16 +52,12 @@ int UnitId // Foreign key to Unit
         @foreach (var item in Model.Leases)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
-                </td>
+                <td>@item.Unit!.Building!.Name</td>
+                <td>@item.Unit!.UnitNumber</td>
                 <td>@item.LeaseHolderName</td>
                 <td>@item.StartDate.ToShortDateString()</td>
                 <td>@item.EndDate.ToShortDateString()</td>
                 <td>@item.PersonsOccupying</td>
-                <td>@item.SignedRules</td>
-                <td>@item.AllowedPets</td>
-                <td>@item.EmergencyContactNumber</td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.LeaseId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.LeaseId">Details</a> |

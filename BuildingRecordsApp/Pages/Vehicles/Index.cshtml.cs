@@ -19,6 +19,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
         {
             Vehicles = await _context.Vehicles
             .Include(v => v.Unit)
+            .ThenInclude(u => u!.Building)
             .ToListAsync();
         }
     }

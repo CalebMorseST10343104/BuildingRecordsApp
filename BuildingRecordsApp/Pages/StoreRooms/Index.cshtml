@@ -22,10 +22,13 @@ int UnitId // Foreign key property
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StoreRooms[0].StoreRoomNumber)
+                @Html.DisplayNameFor(model => model.StoreRooms[0].Unit!.Building!.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StoreRooms[0].Unit!.UnitNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreRooms[0].StoreRoomNumber)
             </th>
             <th></th>
         </tr>
@@ -35,10 +38,13 @@ int UnitId // Foreign key property
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StoreRoomNumber)
+                    @Html.DisplayFor(modelItem => item.Unit!.Building!.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StoreRoomNumber)
                 </td>
                 <td>
                     <a asp-page="Edit" asp-route-id="@item.StoreRoomId">Edit</a> |

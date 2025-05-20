@@ -24,35 +24,32 @@ int RemotesAgent
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].Unit!.Building!.Name)
+            </th>
+            <th rowspan="2">
                 @Html.DisplayNameFor(model => model.TagRemoteRecords[0].Unit!.UnitNumber)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].TagsOwner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].RemotesOwner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].TagsOccupant)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].RemotesOccupant)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].TagsAgent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].RemotesAgent)
-            </th>
-            <th></th>
+            <th colspan="2" class="text-center">Owner</th>
+            <th colspan="2" class="text-center">Occupant</th>
+            <th colspan="2" class="text-center">Agent</th>
+            <th rowspan="2"></th>
+        </tr>
+        <tr>
+            <th>Tags</th>
+            <th>Remotes</th>
+            <th>Tags</th>
+            <th>Remotes</th>
+            <th>Tags</th>
+            <th>Remotes</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.TagRemoteRecords)
         {
             <tr>
-                <td>@item.Unit!.UnitId</td>
+                <td>@item.Unit!.Building!.Name</td>
+                <td>@item.Unit!.UnitNumber</td>
                 <td>@item.TagsOwner</td>
                 <td>@item.RemotesOwner</td>
                 <td>@item.TagsOccupant</td>
@@ -68,3 +65,4 @@ int RemotesAgent
         }
     </tbody>
 </table>
+

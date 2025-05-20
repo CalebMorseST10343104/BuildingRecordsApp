@@ -18,8 +18,9 @@ namespace BuildingRecordsApp.Pages.Occupancies
         public async Task OnGetAsync()
         {
             Occupancies = await _context.Occupancies
-                .Include(o => o.Unit)
                 .Include(o => o.Occupant)
+                .Include(o => o.Unit)
+                .ThenInclude(u => u!.Building)
                 .ToListAsync();
         }
     }

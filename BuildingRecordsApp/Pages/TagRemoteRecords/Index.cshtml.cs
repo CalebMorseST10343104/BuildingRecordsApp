@@ -17,7 +17,10 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
 
         public async Task OnGetAsync()
         {
-            TagRemoteRecords = await _context.TagRemoteRecords.ToListAsync();
+            TagRemoteRecords = await _context.TagRemoteRecords
+            .Include(t => t.Unit)
+            .ThenInclude(u => u!.Building)
+            .ToListAsync();
         }
     }
 }

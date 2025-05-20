@@ -19,6 +19,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         {
             StoreRooms = await _context.StoreRooms
             .Include(s => s.Unit)
+            .ThenInclude(u => u!.Building)
             .ToListAsync();
         }
     }

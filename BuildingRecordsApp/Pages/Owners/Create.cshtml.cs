@@ -38,7 +38,7 @@ namespace BuildingRecordsApp.Pages.Owners
             _context.Owners.Add(Owner);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Owner/Index");
+            return RedirectToPage("/Owners/Index");
         }
     }
 }

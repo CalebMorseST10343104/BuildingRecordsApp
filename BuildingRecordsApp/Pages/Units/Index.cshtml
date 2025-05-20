@@ -27,7 +27,7 @@ int AirconditioningUnits
         <tr>
             
             <th>
-                @Html.DisplayNameFor(model => model.Units[0].UnitId)
+                @Html.DisplayNameFor(model => model.Units[0].Building!.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Units[0].UnitNumber)
@@ -56,7 +56,7 @@ int AirconditioningUnits
         @foreach (var item in Model.Units)
         {
             <tr>
-                <td>@item.UnitId</td>
+                <td>@item.Building!.Name</td>
                 <td>@item.UnitNumber</td>
                 <td>@item.Bedrooms</td>
                 <td>@item.DbInverter</td>

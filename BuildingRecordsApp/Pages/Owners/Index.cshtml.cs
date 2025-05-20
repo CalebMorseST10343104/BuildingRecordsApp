@@ -17,7 +17,12 @@ namespace BuildingRecordsApp.Pages.Owners
 
         public async Task OnGetAsync()
         {
-            Owners = await _context.Owners.ToListAsync();
+            Owners = await _context.Owners
+            .Include(o => o.Person)
+            .Include(o => o.Ownership)
+            .ThenInclude(u => u!.Unit)
+            .ThenInclude(u => u!.Building)
+            .ToListAsync();
         }
     }
 }

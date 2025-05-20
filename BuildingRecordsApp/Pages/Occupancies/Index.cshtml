@@ -24,13 +24,19 @@ Person Occupant // Navigation property for occupants
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Occupancies[0].OccupationType)
+                @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupancies[0].Unit!.Building!.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Occupancies[0].Unit!.UnitNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.Name) & @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.Surname)
+                @Html.DisplayNameFor(model => model.Occupancies[0].OccupationType)
             </th>
             <th></th>
         </tr>
@@ -39,15 +45,11 @@ Person Occupant // Navigation property for occupants
         @foreach (var item in Model.Occupancies)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OccupationType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Occupant!.Name) @Html.DisplayFor(modelItem => item.Occupant!.Surname)
-                </td>
+                <td>@item.Occupant!.Name</td>
+                <td>@item.Occupant!.Surname</td>
+                <td>@item.Unit!.Building!.Name</td>
+                <td>@item.Unit!.UnitNumber</td>
+                <td>@item.OccupationType</td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.OccupancyId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.OccupancyId">Details</a> |

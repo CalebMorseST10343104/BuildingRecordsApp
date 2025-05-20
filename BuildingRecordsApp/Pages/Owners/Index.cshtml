@@ -21,13 +21,16 @@ int OwnershipId // Foreign key for Ownership
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Owners[0].Person.Name)
+                @Html.DisplayNameFor(model => model.Owners[0].Ownership!.Unit!.Building!.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Owners[0].Person.Surname)
+                @Html.DisplayNameFor(model => model.Owners[0].Ownership!.Unit!.UnitNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Owners[0].Ownership.UnitId)
+                @Html.DisplayNameFor(model => model.Owners[0].Person!.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Owners[0].Person!.Surname)
             </th>
             <th></th>
         </tr>
@@ -36,15 +39,10 @@ int OwnershipId // Foreign key for Ownership
         @foreach (var item in Model.Owners)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Person.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Person.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ownership.UnitId)
-                </td>
+                <td>@item.Ownership!.Unit!.Building!.Name</td>
+                <td>@item.Ownership!.Unit!.UnitNumber</td>
+                <td>@item.Person!.Name</td>
+                <td>@item.Person!.Surname</td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.OwnerId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.OwnerId">Details</a> |

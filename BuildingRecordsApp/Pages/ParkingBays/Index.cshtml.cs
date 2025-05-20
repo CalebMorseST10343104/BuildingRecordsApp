@@ -19,6 +19,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         {
             ParkingBays = await _context.ParkingBays
             .Include(p => p.Unit)
+            .ThenInclude(u => u!.Building)
             .ToListAsync();
         }
     }

@@ -22,13 +22,13 @@ Unit Unit // Navigation property for Unit
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Ownerships[0].OwnershipId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ownerships[0].OwnershipType)
+                @Html.DisplayNameFor(model => model.Ownerships[0].Unit!.Building!.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ownerships[0].Unit!.UnitNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ownerships[0].OwnershipType)
             </th>
             <th></th>
         </tr>
@@ -37,15 +37,9 @@ Unit Unit // Navigation property for Unit
         @foreach (var item in Model.Ownerships)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OwnershipId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OwnershipType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
-                </td>
+                <td>@item.Unit!.Building!.Name</td>
+                <td>@item.Unit!.UnitNumber</td>
+                <td>@item.OwnershipType</td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.OwnershipId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.OwnershipId">Details</a> |
