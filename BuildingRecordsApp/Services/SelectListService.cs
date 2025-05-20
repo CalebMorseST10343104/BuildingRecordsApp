@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Services
 {
@@ -17,7 +18,40 @@ namespace BuildingRecordsApp.Services
 
         public async Task<SelectList> GetUnitSelectListAsync()
         {
-            var units = await _context.Units
+            return await GetUnitSelectListAsync(UsageContext.All);
+        }
+
+        public async Task<SelectList> GetUnitSelectListAsync(UsageContext usageContext)
+        {
+            IQueryable<Unit> query = _context.Units;
+
+            var usedIn = new List<int?>();
+            switch (usageContext)
+            {
+                case UsageContext.ForTagRemoteRecord:
+                    usedIn = await _context.TagRemoteRecords
+                    .Select(tr => tr.UnitId)
+                    .ToListAsync();
+                    query = query.Where(u => !usedIn.Contains(u.UnitId));
+                    break;
+                case UsageContext.ForLease:
+                    usedIn = await _context.Leases
+                    .Select(l => l.UnitId)
+                    .ToListAsync();
+                    query = query.Where(u => !usedIn.Contains(u.UnitId));
+                    break;
+                case UsageContext.ForOccupancy:
+                    usedIn = await _context.Occupancies
+                    .Select(o => o.UnitId)
+                    .ToListAsync();
+                    query = query.Where(u => !usedIn.Contains(u.UnitId));
+                    break;
+                case UsageContext.All:
+                default:
+                    break;
+            }
+
+            var units = await query
                 .Include(u => u.Building)
                 .Select(u => new
                 {
@@ -38,11 +72,11 @@ namespace BuildingRecordsApp.Services
         public async Task<SelectList> GetParkingBaySelectListAsync()
         {
             var parkingBays = await _context.ParkingBays
-                .Include(pb => pb.Unit.Building)
+                .Include(pb => pb.Unit!.Building)
                 .Select(pb => new
                 {
                     pb.ParkingBayID,
-                    Display = $"[{pb.Unit.Building!.Name}] {pb.ParkingBayNumber}"
+                    Display = $"[{pb.Unit!.Building!.Name}] {pb.ParkingBayNumber}"
                 })
                 .ToListAsync();
 
@@ -62,7 +96,7 @@ namespace BuildingRecordsApp.Services
                 .Select(a => new
                 {
                     a.AgentId,
-                    Display = $"{a.AgentCompany.CompanyName} - {a.FirstName} {a.LastName}"
+                    Display = $"{a.AgentCompany!.CompanyName} - {a.FirstName} {a.LastName}"
                 })
                 .ToListAsync();
 

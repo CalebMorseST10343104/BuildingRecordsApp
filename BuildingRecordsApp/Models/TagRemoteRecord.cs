@@ -10,6 +10,8 @@ namespace BuildingRecordsApp.Models
         public int TagsAgent { get; set; }
         public int RemotesAgent { get; set; }
 
-        public int UnitId { get; set; } // Foreign key
+        public Unit? Unit { get; set; } // Navigation property
+
+        public int? UnitId { get; set; } // Foreign key
     }
 }

@@ -4,9 +4,11 @@ namespace BuildingRecordsApp.Models
     {
         public int OccupancyId { get; set; }
         public string OccupationType { get; set; } = string.Empty; // e.g., "Owner", "Short-Term Rental", "Long-Term Rental"
-        public int UnitNumber { get; set; } // Foreign key for Unit
-        public Unit Unit { get; set; } = new(); // Navigation property for the unit
-        public int OccupantId { get; set; } // Foreign key for Person
-        public Person Occupant { get; set; } = new(); // Navigation property for occupants
+
+        public Unit? Unit { get; set; } // Navigation property for the unit
+        public Person? Occupant { get; set; } // Navigation property for occupants
+        
+        public int? UnitId { get; set; } // Foreign key for Unit
+        public int? OccupantId { get; set; } // Foreign key for Person
     }
 }

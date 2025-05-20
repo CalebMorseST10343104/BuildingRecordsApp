@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildingRecordsApp.Migrations
 {
     [DbContext(typeof(BuildingContext))]
-    partial class BuildingContextModelSnapshot : ModelSnapshot
+    [Migration("20250519174904_FixShadowEntries")]
+    partial class FixShadowEntries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -444,12 +447,9 @@ namespace BuildingRecordsApp.Migrations
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Lease", b =>
                 {
-                    b.HasOne("BuildingRecordsApp.Models.Unit", "Unit")
+                    b.HasOne("BuildingRecordsApp.Models.Unit", null)
                         .WithOne("Lease")
-                        .HasForeignKey("BuildingRecordsApp.Models.Lease", "UnitId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Unit");
+                        .HasForeignKey("BuildingRecordsApp.Models.Lease", "UnitId");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Occupancy", b =>
@@ -525,12 +525,9 @@ namespace BuildingRecordsApp.Migrations
 
             modelBuilder.Entity("BuildingRecordsApp.Models.TagRemoteRecord", b =>
                 {
-                    b.HasOne("BuildingRecordsApp.Models.Unit", "Unit")
+                    b.HasOne("BuildingRecordsApp.Models.Unit", null)
                         .WithOne("TagRemoteRecord")
-                        .HasForeignKey("BuildingRecordsApp.Models.TagRemoteRecord", "UnitId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Unit");
+                        .HasForeignKey("BuildingRecordsApp.Models.TagRemoteRecord", "UnitId");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Unit", b =>

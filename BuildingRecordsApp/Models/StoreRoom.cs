@@ -6,7 +6,7 @@ namespace BuildingRecordsApp.Models
         public string StoreRoomNumber { get; set; } = string.Empty;
 
         // Navigation properties
-        public Unit Unit { get; set; } = new(); // Navigation property
-        public int UnitId { get; set; } // Foreign key property
+        public Unit? Unit { get; set; } // Navigation property
+        public int? UnitId { get; set; } // Foreign key property
     }
 }

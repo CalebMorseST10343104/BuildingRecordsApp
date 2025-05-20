@@ -65,3 +65,6 @@ int UnitId // Foreign key to Unit
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

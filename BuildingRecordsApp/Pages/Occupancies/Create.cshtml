@@ -22,11 +22,11 @@ Person Occupant // Navigation property for occupant
         <span asp-validation-for="Occupancy.OccupationType" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Occupancy.UnitNumber" class="control-label"></label>
-        <select asp-for="Occupancy.UnitNumber" class="form-control" asp-items="@Model.UnitSelectList">
+        <label asp-for="Occupancy.UnitId" class="control-label"></label>
+        <select asp-for="Occupancy.UnitId" class="form-control" asp-items="@Model.UnitSelectList">
             <option value="">Select Unit</option>
         </select>
-        <span asp-validation-for="Occupancy.UnitNumber" class="text-danger"></span>
+        <span asp-validation-for="Occupancy.UnitId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Occupancy.OccupantId" class="control-label"></label>
@@ -40,3 +40,6 @@ Person Occupant // Navigation property for occupant
         <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </div>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

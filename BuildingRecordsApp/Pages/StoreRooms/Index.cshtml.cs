@@ -17,7 +17,9 @@ namespace BuildingRecordsApp.Pages.StoreRooms
 
         public async Task OnGetAsync()
         {
-            StoreRooms = await _context.StoreRooms.ToListAsync();
+            StoreRooms = await _context.StoreRooms
+            .Include(s => s.Unit)
+            .ToListAsync();
         }
     }
 }

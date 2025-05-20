@@ -6,8 +6,8 @@ namespace BuildingRecordsApp.Models
         public int ParkingBayNumber { get; set; }
         
         
-        public int UnitID { get; set; } // Foreign key
-        public Unit Unit { get; set; } = new(); // Navigation property
+        public int? UnitID { get; set; } // Foreign key
+        public Unit? Unit { get; set; } // Navigation property
 
     }
 }

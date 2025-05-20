@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
+using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Pages.TagRemoteRecords
 {
@@ -21,21 +23,19 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
 
         public SelectList? UnitSelectList { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            return Page();
-        }
-
-        public async Task<IActionResult> OnGetUnitSelectListAsync()
-        {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            UnitSelectList = await _selectListService.GetUnitSelectListAsync(UsageContext.ForTagRemoteRecord);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+            {
+                Console.WriteLine("ModelState is invalid");
                 return Page();
+            }
 
             _context.TagRemoteRecords.Add(TagRemoteRecord);
             await _context.SaveChangesAsync();

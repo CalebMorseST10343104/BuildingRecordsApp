@@ -24,13 +24,21 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
 
         modelBuilder.Entity<Unit>()
             .HasOne(u => u.TagRemoteRecord)
-            .WithOne()
-            .HasForeignKey<TagRemoteRecord>(tr => tr.UnitId);
+            .WithOne(tr => tr.Unit)
+            .HasForeignKey<TagRemoteRecord>(tr => tr.UnitId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Unit>()
             .HasOne(u => u.Lease)
-            .WithOne()
-            .HasForeignKey<Lease>(l => l.UnitId);
+            .WithOne(l => l.Unit)
+            .HasForeignKey<Lease>(l => l.UnitId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Unit>()
+            .HasOne(u => u.Ownership)
+            .WithOne(o => o.Unit)
+            .HasForeignKey<Ownership>(o => o.UnitId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Unit>()
             .HasOne(u => u.Agent)
@@ -43,12 +51,17 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
             .WithMany(b => b.Units)
             .HasForeignKey(u => u.BuildingId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<Unit>()
-            .HasOne(u => u.Ownership)
-            .WithOne(o => o.Unit)
-            .HasForeignKey<Ownership>(o => o.UnitId)
-            .OnDelete(DeleteBehavior.Cascade);
             
+        modelBuilder.Entity<Occupancy>()
+            .HasOne(o => o.Occupant)
+            .WithMany() 
+            .HasForeignKey(o => o.OccupantId)
+            .OnDelete(DeleteBehavior.Restrict); 
+
+        modelBuilder.Entity<Occupancy>()
+            .HasOne(o => o.Unit)
+            .WithMany() 
+            .HasForeignKey(o => o.UnitId)
+            .OnDelete(DeleteBehavior.Restrict); 
     }
 }

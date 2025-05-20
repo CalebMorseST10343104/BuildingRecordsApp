@@ -8,7 +8,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
     public class CreateModel(BuildingContext context, ISelectListService selectListService) : PageModel
     {
         private readonly BuildingContext _context = context;
-        private readonly ISelectListService _selectListService;
+        private readonly ISelectListService _selectListService = selectListService;
 
         [BindProperty]
         public StoreRoom StoreRoom { get; set; } = new();

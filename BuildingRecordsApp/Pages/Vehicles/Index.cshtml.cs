@@ -17,7 +17,9 @@ namespace BuildingRecordsApp.Pages.Vehicles
 
         public async Task OnGetAsync()
         {
-            Vehicles = await _context.Vehicles.ToListAsync();
+            Vehicles = await _context.Vehicles
+            .Include(v => v.Unit)
+            .ToListAsync();
         }
     }
 }

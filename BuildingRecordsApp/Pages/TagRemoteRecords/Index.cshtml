@@ -7,7 +7,7 @@
 <h1>Tag Remote Records</h1>
 
 <p>
-    <a asp-page="./Create" class="btn btn-primary">Create New Tag Remote Record</a>
+    <a asp-page="./Create" class="btn btn-primary">Create New Tag & Remote Record</a>
 </p>
 
 @* 
@@ -24,6 +24,9 @@ int RemotesAgent
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].Unit!.UnitNumber)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.TagRemoteRecords[0].TagsOwner)
             </th>
@@ -44,3 +47,24 @@ int RemotesAgent
             </th>
             <th></th>
         </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TagRemoteRecords)
+        {
+            <tr>
+                <td>@item.Unit!.UnitId</td>
+                <td>@item.TagsOwner</td>
+                <td>@item.RemotesOwner</td>
+                <td>@item.TagsOccupant</td>
+                <td>@item.RemotesOccupant</td>
+                <td>@item.TagsAgent</td>
+                <td>@item.RemotesAgent</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.TagRemoteRecordId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.TagRemoteRecordId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.TagRemoteRecordId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

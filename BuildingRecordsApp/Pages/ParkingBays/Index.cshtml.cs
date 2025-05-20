@@ -17,7 +17,9 @@ namespace BuildingRecordsApp.Pages.ParkingBays
 
         public async Task OnGetAsync()
         {
-            ParkingBays = await _context.ParkingBays.ToListAsync();
+            ParkingBays = await _context.ParkingBays
+            .Include(p => p.Unit)
+            .ToListAsync();
         }
     }
 }

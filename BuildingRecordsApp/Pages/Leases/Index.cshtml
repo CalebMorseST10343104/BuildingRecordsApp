@@ -28,6 +28,9 @@ int UnitId // Foreign key to Unit
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Leases[0].Unit!.UnitNumber)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Leases[0].LeaseHolderName)
             </th>
             <th>
@@ -55,6 +58,9 @@ int UnitId // Foreign key to Unit
         @foreach (var item in Model.Leases)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
+                </td>
                 <td>@item.LeaseHolderName</td>
                 <td>@item.StartDate.ToShortDateString()</td>
                 <td>@item.EndDate.ToShortDateString()</td>

@@ -7,7 +7,7 @@
 <h1>Store Rooms</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="./Create" class="btn btn-primary">Create New Store Room</a>
 </p>
 
 @* 
@@ -25,7 +25,7 @@ int UnitId // Foreign key property
                 @Html.DisplayNameFor(model => model.StoreRooms[0].StoreRoomNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StoreRooms[0].Unit.UnitNumber)
+                @Html.DisplayNameFor(model => model.StoreRooms[0].Unit!.UnitNumber)
             </th>
             <th></th>
         </tr>
@@ -38,7 +38,7 @@ int UnitId // Foreign key property
                     @Html.DisplayFor(modelItem => item.StoreRoomNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Unit.UnitNumber)
+                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
                 </td>
                 <td>
                     <a asp-page="Edit" asp-route-id="@item.StoreRoomId">Edit</a> |

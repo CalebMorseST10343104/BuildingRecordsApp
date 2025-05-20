@@ -7,7 +7,7 @@
 <h1>Vehicles</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="./Create" class="btn btn-primary">Create New Vehicle</a>
 </p>
 
 @* 
@@ -24,7 +24,7 @@ int UnitId // Foreign key to Unit
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleId)
+                @Html.DisplayNameFor(model => model.Vehicles[0].Unit!.UnitNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vehicles[0].VehicleRegistration)
@@ -46,7 +46,7 @@ int UnitId // Foreign key to Unit
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VehicleId)
+                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.VehicleRegistration)

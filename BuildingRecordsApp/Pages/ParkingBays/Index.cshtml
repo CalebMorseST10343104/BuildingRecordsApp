@@ -7,7 +7,7 @@
 <h1>Parking Bays</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="./Create" class="btn btn-primary">Create New Parking Bay</a>
 </p>
 
 @* 
@@ -28,7 +28,7 @@ Unit Unit // Navigation property
                 @Html.DisplayNameFor(model => model.ParkingBays[0].ParkingBayNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ParkingBays[0].Unit.UnitNumber)
+                @Html.DisplayNameFor(model => model.ParkingBays[0].Unit!.UnitNumber)
             </th>
             <th></th>
         </tr>
@@ -44,7 +44,7 @@ Unit Unit // Navigation property
                     @Html.DisplayFor(modelItem => item.ParkingBayNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Unit.UnitNumber)
+                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
                 </td>
                 <td>
                     <a asp-page="Edit" asp-route-id="@item.ParkingBayID">Edit</a> |

@@ -11,6 +11,8 @@ namespace BuildingRecordsApp.Models
         public bool AllowedPets { get; set; }
         public string EmergencyContactNumber { get; set; } = string.Empty;
 
-        public int UnitId { get; set; } // Foreign key to Unit
+        public Unit? Unit { get; set; } // Navigation property
+
+        public int? UnitId { get; set; } // Foreign key to Unit
     }
 }

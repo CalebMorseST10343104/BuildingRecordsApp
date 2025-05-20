@@ -20,6 +20,11 @@ Unit Unit // Navigation property
 
 <form method="post">
     <div class="form-group">
+        <label asp-for="TagRemoteRecord.UnitId"></label>
+        <select asp-for="TagRemoteRecord.UnitId" asp-items="@Model.UnitSelectList"></select>
+        <span asp-validation-for="TagRemoteRecord.UnitId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="TagRemoteRecord.TagsOwner" class="control-label"></label>
         <input asp-for="TagRemoteRecord.TagsOwner" class="form-control" />
         <span asp-validation-for="TagRemoteRecord.TagsOwner" class="text-danger"></span>
@@ -48,13 +53,6 @@ Unit Unit // Navigation property
         <label asp-for="TagRemoteRecord.RemotesAgent" class="control-label"></label>
         <input asp-for="TagRemoteRecord.RemotesAgent" class="form-control" />
         <span asp-validation-for="TagRemoteRecord.RemotesAgent" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TagRemoteRecord.UnitId" class="control-label"></label>
-        <select asp-for="TagRemoteRecord.UnitId" class="form-control" asp-items="@Model.UnitSelectList">
-            <option value="">Select Unit</option>
-        </select>
-        <span asp-validation-for="TagRemoteRecord.UnitId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Create</button>

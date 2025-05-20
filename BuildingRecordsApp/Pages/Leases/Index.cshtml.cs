@@ -18,7 +18,9 @@ namespace BuildingRecordsApp.Pages.Leases
         public async Task OnGetAsync()
         {
             // Load the leases from the database
-            Leases = await _context.Leases.ToListAsync();
+            Leases = await _context.Leases
+            .Include(l => l.Unit)
+            .ToListAsync();
         }
     }
 }

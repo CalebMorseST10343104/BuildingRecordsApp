@@ -27,10 +27,10 @@ Person Occupant // Navigation property for occupants
                 @Html.DisplayNameFor(model => model.Occupancies[0].OccupationType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Occupancies[0].UnitNumber)
+                @Html.DisplayNameFor(model => model.Occupancies[0].Unit!.UnitNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Occupancies[0].OccupantId)
+                @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.Name) & @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.Surname)
             </th>
             <th></th>
         </tr>
@@ -43,10 +43,10 @@ Person Occupant // Navigation property for occupants
                     @Html.DisplayFor(modelItem => item.OccupationType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UnitNumber)
+                    @Html.DisplayFor(modelItem => item.Unit!.UnitNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OccupantId)
+                    @Html.DisplayFor(modelItem => item.Occupant!.Name) @Html.DisplayFor(modelItem => item.Occupant!.Surname)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.OccupancyId">Edit</a> |

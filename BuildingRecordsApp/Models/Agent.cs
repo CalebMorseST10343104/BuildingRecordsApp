@@ -8,10 +8,10 @@ namespace BuildingRecordsApp.Models
         public string PhoneNumber { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
 
-        
-        public int AgentCompanyId { get; set; } // Foreign key to AgentCompany
-        public AgentCompany AgentCompany { get; set; } = new(); // Navigation property
+
+        public AgentCompany? AgentCompany { get; set; } // Navigation property
         public ICollection<Unit> Units { get; set; } = []; // Navigation property
 
+        public int? AgentCompanyId { get; set; } // Foreign key to AgentCompany
     }
 }
