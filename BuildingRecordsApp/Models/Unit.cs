@@ -1,13 +1,30 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BuildingRecordsApp.Models
 {
-    public class Unit {
+    public class Unit
+    {
         public int UnitId { get; set; }
+
+        [Display(Name = "Unit Number")]
         public int UnitNumber { get; set; }
+
+        [Display(Name = "Bedroom Count")]
         public int Bedrooms { get; set; }
+
+        [Display(Name = "Has DB Inverter?")]
         public bool DbInverter { get; set; }
+
+        [Display(Name = "Has Housekeeping?")]
         public bool Housekeeping { get; set; }
+
+        [Display(Name = "Is Pet Friendly?")]
         public bool PetFriendly { get; set; }
+
+        [Display(Name = "Allows Subletting?")]
         public bool SublettingAllowed { get; set; }
+
+        [Display(Name = "AC Unit Count")]
         public int AirconditioningUnits { get; set; }
 
         //Navigation properties
@@ -26,6 +43,6 @@ namespace BuildingRecordsApp.Models
         public int? AgentId { get; set; }
         public int? LeaseId { get; set; }
         public int? TagRemoteRecordId { get; set; }
-        
+
     }
 }

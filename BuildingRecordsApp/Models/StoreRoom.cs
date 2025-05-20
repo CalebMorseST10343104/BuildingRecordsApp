@@ -1,8 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BuildingRecordsApp.Models
 {
     public class StoreRoom
     {
         public int StoreRoomId { get; set; }
+
+        [Display(Name = "Store Room Number")]
         public string StoreRoomNumber { get; set; } = string.Empty;
 
         // Navigation properties
