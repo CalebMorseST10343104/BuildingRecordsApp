@@ -29,12 +29,9 @@ Unit Unit // Navigation property for Unit
         <select asp-for="Ownership.UnitId" asp-items="@Model.UnitSelectList"></select>
         <span asp-validation-for="Ownership.UnitId" class="text-danger"></span>
     </div>
-
-    <div>
-        <button type="submit">Create</button>
-    </div>
+     <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -34,5 +34,9 @@ ICollection<Person> Agents // Navigation property
         <span asp-validation-for="AgentCompany.RegistrationNumber" class="text-danger"></span>
     </div>
 
-    <button type="submit">Create</button>
+     <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

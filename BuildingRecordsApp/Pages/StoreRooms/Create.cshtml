@@ -20,7 +20,6 @@ int UnitId // Foreign key property
         <input asp-for="StoreRoom.StoreRoomNumber" />
         <span asp-validation-for="StoreRoom.StoreRoomNumber" class="text-danger"></span>
     </div>
-
     <div>
         <label asp-for="StoreRoom.UnitId"></label>
         <select asp-for="StoreRoom.UnitId" asp-items="@Model.UnitSelectList">
@@ -28,6 +27,9 @@ int UnitId // Foreign key property
         </select>
         <span asp-validation-for="StoreRoom.UnitId" class="text-danger"></span>
     </div>
-
-    <button type="submit">Create</button>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

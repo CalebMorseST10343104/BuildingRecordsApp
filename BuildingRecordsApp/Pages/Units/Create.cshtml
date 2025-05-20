@@ -69,13 +69,10 @@ int AirconditioningUnits
         <span asp-validation-for="Unit.AirconditioningUnits" class="text-danger"></span>
     </div>    
 
-    <div>
-        <input type="submit" value="Create" />
-        <a asp-page="./Index">Back to List</a>
-    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 
 </form>
-
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

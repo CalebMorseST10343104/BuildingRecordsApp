@@ -20,7 +20,6 @@ Unit Unit // Navigation property
         <input asp-for="ParkingBay.ParkingBayNumber" />
         <span asp-validation-for="ParkingBay.ParkingBayNumber" class="text-danger"></span>
     </div>
-
     <div>
         <label asp-for="ParkingBay.UnitID"></label>
         <select asp-for="ParkingBay.UnitID" asp-items="@Model.UnitSelectList">
@@ -28,8 +27,9 @@ Unit Unit // Navigation property
         </select>
         <span asp-validation-for="ParkingBay.UnitID" class="text-danger"></span>
     </div>
-
-    <button type="submit">Create</button>
-
-    <a asp-page="./Index">Back to List</a>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
