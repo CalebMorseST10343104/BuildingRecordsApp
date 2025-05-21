@@ -231,8 +231,9 @@ namespace BuildingRecordsApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ParkingBayNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ParkingBayNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("UnitID")
                         .HasColumnType("INTEGER");
@@ -376,8 +377,9 @@ namespace BuildingRecordsApp.Migrations
                     b.Property<int?>("TagRemoteRecordId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UnitNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UnitNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UnitId");
 

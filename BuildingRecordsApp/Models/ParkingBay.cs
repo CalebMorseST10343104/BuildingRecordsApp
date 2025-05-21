@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models
         public int ParkingBayID { get; set; }
 
         [Display(Name = "Parking Bay Number")]
-        public int ParkingBayNumber { get; set; }
+        public string ParkingBayNumber { get; set; } = string.Empty;
 
 
         public int? UnitID { get; set; } // Foreign key

@@ -104,7 +104,7 @@ namespace BuildingRecordsApp.Migrations
                 {
                     UnitId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UnitNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    UnitNumber = table.Column<string>(type: "TEXT", nullable: false),
                     Bedrooms = table.Column<int>(type: "INTEGER", nullable: false),
                     DbInverter = table.Column<bool>(type: "INTEGER", nullable: false),
                     Housekeeping = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -226,7 +226,7 @@ namespace BuildingRecordsApp.Migrations
                 {
                     ParkingBayID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ParkingBayNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    ParkingBayNumber = table.Column<string>(type: "TEXT", nullable: false),
                     UnitID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>

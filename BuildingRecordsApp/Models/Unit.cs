@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models
         public int UnitId { get; set; }
 
         [Display(Name = "Unit Number")]
-        public int UnitNumber { get; set; }
+        public string UnitNumber { get; set; } = string.Empty;
 
         [Display(Name = "Bedroom Count")]
         public int Bedrooms { get; set; }

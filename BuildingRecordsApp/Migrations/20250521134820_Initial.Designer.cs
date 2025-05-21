@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildingRecordsApp.Migrations
 {
     [DbContext(typeof(BuildingContext))]
-    [Migration("20250521121843_Initial")]
+    [Migration("20250521134820_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -234,8 +234,9 @@ namespace BuildingRecordsApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ParkingBayNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ParkingBayNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("UnitID")
                         .HasColumnType("INTEGER");
@@ -379,8 +380,9 @@ namespace BuildingRecordsApp.Migrations
                     b.Property<int?>("TagRemoteRecordId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UnitNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UnitNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UnitId");
 
