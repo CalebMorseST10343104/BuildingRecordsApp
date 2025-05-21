@@ -24,5 +24,9 @@ namespace BuildingRecordsApp.Models
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; } = string.Empty;
 
+        // Navigation properties
+        public ICollection<Occupancy> Occupancies { get; set; } = [];
+        public ICollection<Owner> Owners { get; set; } = [];
+        public ICollection<Unit> PrimaryContactUnits { get; set; } = [];
     }
 }

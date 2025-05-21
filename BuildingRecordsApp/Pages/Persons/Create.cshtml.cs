@@ -5,9 +5,14 @@ using BuildingRecordsApp.Models;
 
 namespace BuildingRecordsApp.Pages.Persons
 {
-    public class CreateModel(BuildingContext context) : PageModel
+    public class CreateModel : PageModel
     {
-        private readonly BuildingContext _context = context;
+        private readonly BuildingContext _context;
+
+        public CreateModel(BuildingContext context)
+        {
+            _context = context;
+        }
 
         [BindProperty]
         public Person Person { get; set; } = new();

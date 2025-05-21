@@ -17,6 +17,6 @@ namespace BuildingRecordsApp.Models
         public string RegistrationNumber { get; set; } = string.Empty;
 
         // Navigation property
-        public ICollection<Person> Agents { get; set; } = [];
+        public ICollection<Agent> Agents { get; set; } = [];
     }
 }

@@ -22,6 +22,9 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
     {
         base.OnModelCreating(modelBuilder);
 
+
+        #region Unit 1-to-1 Relationships
+
         modelBuilder.Entity<Unit>()
             .HasOne(u => u.TagRemoteRecord)
             .WithOne(tr => tr.Unit)
@@ -40,6 +43,16 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
             .HasForeignKey<Ownership>(o => o.UnitId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        #endregion
+
+        #region Unit 1-to-Many Relationships
+
+        modelBuilder.Entity<Unit>()
+            .HasOne(u => u.Building)
+            .WithMany(b => b.Units)
+            .HasForeignKey(u => u.BuildingId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<Unit>()
             .HasOne(u => u.Agent)
             .WithMany(a => a.Units)
@@ -47,21 +60,89 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
             .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<Unit>()
-            .HasOne(u => u.Building)
-            .WithMany(b => b.Units)
-            .HasForeignKey(u => u.BuildingId)
-            .OnDelete(DeleteBehavior.Restrict);
-            
+            .HasOne(u => u.PrimaryContactPerson)
+            .WithMany(p => p.PrimaryContactUnits)
+            .HasForeignKey(u => u.PrimaryContactPersonId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Unit>()
+            .HasMany(u => u.ParkingBays)
+            .WithOne(pb => pb.Unit)
+            .HasForeignKey(pb => pb.UnitID)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Unit>()
+            .HasMany(u => u.StoreRooms)
+            .WithOne(sr => sr.Unit)
+            .HasForeignKey(sr => sr.UnitId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Unit>()
+            .HasMany(u => u.Vehicles)
+            .WithOne(v => v.Unit)
+            .HasForeignKey(v => v.UnitId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        #endregion
+
+        #region Occupancy
+
+        modelBuilder.Entity<Occupancy>()
+        .HasKey(o => new { o.UnitId, o.OccupantId });
+
         modelBuilder.Entity<Occupancy>()
             .HasOne(o => o.Occupant)
-            .WithMany() 
+            .WithMany(p => p.Occupancies)
             .HasForeignKey(o => o.OccupantId)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Occupancy>()
             .HasOne(o => o.Unit)
-            .WithMany() 
+            .WithMany(u => u.Occupants)
             .HasForeignKey(o => o.UnitId)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Cascade);
+
+        #endregion
+
+        #region Owners
+
+        modelBuilder.Entity<Owner>()
+            .HasKey(o => new { o.OwnershipId, o.PersonId });
+
+        modelBuilder.Entity<Owner>()
+            .HasOne(o => o.Person)
+            .WithMany(p => p.Owners)
+            .HasForeignKey(o => o.PersonId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Owner>()
+            .HasOne(o => o.Ownership)
+            .WithMany(o => o.Owners)
+            .HasForeignKey(o => o.OwnershipId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Ownership>()
+            .HasOne(o => o.CompanyTrust)
+            .WithMany(ct => ct.Ownerships)
+            .HasForeignKey(o => o.CompanyTrustId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        #endregion
+
+        #region Agent
+
+        modelBuilder.Entity<Agent>()
+            .HasOne(a => a.AgentCompany)
+            .WithMany(ac => ac.Agents)
+            .HasForeignKey(a => a.AgentCompanyId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Agent>()
+            .HasMany(a => a.Units)
+            .WithOne(u => u.Agent)
+            .HasForeignKey(u => u.AgentId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        #endregion
     }
 }

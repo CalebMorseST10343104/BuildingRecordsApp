@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Services;
+using Microsoft.Data.Sqlite;
 
 
 internal class Program
@@ -12,7 +13,20 @@ internal class Program
         // Add services to the container.
         builder.Services.AddRazorPages();
         
-        builder.Services.AddDbContext<BuildingContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddDbContext<BuildingContext>(options =>
+        {
+            var connectionString = builder.Configuration.GetConnectionString("BuildingContext");
+
+            var connection = new SqliteConnection(connectionString);
+            connection.Open();
+
+            //Enable foreign keys explicitly
+            var command = connection.CreateCommand();
+            command.CommandText = "PRAGMA foreign_keys = ON;";
+            command.ExecuteNonQuery();
+
+            options.UseSqlite(connection);
+        });
         
         builder.Services.AddScoped<ISelectListService, SelectListService>();
 

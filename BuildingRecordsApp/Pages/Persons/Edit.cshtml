@@ -1,0 +1,58 @@
+@page
+@model BuildingRecordsApp.Pages.Persons.EditModel
+@{
+    ViewData["Title"] = "Edit Person";
+}
+
+<h1>Edit Person</h1>
+
+@* 
+Person has the following fields:
+int PersonId (Primary Key)
+string Name
+string Surname
+string Email
+string PostalAddress
+string IdNumber
+string PhoneNumber
+*@
+
+<form method="post">
+    <div>
+        <label asp-for="Person.Name"></label>
+        <input asp-for="Person.Name" />
+        <span asp-validation-for="Person.Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Person.Surname"></label>
+        <input asp-for="Person.Surname" />
+        <span asp-validation-for="Person.Surname" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Person.Email"></label>
+        <input asp-for="Person.Email" />
+        <span asp-validation-for="Person.Email" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Person.PostalAddress"></label>
+        <input asp-for="Person.PostalAddress" />
+        <span asp-validation-for="Person.PostalAddress" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Person.IdNumber"></label>
+        <input asp-for="Person.IdNumber" />
+        <span asp-validation-for="Person.IdNumber" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Person.PhoneNumber"></label>
+        <input asp-for="Person.PhoneNumber" />
+        <span asp-validation-for="Person.PhoneNumber" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

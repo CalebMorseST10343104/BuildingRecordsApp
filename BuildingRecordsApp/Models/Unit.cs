@@ -34,6 +34,10 @@ namespace BuildingRecordsApp.Models
         public Agent? Agent { get; set; }
         public Lease? Lease { get; set; }
         public TagRemoteRecord? TagRemoteRecord { get; set; }
+        public ICollection<Occupancy> Occupants { get; set; } = [];
+        public ICollection<ParkingBay> ParkingBays { get; set; } = [];
+        public ICollection<StoreRoom> StoreRooms { get; set; } = [];
+        public ICollection<Vehicle> Vehicles { get; set; } = [];
 
 
         //Foreign keys
