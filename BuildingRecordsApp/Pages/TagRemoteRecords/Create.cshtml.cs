@@ -31,6 +31,10 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (TagRemoteRecord.UnitId == 0)
+            {
+                ModelState.AddModelError("TagRemoteRecord.UnitId", "Unit is required.");
+            }
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("ModelState is invalid");

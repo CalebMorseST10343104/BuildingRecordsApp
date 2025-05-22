@@ -2,15 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.Units
 {
-    public class CreateModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService)
         {
             _context = context;
             _selectListService = selectListService;
@@ -21,13 +22,21 @@ namespace BuildingRecordsApp.Pages.Units
 
         public SelectList? BuildingSelectList { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGetAsync(int? id)
         {
-            // Populate the select list for buildings
-            BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+            if (id == null)
+                return NotFound();
+
+            Unit = _context.Units.Find(id) ?? null!;
+
+            if (Unit == null)
+                return NotFound();
+
+            // Populate the select list for the building
+            BuildingSelectList = _selectListService.GetBuildingSelectListAsync().Result;
             return Page();
         }
-        
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (Unit.BuildingId == 0)
@@ -38,15 +47,26 @@ namespace BuildingRecordsApp.Pages.Units
             }
 
             if (!ModelState.IsValid)
-            {
-                Console.WriteLine("ModelState is invalid");
                 return Page();
+
+            _context.Attach(Unit).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UnitExists(Unit.UnitId))
+                    return NotFound();
 
-            _context.Units.Add(Unit);
-            await _context.SaveChangesAsync();
-
+                throw;
+            }
             return RedirectToPage("/Units/Index");
+        }
+
+        private bool UnitExists(int id)
+        {
+            return _context.Units.Any(e => e.UnitId == id);
         }
     }
 }

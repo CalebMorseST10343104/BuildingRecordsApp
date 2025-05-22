@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingRecordsApp.Pages.Persons
+namespace BuildingRecordsApp.Pages.Buildings
 {
     public class EditModel : PageModel
     {
@@ -16,16 +15,16 @@ namespace BuildingRecordsApp.Pages.Persons
         }
 
         [BindProperty]
-        public required Person Person { get; set; }
+        public required Building Building { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Person = await _context.Persons.FindAsync(id) ?? null!;
+            Building = await _context.Buildings.FindAsync(id) ?? null!;
 
-            if (Person == null)
+            if (Building == null)
                 return NotFound();
 
             return Page();
@@ -36,7 +35,7 @@ namespace BuildingRecordsApp.Pages.Persons
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Person).State = EntityState.Modified;
+            _context.Attach(Building).State = EntityState.Modified;
 
             try
             {
@@ -44,18 +43,18 @@ namespace BuildingRecordsApp.Pages.Persons
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(Person!.PersonId))
+                if (!BuildingExists(Building.BuildingId))
                     return NotFound();
 
                 throw;
             }
-            
-            return RedirectToPage("/Persons/Index");
-        }
 
-        private bool PersonExists(int id)
+            return RedirectToPage("/Buildings/Index");
+        }
+        
+        private bool BuildingExists(int id)
         {
-            return _context.Persons.Any(e => e.PersonId == id);
+            return _context.Buildings.Any(e => e.BuildingId == id);
         }
     }
 }

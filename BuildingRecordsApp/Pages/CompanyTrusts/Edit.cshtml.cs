@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingRecordsApp.Pages.Persons
+namespace BuildingRecordsApp.Pages.CompanyTrusts
 {
     public class EditModel : PageModel
     {
@@ -14,18 +13,17 @@ namespace BuildingRecordsApp.Pages.Persons
         {
             _context = context;
         }
-
         [BindProperty]
-        public required Person Person { get; set; }
+        public required CompanyTrust CompanyTrust { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Person = await _context.Persons.FindAsync(id) ?? null!;
+            CompanyTrust = await _context.CompanyTrusts.FindAsync(id) ?? null!;
 
-            if (Person == null)
+            if (CompanyTrust == null)
                 return NotFound();
 
             return Page();
@@ -36,7 +34,7 @@ namespace BuildingRecordsApp.Pages.Persons
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Person).State = EntityState.Modified;
+            _context.Attach(CompanyTrust).State = EntityState.Modified;
 
             try
             {
@@ -44,18 +42,18 @@ namespace BuildingRecordsApp.Pages.Persons
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(Person!.PersonId))
+                if (!CompanyTrustExists(CompanyTrust.CompanyTrustId))
                     return NotFound();
 
                 throw;
             }
-            
-            return RedirectToPage("/Persons/Index");
+
+            return RedirectToPage("/CompanyTrusts/Index");
         }
 
-        private bool PersonExists(int id)
+        private bool CompanyTrustExists(int id)
         {
-            return _context.Persons.Any(e => e.PersonId == id);
+            return _context.CompanyTrusts.Any(e => e.CompanyTrustId == id);
         }
     }
 }

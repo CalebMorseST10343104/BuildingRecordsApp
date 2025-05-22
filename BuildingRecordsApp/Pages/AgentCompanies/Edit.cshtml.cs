@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingRecordsApp.Pages.Persons
+namespace BuildingRecordsApp.Pages.AgentCompanies
 {
     public class EditModel : PageModel
     {
@@ -16,16 +15,16 @@ namespace BuildingRecordsApp.Pages.Persons
         }
 
         [BindProperty]
-        public required Person Person { get; set; }
+        public required AgentCompany AgentCompany { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Person = await _context.Persons.FindAsync(id) ?? null!;
+            AgentCompany = await _context.AgentCompanies.FindAsync(id) ?? null!;
 
-            if (Person == null)
+            if (AgentCompany == null)
                 return NotFound();
 
             return Page();
@@ -36,7 +35,7 @@ namespace BuildingRecordsApp.Pages.Persons
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Person).State = EntityState.Modified;
+            _context.Attach(AgentCompany).State = EntityState.Modified;
 
             try
             {
@@ -44,18 +43,18 @@ namespace BuildingRecordsApp.Pages.Persons
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(Person!.PersonId))
+                if (!AgentCompanyExists(AgentCompany!.AgentCompanyId))
                     return NotFound();
 
                 throw;
             }
-            
-            return RedirectToPage("/Persons/Index");
+
+            return RedirectToPage("/AgentCompanies/Index");
         }
 
-        private bool PersonExists(int id)
+        private bool AgentCompanyExists(int id)
         {
-            return _context.Persons.Any(e => e.PersonId == id);
+            return _context.AgentCompanies.Any(e => e.AgentCompanyId == id);
         }
     }
 }

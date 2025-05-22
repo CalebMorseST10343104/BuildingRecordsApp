@@ -18,6 +18,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
         public async Task OnGetAsync()
         {
             Ownerships = await _context.Ownerships
+            .Include(o => o.CompanyTrust)
             .Include(o => o.Unit)
             .ThenInclude(u => u!.Building)
             .ToListAsync();

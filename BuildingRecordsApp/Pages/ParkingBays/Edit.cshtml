@@ -1,0 +1,27 @@
+﻿@page
+@model BuildingRecordsApp.Pages.ParkingBays.EditModel
+@{
+    ViewData["Title"] = "Edit Parking Bay";
+}
+
+<h1>Edit Parking Bay</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="ParkingBay.ParkingBayNumber"></label>
+        <input asp-for="ParkingBay.ParkingBayNumber" />
+        <span asp-validation-for="ParkingBay.ParkingBayNumber" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="ParkingBay.UnitID"></label>
+        <select asp-for="ParkingBay.UnitID" asp-items="@Model.UnitSelectList">
+            <option value="">Select Unit</option>
+        </select>
+        <span asp-validation-for="ParkingBay.UnitID" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

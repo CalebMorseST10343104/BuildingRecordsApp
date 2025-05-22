@@ -1,0 +1,33 @@
+﻿@page
+@model BuildingRecordsApp.Pages.AgentCompanies.EditModel
+@{
+    ViewData["Title"] = "Edit Agent Company";
+}
+
+<h1>Edit Agent Company</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="AgentCompany.CompanyName"></label>
+        <input asp-for="AgentCompany.CompanyName" />
+        <span asp-validation-for="AgentCompany.CompanyName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="AgentCompany.Address"></label>
+        <input asp-for="AgentCompany.Address" />
+        <span asp-validation-for="AgentCompany.Address" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="AgentCompany.RegistrationNumber"></label>
+        <input asp-for="AgentCompany.RegistrationNumber" />
+        <span asp-validation-for="AgentCompany.RegistrationNumber" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

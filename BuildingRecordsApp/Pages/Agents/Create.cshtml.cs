@@ -30,6 +30,9 @@ namespace BuildingRecordsApp.Pages.Agents
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (Agent.AgentCompanyId == 0)
+                ModelState.AddModelError("Agent.AgentCompanyId", "Please select an agent company.");
+                
             if (!ModelState.IsValid)
                 return Page();
 

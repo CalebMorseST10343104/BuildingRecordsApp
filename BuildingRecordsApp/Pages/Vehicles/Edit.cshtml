@@ -1,0 +1,46 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Vehicles.EditModel
+@{
+    ViewData["Title"] = "Edit Vehicle";
+}
+
+<h1>Edit Vehicle</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="Vehicle.VehicleRegistration"></label>
+        <input asp-for="Vehicle.VehicleRegistration" />
+        <span asp-validation-for="Vehicle.VehicleRegistration" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Vehicle.VehicleModel"></label>
+        <input asp-for="Vehicle.VehicleModel" />
+        <span asp-validation-for="Vehicle.VehicleModel" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Vehicle.VehicleMake"></label>
+        <input asp-for="Vehicle.VehicleMake" />
+        <span asp-validation-for="Vehicle.VehicleMake" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Vehicle.VehicleColor"></label>
+        <input asp-for="Vehicle.VehicleColor" />
+        <span asp-validation-for="Vehicle.VehicleColor" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Vehicle.UnitId"></label>
+        <select asp-for="Vehicle.UnitId" asp-items="@Model.UnitSelectList">
+            <option value="">Select Unit</option>
+        </select>
+        <span asp-validation-for="Vehicle.UnitId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

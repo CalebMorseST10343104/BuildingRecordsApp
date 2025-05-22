@@ -32,12 +32,20 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWdlbnRDb21wYW5pZXMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/AgentCompanies/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWdlbnRDb21wYW5pZXMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/AgentCompanies/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWdlbnRDb21wYW5pZXMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Agents/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWdlbnRzL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Agents/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWdlbnRzL0VkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Agents/Index.cshtml]
@@ -48,12 +56,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQnVpbGRpbmdzL0NyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Buildings/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQnVpbGRpbmdzL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Buildings/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQnVpbGRpbmdzL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/CompanyTrusts/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcGFueVRydXN0cy9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/CompanyTrusts/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcGFueVRydXN0cy9FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/CompanyTrusts/Index.cshtml]
@@ -72,12 +88,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGVhc2VzL0NyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Leases/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGVhc2VzL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Leases/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGVhc2VzL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Occupancies/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvT2NjdXBhbmNpZXMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Occupancies/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvT2NjdXBhbmNpZXMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Occupancies/Index.cshtml]
@@ -88,6 +112,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvT3duZXJzL0NyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Owners/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvT3duZXJzL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Owners/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvT3duZXJzL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -96,12 +124,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvT3duZXJzaGlwcy9DcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Ownerships/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvT3duZXJzaGlwcy9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Ownerships/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvT3duZXJzaGlwcy9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/ParkingBays/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGFya2luZ0JheXMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/ParkingBays/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGFya2luZ0JheXMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/ParkingBays/Index.cshtml]
@@ -136,12 +172,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU3RvcmVSb29tcy9DcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/StoreRooms/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU3RvcmVSb29tcy9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/StoreRooms/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU3RvcmVSb29tcy9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/TagRemoteRecords/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVGFnUmVtb3RlUmVjb3Jkcy9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/TagRemoteRecords/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVGFnUmVtb3RlUmVjb3Jkcy9FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/TagRemoteRecords/Index.cshtml]
@@ -152,12 +196,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVW5pdHMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Units/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVW5pdHMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Units/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVW5pdHMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Vehicles/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVmVoaWNsZXMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Vehicles/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVmVoaWNsZXMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Vehicles/Index.cshtml]

@@ -1,0 +1,45 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Buildings.EditModel
+@{
+    ViewData["Title"] = "Edit Building";
+}
+
+<h1>Edit Building</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="Building.Name"></label>
+        <input asp-for="Building.Name" />
+        <span asp-validation-for="Building.Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Building.Address"></label>
+        <input asp-for="Building.Address" />
+        <span asp-validation-for="Building.Address" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Building.Address"></label>
+        <input asp-for="Building.Address" />
+        <span asp-validation-for="Building.Address" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Building.NumberOfUnits"></label>
+        <input asp-for="Building.NumberOfUnits" />
+        <span asp-validation-for="Building.NumberOfUnits" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Building.NumberOfFloors"></label>
+        <input asp-for="Building.NumberOfFloors" />
+        <span asp-validation-for="Building.NumberOfFloors" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -5,5 +5,6 @@ public enum UsageContext
     All,
     ForTagRemoteRecord,
     ForLease,
-    ForOccupancy
+    ForOccupancy,
+    ForOwnership
 }

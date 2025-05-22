@@ -23,12 +23,16 @@ namespace BuildingRecordsApp.Pages.Leases
 
         public async Task<IActionResult> OnGetAsync()
         {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (Lease.UnitId == 0)
+            {
+                ModelState.AddModelError("Lease.UnitId", "Unit is required.");
+            }
             if (!ModelState.IsValid)
                 return Page();
 

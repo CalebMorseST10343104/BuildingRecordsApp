@@ -4,29 +4,37 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingRecordsApp.Pages.Persons
+namespace BuildingRecordsApp.Pages.StoreRooms
 {
     public class EditModel : PageModel
     {
         private readonly BuildingContext _context;
+        private readonly ISelectListService _selectListService;
 
-        public EditModel(BuildingContext context)
+        public EditModel(BuildingContext context, ISelectListService selectListService)
         {
             _context = context;
+            _selectListService = selectListService;
         }
 
         [BindProperty]
-        public required Person Person { get; set; }
+        public required StoreRoom StoreRoom { get; set; }
+
+        public SelectList? UnitSelectList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Person = await _context.Persons.FindAsync(id) ?? null!;
+            StoreRoom = await _context.StoreRooms
+                .Include(s => s.Unit)
+                .FirstOrDefaultAsync(m => m.StoreRoomId == id) ?? null!;
 
-            if (Person == null)
+            if (StoreRoom == null)
                 return NotFound();
+
+            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
 
             return Page();
         }
@@ -36,7 +44,7 @@ namespace BuildingRecordsApp.Pages.Persons
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Person).State = EntityState.Modified;
+            _context.Attach(StoreRoom).State = EntityState.Modified;
 
             try
             {
@@ -44,18 +52,18 @@ namespace BuildingRecordsApp.Pages.Persons
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(Person!.PersonId))
+                if (!StoreRoomExists(StoreRoom!.StoreRoomId))
                     return NotFound();
 
                 throw;
             }
-            
-            return RedirectToPage("/Persons/Index");
+
+            return RedirectToPage("/StoreRooms/Index");
         }
 
-        private bool PersonExists(int id)
+        private bool StoreRoomExists(int id)
         {
-            return _context.Persons.Any(e => e.PersonId == id);
+            return _context.StoreRooms.Any(e => e.StoreRoomId == id);
         }
     }
 }

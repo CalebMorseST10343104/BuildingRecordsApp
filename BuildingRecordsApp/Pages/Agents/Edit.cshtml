@@ -1,0 +1,47 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Agents.EditModel
+@{
+    ViewData["Title"] = "Edit Agent";
+}
+
+<h1>Edit Agent</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="Agent.FirstName"></label>
+        <input asp-for="Agent.FirstName" />
+        <span asp-validation-for="Agent.FirstName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Agent.LastName"></label>
+        <input asp-for="Agent.LastName" />
+        <span asp-validation-for="Agent.LastName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Agent.PhoneNumber"></label>
+        <input asp-for="Agent.PhoneNumber" />
+        <span asp-validation-for="Agent.PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Agent.Email"></label>
+        <input asp-for="Agent.Email" />
+        <span asp-validation-for="Agent.Email" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Agent.AgentCompanyId"></label>
+        <select asp-for="Agent.AgentCompanyId" asp-items="@Model.AgentCompanySelectList">
+            <option value="">Select Company</option>
+        </select>
+        <span asp-validation-for="Agent.AgentCompanyId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

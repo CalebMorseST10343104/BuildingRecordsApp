@@ -12,5 +12,5 @@ public interface ISelectListService
     Task<SelectList> GetAgentSelectListAsync();
     Task<SelectList> GetPersonSelectListAsync();
     Task<SelectList> GetOwnershipSelectListAsync();
-    // Add more methods later if needed (e.g., GetAgentCompanySelectListAsync())
+    Task<SelectList> GetCompanyTrustSelectListAsync();
 }

@@ -30,6 +30,10 @@ namespace BuildingRecordsApp.Pages.Vehicles
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (Vehicle.UnitId == 0)
+            {
+                ModelState.AddModelError("Vehicle.UnitId", "Unit is required.");
+            }
             if (!ModelState.IsValid)
                 return Page();
 

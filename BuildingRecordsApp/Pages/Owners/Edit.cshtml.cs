@@ -4,29 +4,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingRecordsApp.Pages.Persons
+namespace BuildingRecordsApp.Pages.Owners
 {
     public class EditModel : PageModel
     {
         private readonly BuildingContext _context;
+        private readonly ISelectListService _selectListService;
 
-        public EditModel(BuildingContext context)
+        public EditModel(BuildingContext context, ISelectListService selectListService)
         {
             _context = context;
+            _selectListService = selectListService;
         }
-
         [BindProperty]
-        public required Person Person { get; set; }
+        public required Owner Owner { get; set; }
+
+        public SelectList? PersonSelectList { get; set; }
+        public SelectList? OwnershipSelectList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Person = await _context.Persons.FindAsync(id) ?? null!;
+            Owner = await _context.Owners.FindAsync(id) ?? null!;
 
-            if (Person == null)
+            if (Owner == null)
                 return NotFound();
+
+            PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+            OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync();
 
             return Page();
         }
@@ -36,7 +43,7 @@ namespace BuildingRecordsApp.Pages.Persons
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Person).State = EntityState.Modified;
+            _context.Attach(Owner).State = EntityState.Modified;
 
             try
             {
@@ -44,18 +51,18 @@ namespace BuildingRecordsApp.Pages.Persons
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(Person!.PersonId))
+                if (!OwnerExists(Owner.OwnerId))
                     return NotFound();
 
                 throw;
             }
-            
-            return RedirectToPage("/Persons/Index");
+
+            return RedirectToPage("/Owners/Index");
         }
 
-        private bool PersonExists(int id)
+        private bool OwnerExists(int id)
         {
-            return _context.Persons.Any(e => e.PersonId == id);
+            return _context.Owners.Any(e => e.OwnerId == id);
         }
     }
 }

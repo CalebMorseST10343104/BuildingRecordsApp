@@ -23,6 +23,10 @@ namespace BuildingRecordsApp.Pages.StoreRooms
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (StoreRoom.UnitId == 0)
+            {
+                ModelState.AddModelError("StoreRoom.UnitId", "Unit is required.");
+            }
             if (!ModelState.IsValid)
                 return Page();
 

@@ -30,6 +30,10 @@ namespace BuildingRecordsApp.Pages.ParkingBays
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ParkingBay.UnitID == 0)
+            {
+                ModelState.AddModelError("ParkingBay.UnitID", "Unit is required.");
+            }
             if (!ModelState.IsValid)
                 return Page();
 

@@ -1,0 +1,34 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Occupancies.EditModel
+@{
+    ViewData["Title"] = "Edit Occupancy";
+}
+
+<h1>Edit Occupancy</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Occupancy.OccupationType" class="control-label"></label>
+        <input asp-for="Occupancy.OccupationType" class="form-control" />
+        <span asp-validation-for="Occupancy.OccupationType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Occupancy.UnitId" class="control-label"></label>
+        <select asp-for="Occupancy.UnitId" class="form-control" asp-items="@Model.UnitSelectList">
+            <option value="">Select Unit</option>
+        </select>
+        <span asp-validation-for="Occupancy.UnitId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Occupancy.OccupantId" class="control-label"></label>
+        <select asp-for="Occupancy.OccupantId" class="form-control" asp-items="@Model.PersonSelectList">
+            <option value="">Select Occupant</option>
+        </select>
+        <span asp-validation-for="Occupancy.OccupantId" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Edit" class="btn btn-primary" />
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

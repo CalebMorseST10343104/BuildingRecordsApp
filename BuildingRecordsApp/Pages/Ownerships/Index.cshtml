@@ -30,6 +30,9 @@ Unit Unit // Navigation property for Unit
             <th>
                 @Html.DisplayNameFor(model => model.Ownerships[0].OwnershipType)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ownerships[0].CompanyTrust)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -40,6 +43,16 @@ Unit Unit // Navigation property for Unit
                 <td>@item.Unit!.Building!.Name</td>
                 <td>@item.Unit!.UnitNumber</td>
                 <td>@item.OwnershipType</td>
+                <td>
+                    @if (item.CompanyTrust != null)
+                    {
+                        @item.CompanyTrust.Name
+                    }
+                    else
+                    {
+                        <span>No Company/Trust</span>
+                    }
+                </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.OwnershipId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.OwnershipId">Details</a> |

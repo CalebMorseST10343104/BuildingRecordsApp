@@ -1,25 +1,19 @@
-@page
-@model BuildingRecordsApp.Pages.Ownerships.CreateModel
+﻿@page
+@model BuildingRecordsApp.Pages.Ownerships.EditModel
 @{
-    ViewData["Title"] = "Create Ownership";
+    ViewData["Title"] = "Edit Ownership";
 }
-<h1>Create New Ownership</h1>
-
-@* 
-Ownership has following fields:
-int OwnershipId
-string OwnershipType // e.g., "Natural", "Juristic"
-string UnitId // Foreign key for Unit
-Unit Unit // Navigation property for Unit
- *@
+<h1>Edit Ownership</h1>
 
 <form method="post">
     <div>
         <label asp-for="Ownership.UnitId"></label>
-        <select asp-for="Ownership.UnitId" asp-items="@Model.UnitSelectList"></select>
+        <select asp-for="Ownership.UnitId" asp-items="@Model.UnitSelectList">
+            <option value="">Select Unit</option>
+        </select>
         <span asp-validation-for="Ownership.UnitId" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group"></div>
         <label asp-for="Ownership.OwnershipType" class="control-label"></label>
         <select asp-for="Ownership.OwnershipType" class="form-control">
             <option value="">-- Select Ownership Type --</option>
@@ -30,10 +24,12 @@ Unit Unit // Navigation property for Unit
     </div>
     <div>
         <label asp-for="Ownership.CompanyTrustId"></label>
-        <select asp-for="Ownership.CompanyTrustId" asp-items="@Model.CompanyTrustSelectList"></select>
+        <select asp-for="Ownership.CompanyTrustId" asp-items="@Model.CompanyTrustSelectList">
+            <option value="">Select Company/Trust</option>
+        </select>
         <span asp-validation-for="Ownership.CompanyTrustId" class="text-danger"></span>
     </div>
-     <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Edit</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>
 @section Scripts {

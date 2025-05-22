@@ -25,30 +25,18 @@ namespace BuildingRecordsApp.Services
         {
             IQueryable<Unit> query = _context.Units;
 
-            var usedIn = new List<int?>();
-            switch (usageContext)
+            var contextUnitSelectors = new Dictionary<UsageContext, Func<Task<List<int?>>>>
             {
-                case UsageContext.ForTagRemoteRecord:
-                    usedIn = await _context.TagRemoteRecords
-                    .Select(tr => tr.UnitId)
-                    .ToListAsync();
-                    query = query.Where(u => !usedIn.Contains(u.UnitId));
-                    break;
-                case UsageContext.ForLease:
-                    usedIn = await _context.Leases
-                    .Select(l => l.UnitId)
-                    .ToListAsync();
-                    query = query.Where(u => !usedIn.Contains(u.UnitId));
-                    break;
-                case UsageContext.ForOccupancy:
-                    usedIn = await _context.Occupancies
-                    .Select(o => o.UnitId)
-                    .ToListAsync();
-                    query = query.Where(u => !usedIn.Contains(u.UnitId));
-                    break;
-                case UsageContext.All:
-                default:
-                    break;
+                [UsageContext.ForTagRemoteRecord] = () => _context.TagRemoteRecords.Select(tr => tr.UnitId).ToListAsync(),
+                [UsageContext.ForLease] = () => _context.Leases.Select(l => l.UnitId).ToListAsync(),
+                [UsageContext.ForOccupancy] = () => _context.Occupancies.Select(o => o.UnitId).ToListAsync(),
+                [UsageContext.ForOwnership] = () => _context.Ownerships.Select(o => o.UnitId).ToListAsync()
+            };
+
+            if (contextUnitSelectors.TryGetValue(usageContext, out var selector))
+            {
+                var usedIn = await selector();
+                query = query.Where(u => !usedIn.Contains(u.UnitId));
             }
 
             var units = await query
@@ -60,12 +48,22 @@ namespace BuildingRecordsApp.Services
                 })
                 .ToListAsync();
 
+            units.Insert(0, new { UnitId = 0, Display = "-- Select Unit --" });
+
             return new SelectList(units, "UnitId", "Display");
         }
+
 
         public async Task<SelectList> GetBuildingSelectListAsync()
         {
             var buildings = await _context.Buildings.ToListAsync();
+
+            buildings.Insert(0, new Building
+            {
+                BuildingId = 0,
+                Name = "-- Select Building --"
+            });
+
             return new SelectList(buildings, "BuildingId", "Name");
         }
 
@@ -86,6 +84,13 @@ namespace BuildingRecordsApp.Services
         public async Task<SelectList> GetAgentCompanySelectListAsync()
         {
             var agentCompanies = await _context.AgentCompanies.ToListAsync();
+
+            agentCompanies.Insert(0, new AgentCompany
+            {
+                AgentCompanyId = 0,
+                CompanyName = "-- Select Agent Company --"
+            });
+
             return new SelectList(agentCompanies, "AgentCompanyId", "CompanyName");
         }
 
@@ -128,6 +133,12 @@ namespace BuildingRecordsApp.Services
                 .ToListAsync();
 
             return new SelectList(ownerships, "OwnershipId", "Display");
+        }
+
+        public async Task<SelectList> GetCompanyTrustSelectListAsync()
+        {
+            var companyTrusts = await _context.CompanyTrusts.ToListAsync();
+            return new SelectList(companyTrusts, "CompanyTrustId", "Name");
         }
     }
 }
