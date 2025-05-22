@@ -67,8 +67,8 @@ int UnitId // Foreign key to Unit
                     @Html.DisplayFor(modelItem => item.VehicleColor)
                 </td>
                 <td>
-                    <a asp-page="Edit" asp-route-id="@item.VehicleId">Edit</a> |
-                    <a asp-page="Delete" asp-route-id="@item.VehicleId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.VehicleId" class="btn btn-sm btn-primary me-1">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.VehicleId" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }

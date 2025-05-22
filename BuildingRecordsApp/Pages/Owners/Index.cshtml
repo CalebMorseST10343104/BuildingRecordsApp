@@ -44,9 +44,9 @@ int OwnershipId // Foreign key for Ownership
                 <td>@item.Person!.Name</td>
                 <td>@item.Person!.Surname</td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.OwnerId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.OwnerId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.OwnerId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.OwnerId" class="btn btn-sm btn-primary me-1">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.OwnerId" class="btn btn-sm btn-info text-white me-1">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.OwnerId" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }

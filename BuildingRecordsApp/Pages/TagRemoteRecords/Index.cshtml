@@ -57,9 +57,8 @@ int RemotesAgent
                 <td>@item.TagsAgent</td>
                 <td>@item.RemotesAgent</td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.TagRemoteRecordId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.TagRemoteRecordId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.TagRemoteRecordId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.TagRemoteRecordId" class="btn btn-sm btn-primary me-1">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.TagRemoteRecordId" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }

@@ -54,9 +54,9 @@ Unit Unit // Navigation property for Unit
                     }
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.OwnershipId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.OwnershipId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.OwnershipId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.OwnershipId" class="btn btn-sm btn-primary me-1">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.OwnershipId" class="btn btn-sm btn-info text-white me-1">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.OwnershipId" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }
