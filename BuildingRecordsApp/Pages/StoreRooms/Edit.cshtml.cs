@@ -30,13 +30,12 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             {
                 StoreRoom = await _context.StoreRooms
                     .Include(sr => sr.Unit)
-                    .FirstOrDefaultAsync(sr => sr.StoreRoomId == id)
+                    .FirstOrDefaultAsync(sr => sr.StoreRoomId == id),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
 
-            if (ViewModel == null)
+            if (ViewModel.StoreRoom == null)
                 return NotFound();
-
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
 
             return Page();
         }

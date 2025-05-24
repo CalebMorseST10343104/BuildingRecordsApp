@@ -30,13 +30,13 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             {
                 TagRemoteRecord = await _context.TagRemoteRecords
                     .Include(tr => tr.Unit)
-                    .FirstOrDefaultAsync(tr => tr.TagRemoteRecordId == id)
+                    .FirstOrDefaultAsync(tr => tr.TagRemoteRecordId == id),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForTagRemoteRecord)
             };
-
+            
             if (ViewModel == null)
                 return NotFound();
-
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForTagRemoteRecord);
+                
             return Page();
         }
 

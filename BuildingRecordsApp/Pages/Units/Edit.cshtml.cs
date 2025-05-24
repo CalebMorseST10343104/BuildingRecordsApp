@@ -29,14 +29,15 @@ namespace BuildingRecordsApp.Pages.Units
 
             ViewModel = new UnitFormViewModel
             {
-                Unit = _context.Units.Include(u => u.Building).FirstOrDefault(u => u.UnitId == id),
+                Unit = _context.Units
+                    .Include(u => u.Building)
+                    .FirstOrDefault(u => u.UnitId == id),
+                BuildingSelectList = await _selectListService.GetBuildingSelectListAsync()
             };
 
             if (ViewModel == null)
                 return NotFound();
 
-            // Populate the select list for the building
-            ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
             return Page();
         }
 

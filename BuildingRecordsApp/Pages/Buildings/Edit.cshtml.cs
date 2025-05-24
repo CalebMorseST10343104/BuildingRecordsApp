@@ -25,10 +25,10 @@ namespace BuildingRecordsApp.Pages.Buildings
 
             ViewModel = new BuildingFormViewModel
             {
-                Building = await _context.Buildings.FindAsync(id) ?? null!
+                Building = await _context.Buildings.FirstOrDefaultAsync(m => m.BuildingId == id)
             };
 
-            if (ViewModel == null)
+            if (ViewModel.Building == null)
                 return NotFound();
 
             return Page();

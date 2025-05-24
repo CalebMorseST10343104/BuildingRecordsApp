@@ -25,10 +25,10 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
 
             ViewModel = new AgentCompanyFormViewModel
             {
-                AgentCompany = await _context.AgentCompanies.FindAsync(id) ?? null!
+                AgentCompany = await _context.AgentCompanies.FirstOrDefaultAsync(ac => ac.AgentCompanyId == id)
             };
 
-            if (ViewModel == null)
+            if (ViewModel.AgentCompany == null)
                 return NotFound();
 
             return Page();

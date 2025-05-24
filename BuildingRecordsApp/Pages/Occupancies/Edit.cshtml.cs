@@ -26,16 +26,13 @@ namespace BuildingRecordsApp.Pages.Occupancies
                 return NotFound();
             ViewModel = new OccupancyFormViewModel
             {
-                Occupancy = await _context.Occupancies.FindAsync(id) ?? null!,
-                UnitSelectList = new SelectList(Enumerable.Empty<SelectListItem>()),
-                PersonSelectList = new SelectList(Enumerable.Empty<SelectListItem>())
+                Occupancy = await _context.Occupancies.FirstOrDefaultAsync(m => m.OccupancyId == id),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy),
+                PersonSelectList = await _selectListService.GetPersonSelectListAsync()
             };
 
             if (ViewModel.Occupancy == null)
                 return NotFound();
-
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy);
-            ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
 
             return Page();
         }

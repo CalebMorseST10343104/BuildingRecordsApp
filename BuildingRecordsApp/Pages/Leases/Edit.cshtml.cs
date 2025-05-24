@@ -31,13 +31,11 @@ namespace BuildingRecordsApp.Pages.Leases
                 Lease = await _context.Leases
                     .Include(l => l.Unit)
                     .FirstOrDefaultAsync(m => m.LeaseId == id) ?? null!,
-                UnitSelectList = new SelectList(Enumerable.Empty<SelectListItem>())
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease)
             };
 
             if (ViewModel.Lease == null)
                 return NotFound();
-
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
 
             return Page();
         }

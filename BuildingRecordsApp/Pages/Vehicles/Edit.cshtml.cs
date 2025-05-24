@@ -30,13 +30,13 @@ namespace BuildingRecordsApp.Pages.Vehicles
             {
                 Vehicle = await _context.Vehicles
                     .Include(v => v.Unit)
-                    .FirstOrDefaultAsync(v => v.VehicleId == id)
+                    .FirstOrDefaultAsync(v => v.VehicleId == id),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
 
             if (ViewModel == null)
                 return NotFound();
-
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                
             return Page();
         }
 

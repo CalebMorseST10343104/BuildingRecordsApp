@@ -30,13 +30,13 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             {
                 ParkingBay = await _context.ParkingBays
                     .Include(pb => pb.Unit)
-                    .FirstOrDefaultAsync(pb => pb.ParkingBayID == id)
+                    .FirstOrDefaultAsync(pb => pb.ParkingBayID == id),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
 
             if (ViewModel == null)
                 return NotFound();
-
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                
             return Page();
         }
 

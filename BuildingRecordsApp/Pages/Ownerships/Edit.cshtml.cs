@@ -31,14 +31,13 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 Ownership = await _context.Ownerships
                     .Include(o => o.Unit)
                     .Include(o => o.CompanyTrust)
-                    .FirstOrDefaultAsync(m => m.OwnershipId == id) ?? null!
+                    .FirstOrDefaultAsync(m => m.OwnershipId == id) ?? null!,
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership),
+                CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync()
             };
-
+            
             if (ViewModel == null)
                 return NotFound();
-
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
-            ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
 
             return Page();
         }

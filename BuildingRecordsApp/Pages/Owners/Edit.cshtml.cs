@@ -30,14 +30,13 @@ namespace BuildingRecordsApp.Pages.Owners
                 Owner = await _context.Owners
                     .Include(o => o.Person)
                     .Include(o => o.Ownership)
-                    .FirstOrDefaultAsync(m => m.OwnerId == id) ?? null!
+                    .FirstOrDefaultAsync(m => m.OwnerId == id) ?? null!,
+                PersonSelectList = await _selectListService.GetPersonSelectListAsync(),
+                OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync()
             };
 
-            if (ViewModel == null)
+            if (ViewModel.Owner == null)
                 return NotFound();
-
-            ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
-            ViewModel.OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync();
 
             return Page();
         }

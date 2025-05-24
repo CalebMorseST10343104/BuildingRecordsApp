@@ -27,7 +27,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
                 CompanyTrust = await _context.CompanyTrusts.FindAsync(id) ?? null!
             };
 
-            if (ViewModel == null)
+            if (ViewModel.CompanyTrust == null)
                 return NotFound();
 
             return Page();

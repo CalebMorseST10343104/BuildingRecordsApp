@@ -30,22 +30,21 @@ namespace BuildingRecordsApp.Pages.Agents
             {
                 Agent = await _context.Agents
                     .Include(a => a.AgentCompany)
-                    .FirstOrDefaultAsync(m => m.AgentId == id) ?? null!,
-                AgentCompanySelectList = new SelectList(Enumerable.Empty<SelectListItem>())
+                    .FirstOrDefaultAsync(m => m.AgentId == id),
+                AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync()
             };
 
-            if (ViewModel == null)
+            if (ViewModel.Agent == null)
                 return NotFound();
 
-            ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.Agent == null)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError(string.Empty, "Agent cannot be null.");
+                ModelState.AddModelError("ViewModel", "Agent details are required.");
                 return Page();
             }
             if (ViewModel.Agent == null)

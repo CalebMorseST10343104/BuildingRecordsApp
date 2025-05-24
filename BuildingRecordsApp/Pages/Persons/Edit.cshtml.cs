@@ -29,7 +29,7 @@ namespace BuildingRecordsApp.Pages.Persons
                 Person = await _context.Persons.FirstOrDefaultAsync(p => p.PersonId == id)
             };
 
-            if (ViewModel == null)
+            if (ViewModel.Person == null)
                 return NotFound();
 
             return Page();
