@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.Agents
@@ -18,35 +19,37 @@ namespace BuildingRecordsApp.Pages.Agents
         }
 
         [BindProperty]
-        public required Agent Agent { get; set; }
-
-        public SelectList? AgentCompanySelectList { get; set; }
+        public required AgentFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Agent = await _context.Agents
-                .Include(a => a.AgentCompany)
-                .FirstOrDefaultAsync(m => m.AgentId == id) ?? null!;
+            ViewModel = new AgentFormViewModel
+            {
+                Agent = await _context.Agents
+                    .Include(a => a.AgentCompany)
+                    .FirstOrDefaultAsync(m => m.AgentId == id) ?? null!,
+                AgentCompanySelectList = new SelectList(Enumerable.Empty<SelectListItem>())
+            };
 
-            if (Agent == null)
+            if (ViewModel == null)
                 return NotFound();
 
-            AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
+            ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Agent.AgentCompanyId == 0)
+            if (ViewModel.Agent.AgentCompanyId == null)
                 ModelState.AddModelError("Agent.AgentCompanyId", "Please select an agent company.");
             
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Agent).State = EntityState.Modified;
+            _context.Attach(ViewModel.Agent).State = EntityState.Modified;
 
             try
             {
@@ -54,7 +57,7 @@ namespace BuildingRecordsApp.Pages.Agents
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AgentExists(Agent!.AgentId))
+                if (!AgentExists(ViewModel.Agent.AgentId))
                     return NotFound();
 
                 throw;

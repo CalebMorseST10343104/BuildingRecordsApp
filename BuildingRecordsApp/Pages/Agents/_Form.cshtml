@@ -1,0 +1,44 @@
+﻿@model BuildingRecordsApp.ViewModels.AgentFormViewModel
+
+@* 
+new style:
+form: <form method="post" class="needs-validation" novalidate>
+input blocks: <div class="mb-3">
+label: <label asp-for="[model.field]" class="form-label"></label>
+input: <input asp-for="[model.field]" class="form-control" />
+validation: <span asp-validation-for="[model.field]" class="text-danger"></span>
+when using a select element, use:
+select: <select asp-for="[model.field]" asp-items="[model.selectList]" class="form-select">
+ *@
+
+ <div class="mb-3">
+    <label asp-for="Agent.FirstName" class="form-label"></label>
+    <input asp-for="Agent.FirstName" class="form-control" />
+    <span asp-validation-for="Agent.FirstName" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Agent.LastName" class="form-label"></label>
+    <input asp-for="Agent.LastName" class="form-control" />
+    <span asp-validation-for="Agent.LastName" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Agent.PhoneNumber" class="form-label"></label>
+    <input asp-for="Agent.PhoneNumber" class="form-control" />
+    <span asp-validation-for="Agent.PhoneNumber" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Agent.Email" class="form-label"></label>
+    <input asp-for="Agent.Email" class="form-control" />
+    <span asp-validation-for="Agent.Email" class="text-danger"></span>
+</div>
+
+<div class="mb-4">
+    <label asp-for="Agent.AgentCompanyId" class="form-label"></label>
+    <select asp-for="Agent.AgentCompanyId" asp-items="Model.AgentCompanySelectList" class="form-select">
+        <option value="">-- Select Company --</option>
+    </select>
+    <span asp-validation-for="Agent.AgentCompanyId" class="text-danger"></span>
+</div>

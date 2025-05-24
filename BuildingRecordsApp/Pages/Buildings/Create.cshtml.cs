@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.Buildings
 {

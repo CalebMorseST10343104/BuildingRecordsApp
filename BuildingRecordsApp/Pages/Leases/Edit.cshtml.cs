@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.Leases
 {
@@ -18,29 +19,32 @@ namespace BuildingRecordsApp.Pages.Leases
         }
 
         [BindProperty]
-        public required Lease Lease { get; set; }
-
-        public SelectList? UnitSelectList { get; set; }
+        public required LeaseFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Lease = await _context.Leases
-                .Include(l => l.Unit)
-                .FirstOrDefaultAsync(m => m.LeaseId == id) ?? null!;
+            ViewModel = new LeaseFormViewModel
+            {
+                Lease = await _context.Leases
+                    .Include(l => l.Unit)
+                    .FirstOrDefaultAsync(m => m.LeaseId == id) ?? null!,
+                UnitSelectList = new SelectList(Enumerable.Empty<SelectListItem>())
+            };
 
-            if (Lease == null)
+            if (ViewModel.Lease == null)
                 return NotFound();
 
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Lease.UnitId == 0)
+            if (ViewModel.Lease.UnitId == null)
             {
                 ModelState.AddModelError("Lease.UnitId", "Unit is required.");
             }
@@ -48,7 +52,7 @@ namespace BuildingRecordsApp.Pages.Leases
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Lease).State = EntityState.Modified;
+            _context.Attach(ViewModel.Lease).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +60,7 @@ namespace BuildingRecordsApp.Pages.Leases
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LeaseExists(Lease!.LeaseId))
+                if (!LeaseExists(ViewModel!.Lease.LeaseId))
                     return NotFound();
 
                 throw;

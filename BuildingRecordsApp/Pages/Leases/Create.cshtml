@@ -20,46 +20,46 @@ int UnitId // Foreign key to Unit
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="Lease.UnitId"></label>
-        <select asp-for="Lease.UnitId" class="form-control" asp-items="@Model.UnitSelectList">
+        <label asp-for="ViewModel.UnitId"></label>
+        <select asp-for="ViewModel.UnitId" class="form-control" asp-items="@Model.UnitSelectList">
             <option value="">Select Unit</option>
         </select>
-        <span asp-validation-for="Lease.UnitId" class="text-danger"></span>
+        <span asp-validation-for="ViewModel.UnitId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Lease.LeaseHolderName"></label>
-        <input asp-for="Lease.LeaseHolderName" class="form-control" />
-        <span asp-validation-for="Lease.LeaseHolderName" class="text-danger"></span>
+        <label asp-for="ViewModel.LeaseHolderName"></label>
+        <input asp-for="ViewModel.LeaseHolderName" class="form-control" />
+        <span asp-validation-for="ViewModel.LeaseHolderName" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Lease.StartDate"></label>
-        <input asp-for="Lease.StartDate" class="form-control" />
-        <span asp-validation-for="Lease.StartDate" class="text-danger"></span>
+        <label asp-for="ViewModel.StartDate"></label>
+        <input asp-for="ViewModel.StartDate" class="form-control" />
+        <span asp-validation-for="ViewModel.StartDate" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Lease.EndDate"></label>
-        <input asp-for="Lease.EndDate" class="form-control" />
-        <span asp-validation-for="Lease.EndDate" class="text-danger"></span>
+        <label asp-for="ViewModel.EndDate"></label>
+        <input asp-for="ViewModel.EndDate" class="form-control" />
+        <span asp-validation-for="ViewModel.EndDate" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Lease.PersonsOccupying"></label>
-        <input asp-for="Lease.PersonsOccupying" class="form-control" />
-        <span asp-validation-for="Lease.PersonsOccupying" class="text-danger"></span>
+        <label asp-for="ViewModel.PersonsOccupying"></label>
+        <input asp-for="ViewModel.PersonsOccupying" class="form-control" />
+        <span asp-validation-for="ViewModel.PersonsOccupying" class="text-danger"></span>
     </div>
     <div class="form-group form-check">
-        <input asp-for="Lease.SignedRules" class="form-check-input" type="checkbox" />
-        <label asp-for="Lease.SignedRules" class="form-check-label"></label>
-        <span asp-validation-for="Lease.SignedRules" class="text-danger"></span>
+        <input asp-for="ViewModel.SignedRules" class="form-check-input" type="checkbox" />
+        <label asp-for="ViewModel.SignedRules" class="form-check-label"></label>
+        <span asp-validation-for="ViewModel.SignedRules" class="text-danger"></span>
     </div>
     <div class="form-group form-check">
-        <input asp-for="Lease.AllowedPets" class="form-check-input" type="checkbox" />
-        <label asp-for="Lease.AllowedPets" class="form-check-label"></label>
-        <span asp-validation-for="Lease.AllowedPets" class="text-danger"></span>
+        <input asp-for="ViewModel.AllowedPets" class="form-check-input" type="checkbox" />
+        <label asp-for="ViewModel.AllowedPets" class="form-check-label"></label>
+        <span asp-validation-for="ViewModel.AllowedPets" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Lease.EmergencyContactNumber"></label>
-        <input asp-for="Lease.EmergencyContactNumber" class="form-control" />
-        <span asp-validation-for="Lease.EmergencyContactNumber" class="text-danger"></span>
+        <label asp-for="ViewModel.EmergencyContactNumber"></label>
+        <input asp-for="ViewModel.EmergencyContactNumber" class="form-control" />
+        <span asp-validation-for="ViewModel.EmergencyContactNumber" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>

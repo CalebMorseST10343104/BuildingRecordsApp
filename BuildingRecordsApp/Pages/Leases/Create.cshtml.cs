@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.Leases
 {
@@ -17,26 +18,28 @@ namespace BuildingRecordsApp.Pages.Leases
         }
 
         [BindProperty]
-        public Lease Lease { get; set; } = new();
-
-        public SelectList? UnitSelectList { get; set; }
+        public LeaseFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
+            ViewModel = new LeaseFormViewModel
+            {
+                Lease = new Lease(),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease)
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Lease.UnitId == 0)
+            if (ViewModel.Lease.Unit == null)
             {
                 ModelState.AddModelError("Lease.UnitId", "Unit is required.");
             }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Leases.Add(Lease);
+            _context.Leases.Add(ViewModel.Lease);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Leases/Index");

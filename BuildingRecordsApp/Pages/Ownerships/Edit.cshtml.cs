@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.Ownerships
 {

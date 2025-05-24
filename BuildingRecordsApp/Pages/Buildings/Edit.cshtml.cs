@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.Buildings
 {

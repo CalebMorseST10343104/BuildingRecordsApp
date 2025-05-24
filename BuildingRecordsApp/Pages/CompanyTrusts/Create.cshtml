@@ -15,21 +15,8 @@ ICollection<Ownership> Ownerships
  *@
 
 <form method="post">
-    <div class="form-group">
-        <label asp-for="CompanyTrust.Name" class="control-label"></label>
-        <input asp-for="CompanyTrust.Name" class="form-control" />
-        <span asp-validation-for="CompanyTrust.Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="CompanyTrust.Address" class="control-label"></label>
-        <input asp-for="CompanyTrust.Address" class="form-control" />
-        <span asp-validation-for="CompanyTrust.Address" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="CompanyTrust.RegistrationNumber" class="control-label"></label>
-        <input asp-for="CompanyTrust.RegistrationNumber" class="form-control" />
-        <span asp-validation-for="CompanyTrust.RegistrationNumber" class="text-danger"></span>
-    </div>
+
+    @await Html.PartialAsync("_Form", Model.CompanyTrust)
 
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>

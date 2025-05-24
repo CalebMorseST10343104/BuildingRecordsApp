@@ -487,7 +487,7 @@ namespace BuildingRecordsApp.Migrations
                     b.HasOne("BuildingRecordsApp.Models.CompanyTrust", "CompanyTrust")
                         .WithMany("Ownerships")
                         .HasForeignKey("CompanyTrustId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("BuildingRecordsApp.Models.Unit", "Unit")
                         .WithOne("Ownership")

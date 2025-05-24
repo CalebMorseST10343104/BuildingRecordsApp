@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.Occupancies
 {
@@ -17,30 +18,31 @@ namespace BuildingRecordsApp.Pages.Occupancies
         }
 
         [BindProperty]
-        public required Occupancy Occupancy { get; set; }
-
-        public SelectList? UnitSelectList { get; set; }
-        public SelectList? PersonSelectList { get; set; }
+        public required OccupancyFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
+            ViewModel = new OccupancyFormViewModel
+            {
+                Occupancy = await _context.Occupancies.FindAsync(id) ?? null!,
+                UnitSelectList = new SelectList(Enumerable.Empty<SelectListItem>()),
+                PersonSelectList = new SelectList(Enumerable.Empty<SelectListItem>())
+            };
 
-            Occupancy = await _context.Occupancies.FindAsync(id) ?? null!;
-
-            if (Occupancy == null)
+            if (ViewModel.Occupancy == null)
                 return NotFound();
 
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy);
-            PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy);
+            ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Occupancy.UnitId == 0)
+            if (ViewModel.Occupancy.UnitId == 0)
             {
                 ModelState.AddModelError("Occupancy.UnitId", "Unit is required.");
             }
@@ -48,7 +50,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Occupancy).State = EntityState.Modified;
+            _context.Attach(ViewModel.Occupancy).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +58,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OccupancyExists(Occupancy.OccupancyId))
+                if (!OccupancyExists(ViewModel.Occupancy.OccupancyId))
                     return NotFound();
 
                 throw;

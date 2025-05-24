@@ -1,0 +1,25 @@
+﻿@model BuildingRecordsApp.Models.Building
+
+<div>
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Address"></label>
+    <input asp-for="Address" />
+    <span asp-validation-for="Address" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="NumberOfUnits"></label>
+    <input asp-for="NumberOfUnits" />
+    <span asp-validation-for="NumberOfUnits" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="NumberOfFloors"></label>
+    <input asp-for="NumberOfFloors" />
+    <span asp-validation-for="NumberOfFloors" class="text-danger"></span>
+</div>

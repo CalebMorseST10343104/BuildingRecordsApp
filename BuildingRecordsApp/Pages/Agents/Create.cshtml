@@ -1,60 +1,23 @@
 @page
 @model BuildingRecordsApp.Pages.Agents.CreateModel
+
+
 @{
     ViewData["Title"] = "Create Agent";
 }
 
-<h1>Create New Agent</h1>
+<h1 class="mb-4">Create New Agent</h1>
 
-@* 
-Agent has following fields:
-int AgentId
-string FirstName
-string LastName
-string PhoneNumber
-string Email
-int AgentCompanyId // Foreign key to AgentCompany
-AgentCompany AgentCompany // Navigation property
-ICollection<Unit> Units // Navigation property
- *@
+<form method="post" class="needs-validation" novalidate>
 
-<form method="post">
-    <div>
-        <label asp-for="Agent.FirstName"></label>
-        <input asp-for="Agent.FirstName" />
-        <span asp-validation-for="Agent.FirstName" class="text-danger"></span>
+    @await Html.PartialAsync("_Form", Model.ViewModel)
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </div>
-
-    <div>
-        <label asp-for="Agent.LastName"></label>
-        <input asp-for="Agent.LastName" />
-        <span asp-validation-for="Agent.LastName" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Agent.PhoneNumber"></label>
-        <input asp-for="Agent.PhoneNumber" />
-        <span asp-validation-for="Agent.PhoneNumber" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Agent.Email"></label>
-        <input asp-for="Agent.Email" />
-        <span asp-validation-for="Agent.Email" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Agent.AgentCompanyId"></label>
-        <select asp-for="Agent.AgentCompanyId" asp-items="@Model.AgentCompanySelectList">
-            <option value="">Select Company</option>
-        </select>
-        <span asp-validation-for="Agent.AgentCompanyId" class="text-danger"></span>
-    </div>
-
-     <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-

@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BuildingRecordsApp.Models;
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.AgentCompanies
 {
@@ -15,16 +16,19 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
         }
 
         [BindProperty]
-        public required AgentCompany AgentCompany { get; set; }
+        public required AgentCompanyFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            AgentCompany = await _context.AgentCompanies.FindAsync(id) ?? null!;
+            ViewModel = new AgentCompanyFormViewModel
+            {
+                AgentCompany = await _context.AgentCompanies.FindAsync(id) ?? null!
+            };
 
-            if (AgentCompany == null)
+            if (ViewModel == null)
                 return NotFound();
 
             return Page();
@@ -32,10 +36,15 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel.AgentCompany == null)
+            {
+                ModelState.AddModelError(string.Empty, "Agent Company cannot be null.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(AgentCompany).State = EntityState.Modified;
+            _context.Attach(ViewModel.AgentCompany).State = EntityState.Modified;
 
             try
             {
@@ -43,7 +52,7 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AgentCompanyExists(AgentCompany!.AgentCompanyId))
+                if (!AgentCompanyExists(ViewModel.AgentCompany.AgentCompanyId))
                     return NotFound();
 
                 throw;

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.AgentCompanies
 {
@@ -15,7 +16,7 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
         }
 
         [BindProperty]
-        public AgentCompany AgentCompany { get; set; } = new();
+        public AgentCompanyFormViewModel ViewModel { get; set; } = new();
 
         public IActionResult OnGet()
         {
@@ -24,10 +25,16 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel.AgentCompany == null)
+            {
+                ModelState.AddModelError(string.Empty, "Agent Company cannot be null.");
+                return Page();
+            }
+                
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.AgentCompanies.Add(AgentCompany);
+            _context.AgentCompanies.Add(ViewModel.AgentCompany);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/AgentCompanies/Index");

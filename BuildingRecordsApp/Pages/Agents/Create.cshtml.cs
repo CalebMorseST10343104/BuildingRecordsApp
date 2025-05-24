@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 
 namespace BuildingRecordsApp.Pages.Agents
 {
@@ -18,25 +19,28 @@ namespace BuildingRecordsApp.Pages.Agents
         }
 
         [BindProperty]
-        public Agent Agent { get; set; } = new();
+        public AgentFormViewModel ViewModel { get; set; } = new AgentFormViewModel();
 
-        public SelectList AgentCompanySelectList { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
-            AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
+            ViewModel = new AgentFormViewModel
+            {
+                Agent = new Agent(),
+                AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync()
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Agent.AgentCompanyId == 0)
+            if (ViewModel.Agent.AgentCompanyId == null)
                 ModelState.AddModelError("Agent.AgentCompanyId", "Please select an agent company.");
                 
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Agents.Add(Agent);
+            _context.Agents.Add(ViewModel.Agent);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Agents/Index");

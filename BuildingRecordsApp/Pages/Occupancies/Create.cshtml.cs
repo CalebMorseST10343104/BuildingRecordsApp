@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models;
+using BuildingRecordsApp.ViewModels;
 using BuildingRecordsApp.Services;
 
 namespace BuildingRecordsApp.Pages.Occupancies
@@ -18,22 +19,23 @@ namespace BuildingRecordsApp.Pages.Occupancies
         }
 
         [BindProperty]
-        public Occupancy Occupancy { get; set; } = new();
-
-        public SelectList? UnitSelectList { get; set; }
-        public SelectList? PersonSelectList { get; set; }
+        public OccupancyFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy);
-            PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+            ViewModel = new OccupancyFormViewModel
+            {
+                Occupancy = new Occupancy(),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy),
+                PersonSelectList = await _selectListService.GetPersonSelectListAsync()
+            };
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Occupancy.UnitId == 0)
+            if (ViewModel.Occupancy.UnitId == null)
             {
                 ModelState.AddModelError("Occupancy.UnitId", "Unit is required.");
             }
@@ -41,7 +43,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Occupancies.Add(Occupancy);
+            _context.Occupancies.Add(ViewModel.Occupancy);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Occupancies/Index");
