@@ -1,0 +1,55 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Units.DeleteModel
+@{
+    ViewData["Title"] = "Delete Unit";
+}
+
+<h1>Delete Unit</h1>
+<p>Are you sure you want to delete this unit?</p>
+<div>
+    <h4>Unit</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Unit.UnitNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Unit.UnitNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Unit.Building!.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Unit.Building!.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Unit.Bedrooms)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Unit.Bedrooms)
+        </dd>
+        <dt class="col-sm-2">
+            Primary Contact - @Html.DisplayNameFor(model => model.Unit.PrimaryContactPerson!.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Unit.PrimaryContactPerson!.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Primary Contact - @Html.DisplayNameFor(model => model.Unit.PrimaryContactPerson!.Surname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Unit.PrimaryContactPerson!.Surname)
+        </dd>
+        <dt class="col-sm-2">
+            Primary Contact - @Html.DisplayNameFor(model => model.Unit.PrimaryContactPerson!.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Unit.PrimaryContactPerson!.PhoneNumber)
+        </dd>
+    </dl>
+    <form method="post">
+        <input type="hidden" asp-for="Unit.UnitId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

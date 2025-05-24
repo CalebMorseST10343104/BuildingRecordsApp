@@ -1,0 +1,46 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Owners.DeleteModel
+@{
+    ViewData["Title"] = "Delete Owner";
+}
+
+<h1>Delete Owner</h1>
+<div>
+    <h3>Are you sure you want to delete this owner?</h3>
+    <div>
+        <h4>Owner</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Owner.Person!.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Owner.Person!.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Owner.Person!.Surname)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Owner.Person!.Surname)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Owner.Ownership!.Unit!.Building!.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Owner.Ownership!.Unit!.Building!.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Owner.Ownership!.Unit!.UnitNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Owner.Ownership!.Unit!.UnitNumber)
+            </dd>
+        </dl>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Owner.OwnerId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

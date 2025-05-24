@@ -1,0 +1,43 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Occupancies.DeleteModel
+@{
+    ViewData["Title"] = "Delete Occupancy";
+}
+<h1>Delete Occupancy</h1>
+<p>Are you sure you want to delete this occupancy?</p>
+
+<div>
+    <h4>Occupancy</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Occupancy.Occupant!.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Occupancy.Occupant!.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Occupancy.Occupant!.Surname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Occupancy.Occupant!.Surname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Occupancy.Unit!.Building!.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Occupancy.Unit!.Building!.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Occupancy.Unit!.UnitNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Occupancy.Unit!.UnitNumber)
+        </dd>
+    </dl>
+    <form method="post">
+        <input type="hidden" asp-for="Occupancy.OccupancyId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

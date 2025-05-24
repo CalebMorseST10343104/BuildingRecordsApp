@@ -1,0 +1,73 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Agents.DeleteModel
+@{
+    ViewData["Title"] = "Delete Agent";
+}
+<h1>Delete Agent</h1>
+<p>Are you sure you want to delete this agent?</p>
+
+<div>
+    <div>
+        <h4>Agent</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Agent.FirstName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Agent.FirstName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Agent.LastName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Agent.LastName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Agent.PhoneNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Agent.PhoneNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Agent.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Agent.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Agent.AgentCompany!.CompanyName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Agent.AgentCompany!.CompanyName)
+            </dd>
+        </dl>
+        <br />
+        <h4>Associated Units</h4>
+        <hr />
+        <div style="width: 50%; overflow-x: auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Building Name</th>
+                        <th>Unit Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var unit in Model.Agent.Units)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => unit.Building!.Name)</td>
+                            <td>@Html.DisplayFor(m => unit.UnitNumber)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form method="post">
+        <input type="hidden" asp-for="Agent.AgentId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

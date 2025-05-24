@@ -1,0 +1,48 @@
+﻿@page
+@model BuildingRecordsApp.Pages.ParkingBays.DeleteModel
+@{
+    ViewData["Title"] = "Delete Parking Bay";
+}
+<h1>Delete Parking Bay</h1>
+<p>Are you sure you want to delete this parking bay?</p>
+<div>
+    <h4>Parking Bay</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParkingBay.ParkingBayNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParkingBay.ParkingBayNumber)
+        </dd>
+        @if (Model.ParkingBay.Unit != null)
+        {
+            <dt class="col-sm-2">
+                Unit Building
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ParkingBay.Unit!.Building!.Name)
+            </dd>
+            <dt class="col-sm-2">
+                Unit Number
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ParkingBay.Unit!.UnitNumber)
+            </dd>
+        }
+        else
+        {
+            <dt class="col-sm-2">
+                Unit Number
+            </dt>
+            <dd class="col-sm-10">
+                No unit assigned
+            </dd>
+        }
+    </dl>
+    <form method="post">
+        <input type="hidden" asp-for="ParkingBay.ParkingBayID" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

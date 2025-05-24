@@ -15,7 +15,7 @@ namespace BuildingRecordsApp.Models
         [Display(Name = "Vehicle Make")]
         public string VehicleMake { get; set; } = string.Empty;
 
-        [Display(Name = "Vehicle Color")]
+        [Display(Name = "Vehicle Colour")]
         public string VehicleColor { get; set; } = string.Empty;
 
         public Unit? Unit { get; set; } // Navigation property to Unit

@@ -125,7 +125,7 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
             .HasOne(o => o.CompanyTrust)
             .WithMany(ct => ct.Ownerships)
             .HasForeignKey(o => o.CompanyTrustId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
 
         #endregion
 
