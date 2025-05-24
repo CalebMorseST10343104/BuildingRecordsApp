@@ -19,33 +19,44 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         }
 
         [BindProperty]
-        public required StoreRoom StoreRoom { get; set; }
-
-        public SelectList? UnitSelectList { get; set; }
+        public required StoreRoomFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            StoreRoom = await _context.StoreRooms
-                .Include(s => s.Unit)
-                .FirstOrDefaultAsync(m => m.StoreRoomId == id) ?? null!;
+            ViewModel = new StoreRoomFormViewModel
+            {
+                StoreRoom = await _context.StoreRooms
+                    .Include(sr => sr.Unit)
+                    .FirstOrDefaultAsync(sr => sr.StoreRoomId == id)
+            };
 
-            if (StoreRoom == null)
+            if (ViewModel == null)
                 return NotFound();
 
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Store Room details are required.");
+                return Page();
+            }
+            if (ViewModel.StoreRoom == null)
+            {
+                ModelState.AddModelError("ViewModel.StoreRoom", "Store Room details are required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(StoreRoom).State = EntityState.Modified;
+            _context.Attach(ViewModel.StoreRoom).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +64,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StoreRoomExists(StoreRoom!.StoreRoomId))
+                if (!StoreRoomExists(ViewModel.StoreRoom.StoreRoomId))
                     return NotFound();
 
                 throw;

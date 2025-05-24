@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models;
 using BuildingRecordsApp.ViewModels;
+using System.Threading.Tasks;
 
 namespace BuildingRecordsApp.Pages.Units
 {
@@ -19,45 +20,55 @@ namespace BuildingRecordsApp.Pages.Units
         }
 
         [BindProperty]
-        public Unit Unit { get; set; } = new();
+        public UnitFormViewModel ViewModel { get; set; } = new();
 
-        public SelectList? BuildingSelectList { get; set; }
-
-        public IActionResult OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Unit = _context.Units.Find(id) ?? null!;
+            ViewModel = new UnitFormViewModel
+            {
+                Unit = _context.Units.Include(u => u.Building).FirstOrDefault(u => u.UnitId == id),
+            };
 
-            if (Unit == null)
+            if (ViewModel == null)
                 return NotFound();
 
             // Populate the select list for the building
-            BuildingSelectList = _selectListService.GetBuildingSelectListAsync().Result;
+            ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Unit.BuildingId == 0)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError("Unit.BuildingId", "Building is required.");
-                BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+                ModelState.AddModelError("ViewModel", "Unit details are required.");
+                return Page();
+            }
+            if (ViewModel.Unit == null)
+            {
+                ModelState.AddModelError("ViewModel.Unit", "Unit details are required.");
+                return Page();
+            }
+            if (ViewModel.Unit.BuildingId == null)
+            {
+                ModelState.AddModelError("ViewModel.Unit.BuildingId", "Building is required.");
                 return Page();
             }
 
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Unit).State = EntityState.Modified;
+            _context.Attach(ViewModel.Unit).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UnitExists(Unit.UnitId))
+                if (!UnitExists(ViewModel.Unit.UnitId))
                     return NotFound();
 
                 throw;

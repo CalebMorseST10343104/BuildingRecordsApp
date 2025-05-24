@@ -17,7 +17,7 @@ ICollection<Ownership> Ownerships
 
 <form method="post">
     
-    @await Html.PartialAsync("_Form", Model.CompanyTrust)
+    @await Html.PartialAsync("_Form", Model.ViewModel)
 
     <button type="submit" class="btn btn-primary">Edit</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>

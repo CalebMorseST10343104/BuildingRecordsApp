@@ -34,8 +34,16 @@ namespace BuildingRecordsApp.Pages.Agents
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel.Agent == null)
+            {
+                ModelState.AddModelError("ViewModel.Agent", "Agent details are required.");
+                return Page();
+            }
             if (ViewModel.Agent.AgentCompanyId == null)
-                ModelState.AddModelError("Agent.AgentCompanyId", "Please select an agent company.");
+            {
+                ModelState.AddModelError("ViewModel.Agent.AgentCompanyId", "Agent Company is required.");
+                return Page();
+            }
                 
             if (!ModelState.IsValid)
                 return Page();

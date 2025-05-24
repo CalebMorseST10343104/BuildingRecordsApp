@@ -8,16 +8,16 @@
 
 <form method="post">
     <div>
-        <label asp-for="StoreRoom.StoreRoomNumber"></label>
-        <input asp-for="StoreRoom.StoreRoomNumber" />
-        <span asp-validation-for="StoreRoom.StoreRoomNumber" class="text-danger"></span>
+        <label asp-for="ViewModel.StoreRoomNumber"></label>
+        <input asp-for="ViewModel.StoreRoomNumber" />
+        <span asp-validation-for="ViewModel.StoreRoomNumber" class="text-danger"></span>
     </div>
     <div>
-        <label asp-for="StoreRoom.UnitId"></label>
-        <select asp-for="StoreRoom.UnitId" asp-items="@Model.UnitSelectList">
+        <label asp-for="ViewModel.UnitId"></label>
+        <select asp-for="ViewModel.UnitId" asp-items="@Model.UnitSelectList">
             <option value="">Select Unit</option>
         </select>
-        <span asp-validation-for="StoreRoom.UnitId" class="text-danger"></span>
+        <span asp-validation-for="ViewModel.UnitId" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Edit</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>

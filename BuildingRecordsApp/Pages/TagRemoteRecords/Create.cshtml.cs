@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Enums;
 using BuildingRecordsApp.Models;
 using BuildingRecordsApp.ViewModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuildingRecordsApp.Pages.TagRemoteRecords
 {
@@ -20,21 +21,34 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
         }
 
         [BindProperty]
-        public TagRemoteRecord TagRemoteRecord { get; set; } = new();
-
-        public SelectList? UnitSelectList { get; set; }
+        public TagRemoteRecordFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync(UsageContext.ForTagRemoteRecord);
+            ViewModel = new TagRemoteRecordFormViewModel
+            {
+                TagRemoteRecord = new TagRemoteRecord(),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync(UsageContext.ForTagRemoteRecord)
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (TagRemoteRecord.UnitId == 0)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError("TagRemoteRecord.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel", "Tag Remote Record details are required.");
+                return Page();
+            }
+            if (ViewModel.TagRemoteRecord == null)
+            {
+                ModelState.AddModelError("ViewModel.TagRemoteRecord", "Tag Remote Record details are required.");
+                return Page();
+            }
+            if (ViewModel.TagRemoteRecord.UnitId == null)
+            {
+                ModelState.AddModelError("ViewModel.TagRemoteRecord.UnitId", "Unit is required.");
+                return Page();
             }
             if (!ModelState.IsValid)
             {
@@ -42,7 +56,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
                 return Page();
             }
 
-            _context.TagRemoteRecords.Add(TagRemoteRecord);
+            _context.TagRemoteRecords.Add(ViewModel.TagRemoteRecord);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/TagRemoteRecords/Index");

@@ -16,18 +16,27 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
         }
 
         [BindProperty]
-        public CompanyTrust CompanyTrust { get; set; } = new();
+        public CompanyTrustFormViewModel ViewModel { get; set; } = new();
 
         public IActionResult OnGet()
         {
+            ViewModel = new CompanyTrustFormViewModel
+            {
+                CompanyTrust = new CompanyTrust()
+            };
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel.CompanyTrust == null)
+            {
+                ModelState.AddModelError("ViewModel.CompanyTrust", "Company Trust details are required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.CompanyTrusts.Add(CompanyTrust);
+            _context.CompanyTrusts.Add(ViewModel.CompanyTrust);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/CompanyTrusts/Index");

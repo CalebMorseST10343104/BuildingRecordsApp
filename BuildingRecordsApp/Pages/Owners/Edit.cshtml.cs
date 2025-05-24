@@ -18,33 +18,56 @@ namespace BuildingRecordsApp.Pages.Owners
             _selectListService = selectListService;
         }
         [BindProperty]
-        public required Owner Owner { get; set; }
-
-        public SelectList? PersonSelectList { get; set; }
-        public SelectList? OwnershipSelectList { get; set; }
+        public required OwnerFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Owner = await _context.Owners.FindAsync(id) ?? null!;
+            ViewModel = new OwnerFormViewModel
+            {
+                Owner = await _context.Owners
+                    .Include(o => o.Person)
+                    .Include(o => o.Ownership)
+                    .FirstOrDefaultAsync(m => m.OwnerId == id) ?? null!
+            };
 
-            if (Owner == null)
+            if (ViewModel == null)
                 return NotFound();
 
-            PersonSelectList = await _selectListService.GetPersonSelectListAsync();
-            OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync();
+            ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+            ViewModel.OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Owner details are required.");
+                return Page();
+            }
+            if (ViewModel.Owner == null)
+            {
+                ModelState.AddModelError("ViewModel.Owner", "Owner details are required.");
+                return Page();
+            }
+            if (ViewModel.Owner.PersonId == null)
+            {
+                ModelState.AddModelError("ViewModel.Owner.PersonId", "Person is required.");
+                return Page();
+            }
+            if (ViewModel.Owner.OwnershipId == null)
+            {
+                ModelState.AddModelError("ViewModel.Owner.OwnershipId", "Ownership is required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Owner).State = EntityState.Modified;
+            _context.Attach(ViewModel.Owner).State = EntityState.Modified;
 
             try
             {
@@ -52,7 +75,7 @@ namespace BuildingRecordsApp.Pages.Owners
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OwnerExists(Owner.OwnerId))
+                if (!OwnerExists(ViewModel.Owner.OwnerId))
                     return NotFound();
 
                 throw;

@@ -16,19 +16,33 @@ namespace BuildingRecordsApp.Pages.Persons
         }
 
         [BindProperty]
-        public Person Person { get; set; } = new();
+        public PersonFormViewModel ViewModel { get; set; } = new();
 
         public IActionResult OnGet()
         {
+            ViewModel = new PersonFormViewModel
+            {
+                Person = new Person()
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Person details are required.");
+                return Page();
+            }
+            if (ViewModel.Person == null)
+            {
+                ModelState.AddModelError("ViewModel.Person", "Person details are required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Persons.Add(Person);
+            _context.Persons.Add(ViewModel.Person);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Persons/Index");

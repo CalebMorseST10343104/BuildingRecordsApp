@@ -19,36 +19,48 @@ namespace BuildingRecordsApp.Pages.Vehicles
         }
 
         [BindProperty]
-        public required Vehicle Vehicle { get; set; }
-
-        public SelectList? UnitSelectList { get; set; }
+        public required VehicleFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Vehicle = await _context.Vehicles
-                .Include(v => v.Unit)
-                .FirstOrDefaultAsync(m => m.VehicleId == id) ?? null!;
+            ViewModel = new VehicleFormViewModel
+            {
+                Vehicle = await _context.Vehicles
+                    .Include(v => v.Unit)
+                    .FirstOrDefaultAsync(v => v.VehicleId == id)
+            };
 
-            if (Vehicle == null)
+            if (ViewModel == null)
                 return NotFound();
 
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Vehicle.UnitId == 0)
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Vehicle details are required.");
+                return Page();
+            }
+            if (ViewModel.Vehicle == null)
+            {
+                ModelState.AddModelError("Vehicle", "Vehicle details are required.");
+                return Page();
+            }
+            if (ViewModel.Vehicle.UnitId == null)
             {
                 ModelState.AddModelError("Vehicle.UnitId", "Unit is required.");
+                return Page();
             }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Vehicle).State = EntityState.Modified;
+            _context.Attach(ViewModel.Vehicle).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +68,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VehicleExists(Vehicle!.VehicleId))
+                if (!VehicleExists(ViewModel.Vehicle.VehicleId))
                     return NotFound();
 
                 throw;

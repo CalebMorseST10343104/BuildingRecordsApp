@@ -17,16 +17,19 @@ namespace BuildingRecordsApp.Pages.Persons
         }
 
         [BindProperty]
-        public required Person Person { get; set; }
+        public required PersonFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Person = await _context.Persons.FindAsync(id) ?? null!;
+            ViewModel = new PersonFormViewModel
+            {
+                Person = await _context.Persons.FirstOrDefaultAsync(p => p.PersonId == id)
+            };
 
-            if (Person == null)
+            if (ViewModel == null)
                 return NotFound();
 
             return Page();
@@ -34,10 +37,20 @@ namespace BuildingRecordsApp.Pages.Persons
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Person details are required.");
+                return Page();
+            }
+            if (ViewModel.Person == null)
+            {
+                ModelState.AddModelError("ViewModel.Person", "Person details are required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Person).State = EntityState.Modified;
+            _context.Attach(ViewModel.Person).State = EntityState.Modified;
 
             try
             {
@@ -45,7 +58,7 @@ namespace BuildingRecordsApp.Pages.Persons
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(Person!.PersonId))
+                if (!PersonExists(ViewModel.Person.PersonId))
                     return NotFound();
 
                 throw;

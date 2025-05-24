@@ -32,9 +32,15 @@ namespace BuildingRecordsApp.Pages.Leases
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel.Lease == null)
+            {
+                ModelState.AddModelError("ViewModel.Lease", "Lease details are required.");
+                return Page();
+            }
             if (ViewModel.Lease.Unit == null)
             {
                 ModelState.AddModelError("Lease.UnitId", "Unit is required.");
+                return Page();
             }
             if (!ModelState.IsValid)
                 return Page();

@@ -18,23 +18,33 @@ namespace BuildingRecordsApp.Pages.Units
         }
 
         [BindProperty]
-        public Unit Unit { get; set; } = new();
-
-        public SelectList? BuildingSelectList { get; set; }
+        public UnitFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // Populate the select list for buildings
-            BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+            ViewModel = new UnitFormViewModel
+            {
+                Unit = new Unit(),
+                BuildingSelectList = await _selectListService.GetBuildingSelectListAsync()
+            };
             return Page();
         }
         
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Unit.BuildingId == 0)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError("Unit.BuildingId", "Building is required.");
-                BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+                ModelState.AddModelError("ViewModel", "Unit details are required.");
+                return Page();
+            }
+            if (ViewModel.Unit == null)
+            {
+                ModelState.AddModelError("ViewModel.Unit", "Unit details are required.");
+                return Page();
+            }
+            if (ViewModel.Unit.BuildingId == null)
+            {
+                ModelState.AddModelError("ViewModel.Unit.BuildingId", "Building is required.");
                 return Page();
             }
 
@@ -44,7 +54,7 @@ namespace BuildingRecordsApp.Pages.Units
                 return Page();
             }
 
-            _context.Units.Add(Unit);
+            _context.Units.Add(ViewModel.Unit);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Units/Index");

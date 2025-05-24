@@ -19,26 +19,39 @@ namespace BuildingRecordsApp.Pages.Vehicles
         }
 
         [BindProperty]
-        public Vehicle Vehicle { get; set; } = new();
-
-        public SelectList? UnitSelectList { get; set; }
+        public VehicleFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel = new VehicleFormViewModel
+            {
+                Vehicle = new Vehicle(),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Vehicle.UnitId == 0)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError("Vehicle.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel", "Vehicle details are required.");
+                return Page();
+            }
+            if (ViewModel.Vehicle == null)
+            {
+                ModelState.AddModelError("ViewModel.Vehicle", "Vehicle details are required.");
+                return Page();
+            }
+            if (ViewModel.Vehicle.UnitId == null)
+            {
+                ModelState.AddModelError("ViewModel.Vehicle.UnitId", "Unit is required.");
+                return Page();
             }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Vehicles.Add(Vehicle);
+            _context.Vehicles.Add(ViewModel.Vehicle);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Vehicles/Index");

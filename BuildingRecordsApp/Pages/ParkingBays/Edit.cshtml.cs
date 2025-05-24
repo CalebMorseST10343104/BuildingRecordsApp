@@ -19,32 +19,43 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         }
 
         [BindProperty]
-        public required ParkingBay ParkingBay { get; set; }
-
-        public SelectList? UnitSelectList { get; set; }
+        public required ParkingBayFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            ParkingBay = await _context.ParkingBays
-                .Include(p => p.Unit)
-                .FirstOrDefaultAsync(m => m.ParkingBayID == id) ?? null!;
+            ViewModel = new ParkingBayFormViewModel
+            {
+                ParkingBay = await _context.ParkingBays
+                    .Include(pb => pb.Unit)
+                    .FirstOrDefaultAsync(pb => pb.ParkingBayID == id)
+            };
 
-            if (ParkingBay == null)
+            if (ViewModel == null)
                 return NotFound();
 
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Parking Bay details are required.");
+                return Page();
+            }
+            if (ViewModel.ParkingBay == null)
+            {
+                ModelState.AddModelError("ViewModel.ParkingBay", "Parking Bay details are required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(ParkingBay).State = EntityState.Modified;
+            _context.Attach(ViewModel.ParkingBay).State = EntityState.Modified;
 
             try
             {
@@ -52,7 +63,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParkingBayExists(ParkingBay!.ParkingBayID))
+                if (!ParkingBayExists(ViewModel.ParkingBay.ParkingBayID))
                     return NotFound();
 
                 throw;

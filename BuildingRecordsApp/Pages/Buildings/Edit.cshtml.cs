@@ -16,16 +16,19 @@ namespace BuildingRecordsApp.Pages.Buildings
         }
 
         [BindProperty]
-        public required Building Building { get; set; }
+        public required BuildingFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Building = await _context.Buildings.FindAsync(id) ?? null!;
+            ViewModel = new BuildingFormViewModel
+            {
+                Building = await _context.Buildings.FindAsync(id) ?? null!
+            };
 
-            if (Building == null)
+            if (ViewModel == null)
                 return NotFound();
 
             return Page();
@@ -33,10 +36,20 @@ namespace BuildingRecordsApp.Pages.Buildings
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Building details are required.");
+                return Page();
+            }
+            if (ViewModel.Building == null)
+            {
+                ModelState.AddModelError("ViewModel.Building", "Building details are required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(Building).State = EntityState.Modified;
+            _context.Attach(ViewModel.Building).State = EntityState.Modified;
 
             try
             {
@@ -44,7 +57,7 @@ namespace BuildingRecordsApp.Pages.Buildings
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BuildingExists(Building.BuildingId))
+                if (!BuildingExists(ViewModel.Building.BuildingId))
                     return NotFound();
 
                 throw;

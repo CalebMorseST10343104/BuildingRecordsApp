@@ -18,24 +18,35 @@ namespace BuildingRecordsApp.Pages.Ownerships
         }
 
         [BindProperty]
-        public Ownership Ownership { get; set; } = new();
-
-        public SelectList? UnitSelectList { get; set; }
-        public SelectList? CompanyTrustSelectList { get; set; }
+        public OwnershipFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
-            CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
+            ViewModel = new OwnershipFormViewModel
+            {
+                Ownership = new Ownership(),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership),
+                CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync()
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-            if (Ownership.UnitId == 0)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError("Ownership.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel", "Ownership details are required.");
+                return Page();
+            }
+            if (ViewModel.Ownership == null)
+            {
+                ModelState.AddModelError("ViewModel.Ownership", "Ownership details are required.");
+                return Page();
+            }
+            if (ViewModel.Ownership.UnitId == null)
+            {
+                ModelState.AddModelError("ViewModel.Ownership.UnitId", "Unit is required.");
+                return Page();
             }
 
             if (!ModelState.IsValid)
@@ -44,7 +55,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 return Page();
             }
             
-            _context.Ownerships.Add(Ownership);
+            _context.Ownerships.Add(ViewModel.Ownership);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Ownerships/Index");

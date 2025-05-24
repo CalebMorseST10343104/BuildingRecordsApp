@@ -17,19 +17,28 @@ namespace BuildingRecordsApp.Pages.Buildings
         }
 
         [BindProperty]
-        public Building Building { get; set; } = new();
+        public BuildingFormViewModel ViewModel { get; set; } = new();
 
         public IActionResult OnGet()
         {
+            ViewModel = new BuildingFormViewModel
+            {
+                Building = new Building()
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel.Building == null)
+            {
+                ModelState.AddModelError("ViewModel.Building", "Building details are required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Buildings.Add(Building);
+            _context.Buildings.Add(ViewModel.Building);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Buildings/Index");

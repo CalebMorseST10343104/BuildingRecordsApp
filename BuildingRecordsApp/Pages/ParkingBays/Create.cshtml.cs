@@ -19,26 +19,33 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         }
 
         [BindProperty]
-        public ParkingBay ParkingBay { get; set; } = new();
-
-        public SelectList UnitSelectList { get; set; } = default!;
+        public ParkingBayFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel = new ParkingBayFormViewModel
+            {
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ParkingBay.UnitID == 0)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError("ParkingBay.UnitID", "Unit is required.");
+                ModelState.AddModelError("ViewModel", "Parking Bay details are required.");
+                return Page();
+            }
+            if (ViewModel.ParkingBay == null)
+            {
+                ModelState.AddModelError("ViewModel.ParkingBay", "Parking Bay details are required.");
+                return Page();
             }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.ParkingBays.Add(ParkingBay);
+            _context.ParkingBays.Add(ViewModel.ParkingBay);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/ParkingBays/Index");

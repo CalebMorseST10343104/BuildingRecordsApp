@@ -27,7 +27,7 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
         {
             if (ViewModel.AgentCompany == null)
             {
-                ModelState.AddModelError(string.Empty, "Agent Company cannot be null.");
+                ModelState.AddModelError("ViewModel.AgentCompany", "Agent company details are required.");
                 return Page();
             }
                 

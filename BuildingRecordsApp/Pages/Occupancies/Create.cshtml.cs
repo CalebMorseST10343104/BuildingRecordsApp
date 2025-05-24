@@ -35,9 +35,15 @@ namespace BuildingRecordsApp.Pages.Occupancies
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel.Occupancy == null)
+            {
+                ModelState.AddModelError("ViewModel.Occupancy", "Occupancy details are required.");
+                return Page();
+            }
             if (ViewModel.Occupancy.UnitId == null)
             {
-                ModelState.AddModelError("Occupancy.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel.Occupancy.UnitId", "Unit is required.");
+                return Page();
             }
 
             if (!ModelState.IsValid)

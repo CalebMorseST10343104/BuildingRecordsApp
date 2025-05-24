@@ -15,27 +15,40 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             _context = context;
         }
         [BindProperty]
-        public required CompanyTrust CompanyTrust { get; set; }
+        public required CompanyTrustFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            CompanyTrust = await _context.CompanyTrusts.FindAsync(id) ?? null!;
+            ViewModel = new CompanyTrustFormViewModel
+            {
+                CompanyTrust = await _context.CompanyTrusts.FindAsync(id) ?? null!
+            };
 
-            if (CompanyTrust == null)
+            if (ViewModel == null)
                 return NotFound();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
-        {
+        {   
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Company Trust details are required.");
+                return Page();
+            }
+            if (ViewModel.CompanyTrust == null)
+            {
+                ModelState.AddModelError("ViewModel.CompanyTrust", "Company Trust details are required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(CompanyTrust).State = EntityState.Modified;
+            _context.Attach(ViewModel.CompanyTrust).State = EntityState.Modified;
 
             try
             {
@@ -43,7 +56,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CompanyTrustExists(CompanyTrust.CompanyTrustId))
+                if (!CompanyTrustExists(ViewModel.CompanyTrust.CompanyTrustId))
                     return NotFound();
 
                 throw;

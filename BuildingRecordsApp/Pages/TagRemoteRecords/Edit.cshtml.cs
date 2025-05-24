@@ -19,37 +19,49 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
         }
 
         [BindProperty]
-        public required TagRemoteRecord TagRemoteRecord { get; set; }
-
-        public SelectList? UnitSelectList { get; set; }
+        public required TagRemoteRecordFormViewModel ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            TagRemoteRecord = await _context.TagRemoteRecords
-                .Include(t => t.Unit)
-                .FirstOrDefaultAsync(m => m.TagRemoteRecordId == id) ?? null!;
+            ViewModel = new TagRemoteRecordFormViewModel
+            {
+                TagRemoteRecord = await _context.TagRemoteRecords
+                    .Include(tr => tr.Unit)
+                    .FirstOrDefaultAsync(tr => tr.TagRemoteRecordId == id)
+            };
 
-            if (TagRemoteRecord == null)
+            if (ViewModel == null)
                 return NotFound();
 
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForTagRemoteRecord);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForTagRemoteRecord);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (TagRemoteRecord.UnitId == 0)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError("TagRemoteRecord.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel", "Tag Remote Record details are required.");
+                return Page();
+            }
+            if (ViewModel.TagRemoteRecord == null)
+            {
+                ModelState.AddModelError("ViewModel.TagRemoteRecord", "Tag Remote Record details are required.");
+                return Page();
+            }
+            if (ViewModel.TagRemoteRecord.UnitId == null)
+            {
+                ModelState.AddModelError("ViewModel.TagRemoteRecord.UnitId", "Unit is required.");
+                return Page();
             }
 
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(TagRemoteRecord).State = EntityState.Modified;
+            _context.Attach(ViewModel.TagRemoteRecord).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +69,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TagRemoteRecordExists(TagRemoteRecord!.TagRemoteRecordId))
+                if (!TagRemoteRecordExists(ViewModel.TagRemoteRecord.TagRemoteRecordId))
                     return NotFound();
 
                 throw;

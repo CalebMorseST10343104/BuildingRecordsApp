@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models;
 using BuildingRecordsApp.ViewModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.Agents
 {
@@ -43,8 +43,21 @@ namespace BuildingRecordsApp.Pages.Agents
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel.Agent == null)
+            {
+                ModelState.AddModelError(string.Empty, "Agent cannot be null.");
+                return Page();
+            }
+            if (ViewModel.Agent == null)
+            {
+                ModelState.AddModelError("ViewModel.Agent", "Agent details are required.");
+                return Page();
+            }
             if (ViewModel.Agent.AgentCompanyId == null)
-                ModelState.AddModelError("Agent.AgentCompanyId", "Please select an agent company.");
+            {
+                ModelState.AddModelError("ViewModelAgent.AgentCompanyId", "Please select an agent company.");
+                return Page();
+            }
             
             if (!ModelState.IsValid)
                 return Page();

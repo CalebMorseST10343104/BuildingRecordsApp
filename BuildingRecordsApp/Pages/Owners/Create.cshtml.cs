@@ -18,25 +18,45 @@ namespace BuildingRecordsApp.Pages.Owners
         }
 
         [BindProperty]
-        public Owner Owner { get; set; } = new();
-
-        public SelectList? OwnershipSelectList { get; set; }
-        public SelectList? PersonSelectList { get; set; }
+        public OwnerFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync();
-            PersonSelectList = await _selectListService.GetPersonSelectListAsync();
-
+            ViewModel = new OwnerFormViewModel
+            {
+                Owner = new Owner(),
+                OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync(),
+                PersonSelectList = await _selectListService.GetPersonSelectListAsync()
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (ViewModel == null)
+            {
+                ModelState.AddModelError("ViewModel", "Owner details are required.");
+                return Page();
+            }
+            if (ViewModel.Owner == null)
+            {
+                ModelState.AddModelError("ViewModel.Owner", "Owner details are required.");
+                return Page();
+            }
+            if (ViewModel.Owner.PersonId == null)
+            {
+                ModelState.AddModelError("ViewModel.Owner.PersonId", "Person is required.");
+                return Page();
+            }
+            if (ViewModel.Owner.OwnershipId == null)
+            {
+                ModelState.AddModelError("ViewModel.Owner.OwnershipId", "Ownership is required.");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Owners.Add(Owner);
+            _context.Owners.Add(ViewModel.Owner);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Owners/Index");

@@ -7,27 +7,27 @@
 
 <form method="post">
     <div>
-        <label asp-for="Ownership.UnitId"></label>
-        <select asp-for="Ownership.UnitId" asp-items="@Model.UnitSelectList">
+        <label asp-for="ViewModel.UnitId"></label>
+        <select asp-for="ViewModel.UnitId" asp-items="@Model.UnitSelectList">
             <option value="">Select Unit</option>
         </select>
-        <span asp-validation-for="Ownership.UnitId" class="text-danger"></span>
+        <span asp-validation-for="ViewModel.UnitId" class="text-danger"></span>
     </div>
     <div class="form-group"></div>
-        <label asp-for="Ownership.OwnershipType" class="control-label"></label>
-        <select asp-for="Ownership.OwnershipType" class="form-control">
+        <label asp-for="ViewModel.OwnershipType" class="control-label"></label>
+        <select asp-for="ViewModel.OwnershipType" class="form-control">
             <option value="">-- Select Ownership Type --</option>
             <option value="Natural">Natural</option>
             <option value="Juristic">Juristic</option>
         </select>
-        <span asp-validation-for="Ownership.OwnershipType" class="text-danger"></span>
+        <span asp-validation-for="ViewModel.OwnershipType" class="text-danger"></span>
     </div>
     <div>
-        <label asp-for="Ownership.CompanyTrustId"></label>
-        <select asp-for="Ownership.CompanyTrustId" asp-items="@Model.CompanyTrustSelectList">
+        <label asp-for="ViewModel.CompanyTrustId"></label>
+        <select asp-for="ViewModel.CompanyTrustId" asp-items="@Model.CompanyTrustSelectList">
             <option value="">Select Company/Trust</option>
         </select>
-        <span asp-validation-for="Ownership.CompanyTrustId" class="text-danger"></span>
+        <span asp-validation-for="ViewModel.CompanyTrustId" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Edit</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>

@@ -12,26 +12,34 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         private readonly ISelectListService _selectListService = selectListService;
 
         [BindProperty]
-        public StoreRoom StoreRoom { get; set; } = new();
-        
-        public SelectList? UnitSelectList { get; set; }
+        public StoreRoomFormViewModel ViewModel { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel = new StoreRoomFormViewModel
+            {
+                StoreRoom = new StoreRoom(),
+                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (StoreRoom.UnitId == 0)
+            if (ViewModel == null)
             {
-                ModelState.AddModelError("StoreRoom.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel", "Store Room details are required.");
+                return Page();
+            }   
+            if (ViewModel.StoreRoom == null)
+            {
+                ModelState.AddModelError("ViewModel.StoreRoom", "Store Room details are required.");
+                return Page();
             }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.StoreRooms.Add(StoreRoom);
+            _context.StoreRooms.Add(ViewModel.StoreRoom);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/StoreRooms/Index");

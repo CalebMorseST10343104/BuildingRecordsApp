@@ -20,9 +20,9 @@ Unit Unit // Navigation property
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="TagRemoteRecord.UnitId"></label>
-        <select asp-for="TagRemoteRecord.UnitId" asp-items="@Model.UnitSelectList" class="form-control"></select>
-        <span asp-validation-for="TagRemoteRecord.UnitId" class="text-danger"></span>
+        <label asp-for="ViewModel.UnitId"></label>
+        <select asp-for="ViewModel.UnitId" asp-items="@Model.UnitSelectList" class="form-control"></select>
+        <span asp-validation-for="ViewModel.UnitId" class="text-danger"></span>
     </div>
 
     <table class="table">
@@ -37,34 +37,34 @@ Unit Unit // Navigation property
             <tr>
                 <td>Owner</td>
                 <td>
-                    <input asp-for="TagRemoteRecord.TagsOwner" class="form-control" />
-                    <span asp-validation-for="TagRemoteRecord.TagsOwner" class="text-danger"></span>
+                    <input asp-for="ViewModel.TagsOwner" class="form-control" />
+                    <span asp-validation-for="ViewModel.TagsOwner" class="text-danger"></span>
                 </td>
                 <td>
-                    <input asp-for="TagRemoteRecord.RemotesOwner" class="form-control" />
-                    <span asp-validation-for="TagRemoteRecord.RemotesOwner" class="text-danger"></span>
+                    <input asp-for="ViewModel.RemotesOwner" class="form-control" />
+                    <span asp-validation-for="ViewModel.RemotesOwner" class="text-danger"></span>
                 </td>
             </tr>
             <tr>
                 <td>Occupant</td>
                 <td>
-                    <input asp-for="TagRemoteRecord.TagsOccupant" class="form-control" />
-                    <span asp-validation-for="TagRemoteRecord.TagsOccupant" class="text-danger"></span>
+                    <input asp-for="ViewModel.TagsOccupant" class="form-control" />
+                    <span asp-validation-for="ViewModel.TagsOccupant" class="text-danger"></span>
                 </td>
                 <td>
-                    <input asp-for="TagRemoteRecord.RemotesOccupant" class="form-control" />
-                    <span asp-validation-for="TagRemoteRecord.RemotesOccupant" class="text-danger"></span>
+                    <input asp-for="ViewModel.RemotesOccupant" class="form-control" />
+                    <span asp-validation-for="ViewModel.RemotesOccupant" class="text-danger"></span>
                 </td>
             </tr>
             <tr>
                 <td>Agent</td>
                 <td>
-                    <input asp-for="TagRemoteRecord.TagsAgent" class="form-control" />
-                    <span asp-validation-for="TagRemoteRecord.TagsAgent" class="text-danger"></span>
+                    <input asp-for="ViewModel.TagsAgent" class="form-control" />
+                    <span asp-validation-for="ViewModel.TagsAgent" class="text-danger"></span>
                 </td>
                 <td>
-                    <input asp-for="TagRemoteRecord.RemotesAgent" class="form-control" />
-                    <span asp-validation-for="TagRemoteRecord.RemotesAgent" class="text-danger"></span>
+                    <input asp-for="ViewModel.RemotesAgent" class="form-control" />
+                    <span asp-validation-for="ViewModel.RemotesAgent" class="text-danger"></span>
                 </td>
             </tr>
         </tbody>
