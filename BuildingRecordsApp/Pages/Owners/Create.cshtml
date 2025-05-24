@@ -5,26 +5,10 @@
 }
 <h1>Create New Owner</h1>
 
-@* 
-Owner has following fields:
-int OwnerId 
-Person Person // Navigation property for the person
-int PersonId // Foreign key for Person
-Ownership Ownership // Navigation property for ownership
-int OwnershipId // Foreign key for Ownership
- *@
-
 <form method="post">
-    <div>
-        <label asp-for="ViewModel.PersonId"></label>
-        <select asp-for="ViewModel.PersonId" asp-items="@Model.PersonSelectList"></select>
-        <span asp-validation-for="ViewModel.PersonId" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="ViewModel.OwnershipId"></label>
-        <select asp-for="ViewModel.OwnershipId" asp-items="@Model.OwnershipSelectList"></select>
-        <span asp-validation-for="ViewModel.OwnershipId" class="text-danger"></span>
-    </div>
+
+    @await Html.PartialAsync("_Form", Model.ViewModel)
+
      <button type="submit" class="btn btn-primary">Create</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>

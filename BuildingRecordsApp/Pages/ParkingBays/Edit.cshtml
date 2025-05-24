@@ -7,18 +7,9 @@
 <h1>Edit Parking Bay</h1>
 
 <form method="post">
-    <div>
-        <label asp-for="ViewModel.ParkingBayNumber"></label>
-        <input asp-for="ViewModel.ParkingBayNumber" />
-        <span asp-validation-for="ViewModel.ParkingBayNumber" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="ViewModel.UnitID"></label>
-        <select asp-for="ViewModel.UnitID" asp-items="@Model.UnitSelectList">
-            <option value="">Select Unit</option>
-        </select>
-        <span asp-validation-for="ViewModel.UnitID" class="text-danger"></span>
-    </div>
+    
+    @await Html.PartialAsync("_Form", Model.ViewModel)
+
     <button type="submit" class="btn btn-primary">Edit</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>

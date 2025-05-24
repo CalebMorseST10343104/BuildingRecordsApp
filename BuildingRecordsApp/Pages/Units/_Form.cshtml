@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model BuildingRecordsApp.ViewModels.UnitFormViewModel
+
+<div>
+    <label asp-for="Unit.BuildingId"></label>
+    <select asp-for="Unit.BuildingId" asp-items="@Model.BuildingSelectList">
+        <option value="">Select Building</option>
+    </select>
+    <span asp-validation-for="Unit.BuildingId" class="text-danger"></span>
+</div>
+<div>
+    <label asp-for="Unit.UnitNumber"></label>
+    <input asp-for="Unit.UnitNumber" />
+    <span asp-validation-for="Unit.UnitNumber" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Unit.Bedrooms"></label>
+    <input asp-for="Unit.Bedrooms" />
+    <span asp-validation-for="Unit.Bedrooms" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Unit.DbInverter"></label>
+    <input asp-for="Unit.DbInverter" type="checkbox" />
+    <span asp-validation-for="Unit.DbInverter" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Unit.Housekeeping"></label>
+    <input asp-for="Unit.Housekeeping" type="checkbox" />
+    <span asp-validation-for="Unit.Housekeeping" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Unit.PetFriendly"></label>
+    <input asp-for="Unit.PetFriendly" type="checkbox" />
+    <span asp-validation-for="Unit.PetFriendly" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Unit.SublettingAllowed"></label>
+    <input asp-for="Unit.SublettingAllowed" type="checkbox" />
+    <span asp-validation-for="Unit.SublettingAllowed" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Unit.AirconditioningUnits"></label>
+    <input asp-for="Unit.AirconditioningUnits" />
+    <span asp-validation-for="Unit.AirconditioningUnits" class="text-danger"></span>
+</div>    

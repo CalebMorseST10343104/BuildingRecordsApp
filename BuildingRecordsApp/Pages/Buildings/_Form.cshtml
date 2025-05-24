@@ -1,25 +1,25 @@
-﻿@model BuildingRecordsApp.Models.Building
+﻿@model BuildingRecordsApp.ViewModels.BuildingFormViewModel
 
 <div>
-    <label asp-for="Name"></label>
-    <input asp-for="Name" />
-    <span asp-validation-for="Name" class="text-danger"></span>
+    <label asp-for="Building.Name"></label>
+    <input asp-for="Building.Name" />
+    <span asp-validation-for="Building.Name" class="text-danger"></span>
 </div>
 
 <div>
-    <label asp-for="Address"></label>
-    <input asp-for="Address" />
-    <span asp-validation-for="Address" class="text-danger"></span>
+    <label asp-for="Building.Address"></label>
+    <input asp-for="Building.Address" />
+    <span asp-validation-for="Building.Address" class="text-danger"></span>
 </div>
 
 <div>
-    <label asp-for="NumberOfUnits"></label>
-    <input asp-for="NumberOfUnits" />
-    <span asp-validation-for="NumberOfUnits" class="text-danger"></span>
+    <label asp-for="Building.NumberOfUnits"></label>
+    <input asp-for="Building.NumberOfUnits" />
+    <span asp-validation-for="Building.NumberOfUnits" class="text-danger"></span>
 </div>
 
 <div>
-    <label asp-for="NumberOfFloors"></label>
-    <input asp-for="NumberOfFloors" />
-    <span asp-validation-for="NumberOfFloors" class="text-danger"></span>
+    <label asp-for="Building.NumberOfFloors"></label>
+    <input asp-for="Building.NumberOfFloors" />
+    <span asp-validation-for="Building.NumberOfFloors" class="text-danger"></span>
 </div>

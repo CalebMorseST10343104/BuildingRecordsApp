@@ -4,63 +4,11 @@
     ViewData["Title"] = "Create Lease";
 }
 <h1>Create Lease</h1>
-@* 
-Lease has the following properties:
-int LeaseId
-string LeaseHolderName
-DateTime StartDate
-DateTime EndDate
-int PersonsOccupying
-bool SignedRules
-bool AllowedPets
-string EmergencyContactNumber
-
-int UnitId // Foreign key to Unit
- *@
 
 <form method="post">
-    <div class="form-group">
-        <label asp-for="ViewModel.UnitId"></label>
-        <select asp-for="ViewModel.UnitId" class="form-control" asp-items="@Model.UnitSelectList">
-            <option value="">Select Unit</option>
-        </select>
-        <span asp-validation-for="ViewModel.UnitId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ViewModel.LeaseHolderName"></label>
-        <input asp-for="ViewModel.LeaseHolderName" class="form-control" />
-        <span asp-validation-for="ViewModel.LeaseHolderName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ViewModel.StartDate"></label>
-        <input asp-for="ViewModel.StartDate" class="form-control" />
-        <span asp-validation-for="ViewModel.StartDate" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ViewModel.EndDate"></label>
-        <input asp-for="ViewModel.EndDate" class="form-control" />
-        <span asp-validation-for="ViewModel.EndDate" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ViewModel.PersonsOccupying"></label>
-        <input asp-for="ViewModel.PersonsOccupying" class="form-control" />
-        <span asp-validation-for="ViewModel.PersonsOccupying" class="text-danger"></span>
-    </div>
-    <div class="form-group form-check">
-        <input asp-for="ViewModel.SignedRules" class="form-check-input" type="checkbox" />
-        <label asp-for="ViewModel.SignedRules" class="form-check-label"></label>
-        <span asp-validation-for="ViewModel.SignedRules" class="text-danger"></span>
-    </div>
-    <div class="form-group form-check">
-        <input asp-for="ViewModel.AllowedPets" class="form-check-input" type="checkbox" />
-        <label asp-for="ViewModel.AllowedPets" class="form-check-label"></label>
-        <span asp-validation-for="ViewModel.AllowedPets" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ViewModel.EmergencyContactNumber"></label>
-        <input asp-for="ViewModel.EmergencyContactNumber" class="form-control" />
-        <span asp-validation-for="ViewModel.EmergencyContactNumber" class="text-danger"></span>
-    </div>
+
+    @await Html.PartialAsync("_Form", Model.ViewModel)
+
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>

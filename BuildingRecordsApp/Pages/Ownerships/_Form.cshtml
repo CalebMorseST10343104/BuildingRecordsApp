@@ -1,1 +1,21 @@
 ﻿@model BuildingRecordsApp.ViewModels.OwnershipFormViewModel
+
+<div>
+    <label asp-for="Ownership.UnitId"></label>
+    <select asp-for="Ownership.UnitId" asp-items="@Model.UnitSelectList"></select>
+    <span asp-validation-for="Ownership.UnitId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Ownership.OwnershipType" class="control-label"></label>
+    <select asp-for="Ownership.OwnershipType" class="form-control">
+        <option value="">-- Select Ownership Type --</option>
+        <option value="Natural">Natural</option>
+        <option value="Juristic">Juristic</option>
+    </select>
+    <span asp-validation-for="Ownership.OwnershipType" class="text-danger"></span>
+</div>
+<div>
+    <label asp-for="Ownership.CompanyTrustId"></label>
+    <select asp-for="Ownership.CompanyTrustId" asp-items="@Model.CompanyTrustSelectList"></select>
+    <span asp-validation-for="Ownership.CompanyTrustId" class="text-danger"></span>
+</div>

@@ -6,27 +6,10 @@
 
 <h1>Create New Store Room</h1>
 
-@* 
-StoreRoom has following fields:
-int StoreRoomId
-string StoreRoomNumber
-Unit Unit // Navigation property
-int UnitId // Foreign key property
- *@
-
 <form method="post">
-    <div>
-        <label asp-for="ViewModel.StoreRoomNumber"></label>
-        <input asp-for="ViewModel.StoreRoomNumber" />
-        <span asp-validation-for="ViewModel.StoreRoomNumber" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="ViewModel.UnitId"></label>
-        <select asp-for="ViewModel.UnitId" asp-items="@Model.UnitSelectList">
-            <option value="">Select Unit</option>
-        </select>
-        <span asp-validation-for="ViewModel.UnitId" class="text-danger"></span>
-    </div>
+
+    @await Html.PartialAsync("_Form", Model.ViewModel)
+
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>

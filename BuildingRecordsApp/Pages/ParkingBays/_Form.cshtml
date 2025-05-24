@@ -1,1 +1,14 @@
 ﻿@model BuildingRecordsApp.ViewModels.ParkingBayFormViewModel
+
+<div>
+    <label asp-for="ParkingBay.ParkingBayNumber"></label>
+    <input asp-for="ParkingBay.ParkingBayNumber" />
+    <span asp-validation-for="ParkingBay.ParkingBayNumber" class="text-danger"></span>
+</div>
+<div>
+    <label asp-for="ParkingBay.UnitID"></label>
+    <select asp-for="ParkingBay.UnitID" asp-items="@Model.UnitSelectList">
+        <option value="">Select Unit</option>
+    </select>
+    <span asp-validation-for="ParkingBay.UnitID" class="text-danger"></span>
+</div>

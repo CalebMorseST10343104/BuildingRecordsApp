@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model BuildingRecordsApp.ViewModels.StoreRoomFormViewModel
+
+<div>
+    <label asp-for="StoreRoom.StoreRoomNumber"></label>
+    <input asp-for="StoreRoom.StoreRoomNumber" />
+    <span asp-validation-for="StoreRoom.StoreRoomNumber" class="text-danger"></span>
+</div>
+<div>
+    <label asp-for="StoreRoom.UnitId"></label>
+    <select asp-for="StoreRoom.UnitId" asp-items="@Model.UnitSelectList">
+        <option value="">Select Unit</option>
+    </select>
+    <span asp-validation-for="StoreRoom.UnitId" class="text-danger"></span>
+</div>

@@ -1,5 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model BuildingRecordsApp.ViewModels.VehicleFormViewModel
+
+<div>
+    <label asp-for="Vehicle.VehicleRegistration"></label>
+    <input asp-for="Vehicle.VehicleRegistration" />
+    <span asp-validation-for="Vehicle.VehicleRegistration" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Vehicle.VehicleModel"></label>
+    <input asp-for="Vehicle.VehicleModel" />
+    <span asp-validation-for="Vehicle.VehicleModel" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Vehicle.VehicleMake"></label>
+    <input asp-for="Vehicle.VehicleMake" />
+    <span asp-validation-for="Vehicle.VehicleMake" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Vehicle.VehicleColor"></label>
+    <input asp-for="Vehicle.VehicleColor" />
+    <span asp-validation-for="Vehicle.VehicleColor" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="Vehicle.UnitId"></label>
+    <select asp-for="Vehicle.UnitId" asp-items="@Model.UnitSelectList">
+        <option value="">Select Unit</option>
+    </select>
+    <span asp-validation-for="Vehicle.UnitId" class="text-danger"></span>
+</div>

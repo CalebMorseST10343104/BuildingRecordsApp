@@ -17,37 +17,8 @@ int UnitId // Foreign key to Unit
  *@
 
 <form method="post">
-    <div>
-        <label asp-for="ViewModel.VehicleRegistration"></label>
-        <input asp-for="ViewModel.VehicleRegistration" />
-        <span asp-validation-for="ViewModel.VehicleRegistration" class="text-danger"></span>
-    </div>
 
-    <div>
-        <label asp-for="ViewModel.VehicleModel"></label>
-        <input asp-for="ViewModel.VehicleModel" />
-        <span asp-validation-for="ViewModel.VehicleModel" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ViewModel.VehicleMake"></label>
-        <input asp-for="ViewModel.VehicleMake" />
-        <span asp-validation-for="ViewModel.VehicleMake" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ViewModel.VehicleColor"></label>
-        <input asp-for="ViewModel.VehicleColor" />
-        <span asp-validation-for="ViewModel.VehicleColor" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ViewModel.UnitId"></label>
-        <select asp-for="ViewModel.UnitId" asp-items="@Model.UnitSelectList">
-            <option value="">Select Unit</option>
-        </select>
-        <span asp-validation-for="ViewModel.UnitId" class="text-danger"></span>
-    </div>
+    @await Html.PartialAsync("_Form", Model.ViewModel)
 
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>

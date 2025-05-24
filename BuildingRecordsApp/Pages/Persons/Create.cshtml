@@ -6,50 +6,10 @@
 
 <h1>Create New Person</h1>
 
-@* 
-Person has the following fields:
-int PersonId (Primary Key)
-string Name
-string Surname
-string Email
-string PostalAddress
-string IdNumber
-string PhoneNumber
-*@
-
 <form method="post">
-    <div>
-        <label asp-for="ViewModel.Name"></label>
-        <input asp-for="ViewModel.Name" />
-        <span asp-validation-for="ViewModel.Name" class="text-danger"></span>
-    </div>
 
-    <div>
-        <label asp-for="ViewModel.Surname"></label>
-        <input asp-for="ViewModel.Surname" />
-        <span asp-validation-for="ViewModel.Surname" class="text-danger"></span>
-    </div>
+    @await Html.PartialAsync("_Form", Model.ViewModel)
 
-    <div>
-        <label asp-for="ViewModel.Email"></label>
-        <input asp-for="ViewModel.Email" />
-        <span asp-validation-for="ViewModel.Email" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="ViewModel.PostalAddress"></label>
-        <input asp-for="ViewModel.PostalAddress" />
-        <span asp-validation-for="ViewModel.PostalAddress" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="ViewModel.IdNumber"></label>
-        <input asp-for="ViewModel.IdNumber" />
-        <span asp-validation-for="ViewModel.IdNumber" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="ViewModel.PhoneNumber"></label>
-        <input asp-for="ViewModel.PhoneNumber" />
-        <span asp-validation-for="ViewModel.PhoneNumber" class="text-danger"></span>
-    </div>
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </form>

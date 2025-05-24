@@ -1,5 +1,52 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model BuildingRecordsApp.ViewModels.TagRemoteRecordFormViewModel
+
+<div class="form-group">
+    <label asp-for="TagRemoteRecord.UnitId"></label>
+    <select asp-for="TagRemoteRecord.UnitId" asp-items="@Model.UnitSelectList" class="form-control"></select>
+    <span asp-validation-for="TagRemoteRecord.UnitId" class="text-danger"></span>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Holder</th>
+            <th>Tags</th>
+            <th>Remotes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Owner</td>
+            <td>
+                <input asp-for="TagRemoteRecord.TagsOwner" class="form-control" />
+                <span asp-validation-for="TagRemoteRecord.TagsOwner" class="text-danger"></span>
+            </td>
+            <td>
+                <input asp-for="TagRemoteRecord.RemotesOwner" class="form-control" />
+                <span asp-validation-for="TagRemoteRecord.RemotesOwner" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Occupant</td>
+            <td>
+                <input asp-for="TagRemoteRecord.TagsOccupant" class="form-control" />
+                <span asp-validation-for="TagRemoteRecord.TagsOccupant" class="text-danger"></span>
+            </td>
+            <td>
+                <input asp-for="TagRemoteRecord.RemotesOccupant" class="form-control" />
+                <span asp-validation-for="TagRemoteRecord.RemotesOccupant" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Agent</td>
+            <td>
+                <input asp-for="TagRemoteRecord.TagsAgent" class="form-control" />
+                <span asp-validation-for="TagRemoteRecord.TagsAgent" class="text-danger"></span>
+            </td>
+            <td>
+                <input asp-for="TagRemoteRecord.RemotesAgent" class="form-control" />
+                <span asp-validation-for="TagRemoteRecord.RemotesAgent" class="text-danger"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

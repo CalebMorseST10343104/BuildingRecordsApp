@@ -6,68 +6,9 @@
 
 <h1>Create New Unit</h1>
 
-@* 
-Unit has following fields:
-int UnitId (Primary Key)
-int BuildingId (Foreign Key)
-int UnitNumber
-int Bedrooms
-bool DbInverter
-bool Housekeeping
-bool PetFriendly
-bool SublettingAllowed
-int AirconditioningUnits 
-*@
-
 <form method="post">
-    <div>
-        <label asp-for="ViewModel.BuildingId"></label>
-        <select asp-for="ViewModel.BuildingId" asp-items="@Model.BuildingSelectList">
-            <option value="">Select Building</option>
-        </select>
-        <span asp-validation-for="ViewModel.BuildingId" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="ViewModel.UnitNumber"></label>
-        <input asp-for="ViewModel.UnitNumber" />
-        <span asp-validation-for="ViewModel.UnitNumber" class="text-danger"></span>
-    </div>
 
-    <div>
-        <label asp-for="ViewModel.Bedrooms"></label>
-        <input asp-for="ViewModel.Bedrooms" />
-        <span asp-validation-for="ViewModel.Bedrooms" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ViewModel.DbInverter"></label>
-        <input asp-for="ViewModel.DbInverter" type="checkbox" />
-        <span asp-validation-for="ViewModel.DbInverter" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ViewModel.Housekeeping"></label>
-        <input asp-for="ViewModel.Housekeeping" type="checkbox" />
-        <span asp-validation-for="ViewModel.Housekeeping" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ViewModel.PetFriendly"></label>
-        <input asp-for="ViewModel.PetFriendly" type="checkbox" />
-        <span asp-validation-for="ViewModel.PetFriendly" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ViewModel.SublettingAllowed"></label>
-        <input asp-for="ViewModel.SublettingAllowed" type="checkbox" />
-        <span asp-validation-for="ViewModel.SublettingAllowed" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ViewModel.AirconditioningUnits"></label>
-        <input asp-for="ViewModel.AirconditioningUnits" />
-        <span asp-validation-for="ViewModel.AirconditioningUnits" class="text-danger"></span>
-    </div>    
+    @await Html.PartialAsync("_Form", Model.ViewModel)
 
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
