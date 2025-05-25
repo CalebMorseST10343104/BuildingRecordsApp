@@ -30,7 +30,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             {
                 ParkingBay = await _context.ParkingBays
                     .Include(pb => pb.Unit)
-                    .FirstOrDefaultAsync(pb => pb.ParkingBayID == id),
+                    .FirstOrDefaultAsync(pb => pb.ParkingBayId == id),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
 
@@ -63,7 +63,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParkingBayExists(ViewModel.ParkingBay.ParkingBayID))
+                if (!ParkingBayExists(ViewModel.ParkingBay.ParkingBayId))
                     return NotFound();
 
                 throw;
@@ -74,7 +74,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         
         private bool ParkingBayExists(int id)
         {
-            return _context.ParkingBays.Any(e => e.ParkingBayID == id);
+            return _context.ParkingBays.Any(e => e.ParkingBayId == id);
         }
     }
 }

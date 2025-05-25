@@ -27,7 +27,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             var parkingBay = await _context.ParkingBays
                 .Include(p => p.Unit)
                 .ThenInclude(u => u!.Building)
-                .FirstOrDefaultAsync(m => m.ParkingBayID == id);
+                .FirstOrDefaultAsync(m => m.ParkingBayId == id);
 
             if (parkingBay == null)
             {

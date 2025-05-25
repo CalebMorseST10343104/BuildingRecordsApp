@@ -4,7 +4,7 @@ namespace BuildingRecordsApp.Models
 {
     public class ParkingBay
     {
-        public int ParkingBayID { get; set; }
+        public int ParkingBayId { get; set; }
 
         [Display(Name = "Parking Bay Number")]
         public string ParkingBayNumber { get; set; } = string.Empty;

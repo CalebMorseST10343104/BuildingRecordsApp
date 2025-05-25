@@ -73,7 +73,7 @@ namespace BuildingRecordsApp.Services
                 .Include(pb => pb.Unit!.Building)
                 .Select(pb => new
                 {
-                    pb.ParkingBayID,
+                    pb.ParkingBayId,
                     Display = $"[{pb.Unit!.Building!.Name}] {pb.ParkingBayNumber}"
                 })
                 .ToListAsync();
