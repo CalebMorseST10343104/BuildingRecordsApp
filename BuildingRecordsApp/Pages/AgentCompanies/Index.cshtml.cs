@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Models.Entities;
 
 namespace BuildingRecordsApp.Pages.AgentCompanies
 {

@@ -1,4 +1,4 @@
-namespace BuildingRecordsApp.Models
+namespace BuildingRecordsApp.Models.Entities
 {
     public class Owner 
     {

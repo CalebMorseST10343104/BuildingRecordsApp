@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Services

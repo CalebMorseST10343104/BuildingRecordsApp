@@ -1,8 +1,8 @@
 using System;
-using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BuildingRecordsApp.ViewModels;
+namespace BuildingRecordsApp.Models.FormViewModels;
 
 public class StoreRoomFormViewModel
 {

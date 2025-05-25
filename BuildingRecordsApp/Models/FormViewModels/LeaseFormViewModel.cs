@@ -1,12 +1,11 @@
 using System;
-using BuildingRecordsApp.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BuildingRecordsApp.Models.Entities;
 
-namespace BuildingRecordsApp.ViewModels;
+namespace BuildingRecordsApp.Models.FormViewModels;
 
-public class ParkingBayFormViewModel
+public class LeaseFormViewModel
 {
-    public ParkingBay? ParkingBay { get; set; }
+    public Lease? Lease { get; set; }
     public SelectList UnitSelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
-    
 }

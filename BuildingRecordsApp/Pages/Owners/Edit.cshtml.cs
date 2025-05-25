@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BuildingRecordsApp.Models;
-using BuildingRecordsApp.ViewModels;
+using BuildingRecordsApp.Models.Entities;
+using BuildingRecordsApp.Models.FormViewModels;
 
 namespace BuildingRecordsApp.Pages.Owners
 {

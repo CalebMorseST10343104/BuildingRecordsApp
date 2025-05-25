@@ -1,7 +1,7 @@
 using System;
-using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Models.Entities;
 
-namespace BuildingRecordsApp.ViewModels;
+namespace BuildingRecordsApp.Models.FormViewModels;
 
 public class BuildingFormViewModel
 {

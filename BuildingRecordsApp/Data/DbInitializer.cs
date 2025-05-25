@@ -1,5 +1,5 @@
 using System;
-using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Models.Entities;
 using Microsoft.VisualBasic;
 
 namespace BuildingRecordsApp.Data;

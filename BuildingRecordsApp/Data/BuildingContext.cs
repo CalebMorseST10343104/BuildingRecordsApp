@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Models.Entities;
 
 public class BuildingContext(DbContextOptions<BuildingContext> options) : DbContext(options)
 {

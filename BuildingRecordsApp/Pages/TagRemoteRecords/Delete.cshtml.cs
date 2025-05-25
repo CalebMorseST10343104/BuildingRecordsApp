@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.TagRemoteRecords

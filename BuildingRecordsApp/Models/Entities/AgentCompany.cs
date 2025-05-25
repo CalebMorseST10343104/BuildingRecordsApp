@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BuildingRecordsApp.Models
+namespace BuildingRecordsApp.Models.Entities
 {
     public class AgentCompany
     {
