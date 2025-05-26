@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuildingRecordsApp.Pages.Agents
 {
@@ -11,11 +13,13 @@ namespace BuildingRecordsApp.Pages.Agents
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -26,42 +30,36 @@ namespace BuildingRecordsApp.Pages.Agents
             if (id == null)
                 return NotFound();
 
-            ViewModel = new AgentFormViewModel
-            {
-                Agent = await _context.Agents
-                    .Include(a => a.AgentCompany)
-                    .FirstOrDefaultAsync(m => m.AgentId == id),
-                AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync()
-            };
+            var agent = await _context.Agents
+                .Include(a => a.AgentCompany)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.AgentId == id);
 
-            if (ViewModel.Agent == null)
+            if (agent == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<AgentFormViewModel>(agent);
+            ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
+            if (ViewModel.AgentId == null)
                 ModelState.AddModelError("ViewModel", "Agent details are required.");
-                return Page();
-            }
-            if (ViewModel.Agent == null)
+
+            if (ViewModel.AgentCompanyId == null)
+                ModelState.AddModelError("ViewModel.AgentCompanyId", "Please select an agent company.");
+
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("ViewModel.Agent", "Agent details are required.");
-                return Page();
-            }
-            if (ViewModel.Agent.AgentCompanyId == null)
-            {
-                ModelState.AddModelError("ViewModelAgent.AgentCompanyId", "Please select an agent company.");
+                ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
                 return Page();
             }
             
-            if (!ModelState.IsValid)
-                return Page();
-
-            _context.Attach(ViewModel.Agent).State = EntityState.Modified;
+            var agent = _mapper.Map<Agent>(ViewModel);
+            _context.Attach(agent).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +67,7 @@ namespace BuildingRecordsApp.Pages.Agents
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AgentExists(ViewModel.Agent.AgentId))
+                if (!AgentExists(agent.AgentId))
                     return NotFound();
 
                 throw;

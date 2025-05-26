@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Occupancies
 {
@@ -10,11 +11,13 @@ namespace BuildingRecordsApp.Pages.Occupancies
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -24,7 +27,6 @@ namespace BuildingRecordsApp.Pages.Occupancies
         {
             ViewModel = new OccupancyFormViewModel
             {
-                Occupancy = new Occupancy(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy),
                 PersonSelectList = await _selectListService.GetPersonSelectListAsync()
             };
@@ -34,21 +36,21 @@ namespace BuildingRecordsApp.Pages.Occupancies
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.Occupancy == null)
+            if (ViewModel.UnitId == null)
             {
-                ModelState.AddModelError("ViewModel.Occupancy", "Occupancy details are required.");
-                return Page();
-            }
-            if (ViewModel.Occupancy.UnitId == null)
-            {
-                ModelState.AddModelError("ViewModel.Occupancy.UnitId", "Unit is required.");
-                return Page();
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
             }
 
             if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy);
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
                 return Page();
+            }
 
-            _context.Occupancies.Add(ViewModel.Occupancy);
+            var occupancy = _mapper.Map<Occupancy>(ViewModel);
+
+            _context.Occupancies.Add(occupancy);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Occupancies/Index");

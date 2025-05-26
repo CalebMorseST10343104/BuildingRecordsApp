@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Units
 {
@@ -9,11 +11,13 @@ namespace BuildingRecordsApp.Pages.Units
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -24,49 +28,44 @@ namespace BuildingRecordsApp.Pages.Units
             if (id == null)
                 return NotFound();
 
-            ViewModel = new UnitFormViewModel
-            {
-                Unit = _context.Units
-                    .Include(u => u.Building)
-                    .FirstOrDefault(u => u.UnitId == id),
-                BuildingSelectList = await _selectListService.GetBuildingSelectListAsync()
-            };
+            var unit = await _context.Units
+                .Include(u => u.Building)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.UnitId == id);
 
-            if (ViewModel == null)
+            if (unit == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<UnitFormViewModel>(unit);
+            ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
+            if (ViewModel.UnitId == null)
                 ModelState.AddModelError("ViewModel", "Unit details are required.");
-                return Page();
-            }
-            if (ViewModel.Unit == null)
-            {
-                ModelState.AddModelError("ViewModel.Unit", "Unit details are required.");
-                return Page();
-            }
-            if (ViewModel.Unit.BuildingId == null)
-            {
-                ModelState.AddModelError("ViewModel.Unit.BuildingId", "Building is required.");
-                return Page();
-            }
+                
+            if (ViewModel.BuildingId == null)
+                ModelState.AddModelError("ViewModel.BuildingId", "Building is required.");
 
             if (!ModelState.IsValid)
+            {
+                ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
                 return Page();
+            }
 
-            _context.Attach(ViewModel.Unit).State = EntityState.Modified;
+            var unit = _mapper.Map<Unit>(ViewModel);
+            _context.Attach(unit).State = EntityState.Modified;
+
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UnitExists(ViewModel.Unit.UnitId))
+                if (!UnitExists(unit.UnitId))
                     return NotFound();
 
                 throw;

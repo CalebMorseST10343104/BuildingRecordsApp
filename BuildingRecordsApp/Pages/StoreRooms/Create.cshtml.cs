@@ -3,13 +3,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.StoreRooms
 {
-    public class CreateModel(BuildingContext context, ISelectListService selectListService) : PageModel
+    public class CreateModel : PageModel
     {
-        private readonly BuildingContext _context = context;
-        private readonly ISelectListService _selectListService = selectListService;
+        private readonly BuildingContext _context;
+        private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
+
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
+        {
+            _context = context;
+            _selectListService = selectListService;
+            _mapper = mapper;
+        }
 
         [BindProperty]
         public StoreRoomFormViewModel ViewModel { get; set; } = new();
@@ -18,7 +27,6 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         {
             ViewModel = new StoreRoomFormViewModel
             {
-                StoreRoom = new StoreRoom(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
             return Page();
@@ -26,20 +34,20 @@ namespace BuildingRecordsApp.Pages.StoreRooms
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
+ 
+            if (ViewModel.UnitId == null)
             {
-                ModelState.AddModelError("ViewModel", "Store Room details are required.");
-                return Page();
-            }   
-            if (ViewModel.StoreRoom == null)
-            {
-                ModelState.AddModelError("ViewModel.StoreRoom", "Store Room details are required.");
-                return Page();
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
             }
             if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
                 return Page();
+            }
 
-            _context.StoreRooms.Add(ViewModel.StoreRoom);
+            var storeRoom = _mapper.Map<StoreRoom>(ViewModel);
+
+            _context.StoreRooms.Add(storeRoom);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/StoreRooms/Index");

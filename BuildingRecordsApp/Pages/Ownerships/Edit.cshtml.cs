@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Ownerships
 {
@@ -11,11 +12,13 @@ namespace BuildingRecordsApp.Pages.Ownerships
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -26,44 +29,39 @@ namespace BuildingRecordsApp.Pages.Ownerships
             if (id == null)
                 return NotFound();
 
-            ViewModel = new OwnershipFormViewModel
-            {
-                Ownership = await _context.Ownerships
-                    .Include(o => o.Unit)
-                    .Include(o => o.CompanyTrust)
-                    .FirstOrDefaultAsync(m => m.OwnershipId == id) ?? null!,
-                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership),
-                CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync()
-            };
-            
-            if (ViewModel == null)
+            var ownership = await _context.Ownerships
+                .Include(o => o.Unit)
+                .Include(o => o.CompanyTrust)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o => o.OwnershipId == id);
+
+            if (ownership == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<OwnershipFormViewModel>(ownership);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
+            ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
+            if (ViewModel.OwnershipId == null)
                 ModelState.AddModelError("ViewModel", "Ownership details are required.");
-                return Page();
-            }
-            if (ViewModel.Ownership == null)
-            {
-                ModelState.AddModelError("ViewModel.Ownership", "Ownership details are required.");
-                return Page();
-            }
-            if (ViewModel.Ownership.UnitId == null)
-            {
+            
+            if (ViewModel.UnitId == null)
                 ModelState.AddModelError("Ownership.UnitId", "Unit is required.");
-                return Page();
-            }
 
             if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
+                ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
                 return Page();
+            }
 
-            _context.Attach(ViewModel.Ownership).State = EntityState.Modified;
+            var ownership = _mapper.Map<Ownership>(ViewModel);
+            _context.Attach(ownership).State = EntityState.Modified;
 
             try
             {
@@ -71,7 +69,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OwnershipExists(ViewModel.Ownership.OwnershipId))
+                if (!OwnershipExists(ownership.OwnershipId))
                     return NotFound();
 
                 throw;

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Agents
 {
@@ -11,11 +12,13 @@ namespace BuildingRecordsApp.Pages.Agents
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -26,7 +29,6 @@ namespace BuildingRecordsApp.Pages.Agents
         {
             ViewModel = new AgentFormViewModel
             {
-                Agent = new Agent(),
                 AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync()
             };
             return Page();
@@ -34,21 +36,20 @@ namespace BuildingRecordsApp.Pages.Agents
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.Agent == null)
+            if (ViewModel.AgentCompanyId == null)
             {
-                ModelState.AddModelError("ViewModel.Agent", "Agent details are required.");
-                return Page();
+                ModelState.AddModelError("ViewModel.AgentCompanyId", "Agent Company is required.");
             }
-            if (ViewModel.Agent.AgentCompanyId == null)
-            {
-                ModelState.AddModelError("ViewModel.Agent.AgentCompanyId", "Agent Company is required.");
-                return Page();
-            }
-                
-            if (!ModelState.IsValid)
-                return Page();
 
-            _context.Agents.Add(ViewModel.Agent);
+            if (!ModelState.IsValid)
+            {
+                ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
+                return Page();
+            }
+
+            var agent = _mapper.Map<Agent>(ViewModel);
+
+            _context.Agents.Add(agent);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Agents/Index");

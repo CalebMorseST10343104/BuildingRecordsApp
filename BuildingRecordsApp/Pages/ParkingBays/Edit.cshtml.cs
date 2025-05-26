@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.ParkingBays
 {
@@ -11,11 +12,13 @@ namespace BuildingRecordsApp.Pages.ParkingBays
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -26,36 +29,33 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             if (id == null)
                 return NotFound();
 
-            ViewModel = new ParkingBayFormViewModel
-            {
-                ParkingBay = await _context.ParkingBays
-                    .Include(pb => pb.Unit)
-                    .FirstOrDefaultAsync(pb => pb.ParkingBayId == id),
-                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
-            };
+            var parkingBay = await _context.ParkingBays
+                .Include(pb => pb.Unit)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(pb => pb.ParkingBayId == id);
 
-            if (ViewModel == null)
+            if (parkingBay == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<ParkingBayFormViewModel>(parkingBay);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
                 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
+            if (ViewModel.ParkingBayId == null)
                 ModelState.AddModelError("ViewModel", "Parking Bay details are required.");
-                return Page();
-            }
-            if (ViewModel.ParkingBay == null)
-            {
-                ModelState.AddModelError("ViewModel.ParkingBay", "Parking Bay details are required.");
-                return Page();
-            }
-            if (!ModelState.IsValid)
-                return Page();
 
-            _context.Attach(ViewModel.ParkingBay).State = EntityState.Modified;
+            if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                return Page();
+            }
+
+            var parkingBay = _mapper.Map<ParkingBay>(ViewModel);
+            _context.Attach(parkingBay).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +63,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParkingBayExists(ViewModel.ParkingBay.ParkingBayId))
+                if (!ParkingBayExists(parkingBay.ParkingBayId))
                     return NotFound();
 
                 throw;

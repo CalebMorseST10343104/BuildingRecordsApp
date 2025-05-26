@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Enums;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.TagRemoteRecords
 {
@@ -10,11 +11,13 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -24,7 +27,6 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
         {
             ViewModel = new TagRemoteRecordFormViewModel
             {
-                TagRemoteRecord = new TagRemoteRecord(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync(UsageContext.ForTagRemoteRecord)
             };
             return Page();
@@ -32,28 +34,19 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
+            if (ViewModel.UnitId == null)
             {
-                ModelState.AddModelError("ViewModel", "Tag Remote Record details are required.");
-                return Page();
-            }
-            if (ViewModel.TagRemoteRecord == null)
-            {
-                ModelState.AddModelError("ViewModel.TagRemoteRecord", "Tag Remote Record details are required.");
-                return Page();
-            }
-            if (ViewModel.TagRemoteRecord.UnitId == null)
-            {
-                ModelState.AddModelError("ViewModel.TagRemoteRecord.UnitId", "Unit is required.");
-                return Page();
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
             }
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("ModelState is invalid");
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(UsageContext.ForTagRemoteRecord);
                 return Page();
             }
 
-            _context.TagRemoteRecords.Add(ViewModel.TagRemoteRecord);
+            var tagRemoteRecord = _mapper.Map<TagRemoteRecord>(ViewModel);
+
+            _context.TagRemoteRecords.Add(tagRemoteRecord);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/TagRemoteRecords/Index");

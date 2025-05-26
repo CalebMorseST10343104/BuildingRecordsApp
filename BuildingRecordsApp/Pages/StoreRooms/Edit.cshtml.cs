@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.StoreRooms
 {
@@ -11,11 +12,13 @@ namespace BuildingRecordsApp.Pages.StoreRooms
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -26,36 +29,33 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             if (id == null)
                 return NotFound();
 
-            ViewModel = new StoreRoomFormViewModel
-            {
-                StoreRoom = await _context.StoreRooms
-                    .Include(sr => sr.Unit)
-                    .FirstOrDefaultAsync(sr => sr.StoreRoomId == id),
-                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
-            };
+            var storeRoom = await _context.StoreRooms
+                .Include(sr => sr.Unit)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(sr => sr.StoreRoomId == id);
 
-            if (ViewModel.StoreRoom == null)
+            if (storeRoom == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<StoreRoomFormViewModel>(storeRoom);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
+            if (ViewModel.StoreRoomId == null)
                 ModelState.AddModelError("ViewModel", "Store Room details are required.");
-                return Page();
-            }
-            if (ViewModel.StoreRoom == null)
-            {
-                ModelState.AddModelError("ViewModel.StoreRoom", "Store Room details are required.");
-                return Page();
-            }
-            if (!ModelState.IsValid)
-                return Page();
 
-            _context.Attach(ViewModel.StoreRoom).State = EntityState.Modified;
+            if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                return Page();
+            }
+
+            var storeRoom = _mapper.Map<StoreRoom>(ViewModel);
+            _context.Attach(storeRoom).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +63,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StoreRoomExists(ViewModel.StoreRoom.StoreRoomId))
+                if (!StoreRoomExists(storeRoom.StoreRoomId))
                     return NotFound();
 
                 throw;

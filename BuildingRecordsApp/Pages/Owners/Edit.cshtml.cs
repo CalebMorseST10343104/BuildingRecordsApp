@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Owners
 {
@@ -11,11 +12,13 @@ namespace BuildingRecordsApp.Pages.Owners
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
         [BindProperty]
         public required OwnerFormViewModel ViewModel { get; set; }
@@ -25,48 +28,38 @@ namespace BuildingRecordsApp.Pages.Owners
             if (id == null)
                 return NotFound();
 
-            ViewModel = new OwnerFormViewModel
-            {
-                Owner = await _context.Owners
-                    .Include(o => o.Person)
-                    .Include(o => o.Ownership)
-                    .FirstOrDefaultAsync(m => m.OwnerId == id) ?? null!,
-                PersonSelectList = await _selectListService.GetPersonSelectListAsync(),
-                OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync()
-            };
+            var owner = await _context.Owners
+                .Include(o => o.Person)
+                .Include(o => o.Ownership)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o => o.OwnerId == id);
 
-            if (ViewModel.Owner == null)
+            if (owner == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<OwnerFormViewModel>(owner);
+            ViewModel.OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync();
+            ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
+            if (ViewModel.OwnerId == null)
                 ModelState.AddModelError("ViewModel", "Owner details are required.");
-                return Page();
-            }
-            if (ViewModel.Owner == null)
-            {
-                ModelState.AddModelError("ViewModel.Owner", "Owner details are required.");
-                return Page();
-            }
-            if (ViewModel.Owner.PersonId == null)
-            {
-                ModelState.AddModelError("ViewModel.Owner.PersonId", "Person is required.");
-                return Page();
-            }
-            if (ViewModel.Owner.OwnershipId == null)
-            {
-                ModelState.AddModelError("ViewModel.Owner.OwnershipId", "Ownership is required.");
-                return Page();
-            }
+                
+            if (ViewModel.PersonId == null)
+                ModelState.AddModelError("ViewModel.PersonId", "Person is required.");
+                
+            if (ViewModel.OwnershipId == null)
+                ModelState.AddModelError("ViewModel.OwnershipId", "Ownership is required.");
+
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(ViewModel.Owner).State = EntityState.Modified;
+            var owner = _mapper.Map<Owner>(ViewModel);
+            _context.Attach(owner).State = EntityState.Modified;
 
             try
             {
@@ -74,7 +67,7 @@ namespace BuildingRecordsApp.Pages.Owners
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OwnerExists(ViewModel.Owner.OwnerId))
+                if (!OwnerExists(owner.OwnerId))
                     return NotFound();
 
                 throw;

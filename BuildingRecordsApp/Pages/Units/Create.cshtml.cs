@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Units
 {
@@ -9,11 +10,13 @@ namespace BuildingRecordsApp.Pages.Units
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -23,7 +26,6 @@ namespace BuildingRecordsApp.Pages.Units
         {
             ViewModel = new UnitFormViewModel
             {
-                Unit = new Unit(),
                 BuildingSelectList = await _selectListService.GetBuildingSelectListAsync()
             };
             return Page();
@@ -31,29 +33,20 @@ namespace BuildingRecordsApp.Pages.Units
         
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
+            if (ViewModel.BuildingId == null)
             {
-                ModelState.AddModelError("ViewModel", "Unit details are required.");
-                return Page();
-            }
-            if (ViewModel.Unit == null)
-            {
-                ModelState.AddModelError("ViewModel.Unit", "Unit details are required.");
-                return Page();
-            }
-            if (ViewModel.Unit.BuildingId == null)
-            {
-                ModelState.AddModelError("ViewModel.Unit.BuildingId", "Building is required.");
-                return Page();
+                ModelState.AddModelError("ViewModel.BuildingId", "Building is required.");
             }
 
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("ModelState is invalid");
+                ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
                 return Page();
             }
 
-            _context.Units.Add(ViewModel.Unit);
+            var unit = _mapper.Map<Unit>(ViewModel);
+
+            _context.Units.Add(unit);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Units/Index");

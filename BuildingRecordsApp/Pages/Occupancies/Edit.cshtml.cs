@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Occupancies
 {
@@ -11,10 +12,13 @@ namespace BuildingRecordsApp.Pages.Occupancies
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        private readonly IMapper _mapper;
+
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -24,36 +28,40 @@ namespace BuildingRecordsApp.Pages.Occupancies
         {
             if (id == null)
                 return NotFound();
-            ViewModel = new OccupancyFormViewModel
-            {
-                Occupancy = await _context.Occupancies.FirstOrDefaultAsync(m => m.OccupancyId == id),
-                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy),
-                PersonSelectList = await _selectListService.GetPersonSelectListAsync()
-            };
 
-            if (ViewModel.Occupancy == null)
+            var occupancy = await _context.Occupancies
+                .Include(o => o.Unit)
+                .Include(o => o.Occupant)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o => o.OccupancyId == id);
+
+            if (occupancy == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<OccupancyFormViewModel>(occupancy);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy);
+            ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.Occupancy == null)
-            {
-                ModelState.AddModelError("ViewModel.Occupancy", "Occupancy details are required.");
-                return Page();
-            }
-            if (ViewModel.Occupancy.UnitId == null)
-            {
-                ModelState.AddModelError("ViewModel.Occupancy.UnitId", "Unit is required.");
-                return Page();
-            }
+            if (ViewModel.OccupancyId == null)
+                ModelState.AddModelError("ViewModel", "Occupancy ID is required.");
+            
+            if (ViewModel.UnitId == null)
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
 
             if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy);
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
                 return Page();
+            }
 
-            _context.Attach(ViewModel.Occupancy).State = EntityState.Modified;
+            var occupancy = _mapper.Map<Occupancy>(ViewModel);
+            _context.Attach(occupancy).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +69,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OccupancyExists(ViewModel.Occupancy.OccupancyId))
+                if (!OccupancyExists(occupancy.OccupancyId))
                     return NotFound();
 
                 throw;

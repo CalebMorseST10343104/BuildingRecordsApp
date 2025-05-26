@@ -1,50 +1,50 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.UnitFormViewModel
 
 <div>
-    <label asp-for="Unit.BuildingId"></label>
-    <select asp-for="Unit.BuildingId" asp-items="@Model.BuildingSelectList">
+    <label asp-for="BuildingId"></label>
+    <select asp-for="BuildingId" asp-items="@Model.BuildingSelectList">
         <option value="">Select Building</option>
     </select>
-    <span asp-validation-for="Unit.BuildingId" class="text-danger"></span>
+    <span asp-validation-for="BuildingId" class="text-danger"></span>
 </div>
 <div>
-    <label asp-for="Unit.UnitNumber"></label>
-    <input asp-for="Unit.UnitNumber" />
-    <span asp-validation-for="Unit.UnitNumber" class="text-danger"></span>
-</div>
-
-<div>
-    <label asp-for="Unit.Bedrooms"></label>
-    <input asp-for="Unit.Bedrooms" />
-    <span asp-validation-for="Unit.Bedrooms" class="text-danger"></span>
+    <label asp-for="UnitNumber"></label>
+    <input asp-for="UnitNumber" />
+    <span asp-validation-for="UnitNumber" class="text-danger"></span>
 </div>
 
 <div>
-    <label asp-for="Unit.DbInverter"></label>
-    <input asp-for="Unit.DbInverter" type="checkbox" />
-    <span asp-validation-for="Unit.DbInverter" class="text-danger"></span>
+    <label asp-for="Bedrooms"></label>
+    <input asp-for="Bedrooms" />
+    <span asp-validation-for="Bedrooms" class="text-danger"></span>
 </div>
 
 <div>
-    <label asp-for="Unit.Housekeeping"></label>
-    <input asp-for="Unit.Housekeeping" type="checkbox" />
-    <span asp-validation-for="Unit.Housekeeping" class="text-danger"></span>
+    <label asp-for="DbInverter"></label>
+    <input asp-for="DbInverter" type="checkbox" />
+    <span asp-validation-for="DbInverter" class="text-danger"></span>
 </div>
 
 <div>
-    <label asp-for="Unit.PetFriendly"></label>
-    <input asp-for="Unit.PetFriendly" type="checkbox" />
-    <span asp-validation-for="Unit.PetFriendly" class="text-danger"></span>
+    <label asp-for="Housekeeping"></label>
+    <input asp-for="Housekeeping" type="checkbox" />
+    <span asp-validation-for="Housekeeping" class="text-danger"></span>
 </div>
 
 <div>
-    <label asp-for="Unit.SublettingAllowed"></label>
-    <input asp-for="Unit.SublettingAllowed" type="checkbox" />
-    <span asp-validation-for="Unit.SublettingAllowed" class="text-danger"></span>
+    <label asp-for="PetFriendly"></label>
+    <input asp-for="PetFriendly" type="checkbox" />
+    <span asp-validation-for="PetFriendly" class="text-danger"></span>
 </div>
 
 <div>
-    <label asp-for="Unit.AirconditioningUnits"></label>
-    <input asp-for="Unit.AirconditioningUnits" />
-    <span asp-validation-for="Unit.AirconditioningUnits" class="text-danger"></span>
+    <label asp-for="SublettingAllowed"></label>
+    <input asp-for="SublettingAllowed" type="checkbox" />
+    <span asp-validation-for="SublettingAllowed" class="text-danger"></span>
+</div>
+
+<div>
+    <label asp-for="AirconditioningUnits"></label>
+    <input asp-for="AirconditioningUnits" />
+    <span asp-validation-for="AirconditioningUnits" class="text-danger"></span>
 </div>    

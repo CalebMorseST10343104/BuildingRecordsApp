@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Vehicles
 {
@@ -10,11 +11,13 @@ namespace BuildingRecordsApp.Pages.Vehicles
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -25,41 +28,36 @@ namespace BuildingRecordsApp.Pages.Vehicles
             if (id == null)
                 return NotFound();
 
-            ViewModel = new VehicleFormViewModel
-            {
-                Vehicle = await _context.Vehicles
-                    .Include(v => v.Unit)
-                    .FirstOrDefaultAsync(v => v.VehicleId == id),
-                UnitSelectList = await _selectListService.GetUnitSelectListAsync()
-            };
+            var vehicle = await _context.Vehicles
+                .Include(v => v.Unit)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(v => v.VehicleId == id);
 
-            if (ViewModel == null)
+            if (vehicle == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<VehicleFormViewModel>(vehicle);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
                 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
-                ModelState.AddModelError("ViewModel", "Vehicle details are required.");
-                return Page();
-            }
-            if (ViewModel.Vehicle == null)
-            {
+            if (ViewModel.VehicleId == null)
                 ModelState.AddModelError("Vehicle", "Vehicle details are required.");
-                return Page();
-            }
-            if (ViewModel.Vehicle.UnitId == null)
-            {
+                
+            if (ViewModel.UnitId == null)
                 ModelState.AddModelError("Vehicle.UnitId", "Unit is required.");
+
+            if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
                 return Page();
             }
-            if (!ModelState.IsValid)
-                return Page();
 
-            _context.Attach(ViewModel.Vehicle).State = EntityState.Modified;
+            var vehicle = _mapper.Map<Vehicle>(ViewModel);
+            _context.Attach(vehicle).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +65,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VehicleExists(ViewModel.Vehicle.VehicleId))
+                if (!VehicleExists(vehicle.VehicleId))
                     return NotFound();
 
                 throw;

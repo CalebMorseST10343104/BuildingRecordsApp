@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.ParkingBays
 {
@@ -11,11 +12,13 @@ namespace BuildingRecordsApp.Pages.ParkingBays
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -32,20 +35,18 @@ namespace BuildingRecordsApp.Pages.ParkingBays
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
-                ModelState.AddModelError("ViewModel", "Parking Bay details are required.");
-                return Page();
-            }
-            if (ViewModel.ParkingBay == null)
-            {
-                ModelState.AddModelError("ViewModel.ParkingBay", "Parking Bay details are required.");
-                return Page();
-            }
-            if (!ModelState.IsValid)
-                return Page();
+            if (ViewModel.UnitID == null)
+                ModelState.AddModelError("ViewModel.UnitID", "Unit is required.");
 
-            _context.ParkingBays.Add(ViewModel.ParkingBay);
+            if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                return Page();
+            }
+
+            var parkingBay = _mapper.Map<ParkingBay>(ViewModel);
+
+            _context.ParkingBays.Add(parkingBay);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/ParkingBays/Index");

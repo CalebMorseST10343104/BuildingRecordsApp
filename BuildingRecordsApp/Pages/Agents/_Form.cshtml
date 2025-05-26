@@ -12,33 +12,33 @@ select: <select asp-for="[model.field]" asp-items="[model.selectList]" class="fo
  *@
 
  <div class="mb-3">
-    <label asp-for="Agent.FirstName" class="form-label"></label>
-    <input asp-for="Agent.FirstName" class="form-control" />
-    <span asp-validation-for="Agent.FirstName" class="text-danger"></span>
+    <label asp-for="FirstName" class="form-label"></label>
+    <input asp-for="FirstName" class="form-control" />
+    <span asp-validation-for="FirstName" class="text-danger"></span>
 </div>
 
 <div class="mb-3">
-    <label asp-for="Agent.LastName" class="form-label"></label>
-    <input asp-for="Agent.LastName" class="form-control" />
-    <span asp-validation-for="Agent.LastName" class="text-danger"></span>
+    <label asp-for="LastName" class="form-label"></label>
+    <input asp-for="LastName" class="form-control" />
+    <span asp-validation-for="LastName" class="text-danger"></span>
 </div>
 
 <div class="mb-3">
-    <label asp-for="Agent.PhoneNumber" class="form-label"></label>
-    <input asp-for="Agent.PhoneNumber" class="form-control" />
-    <span asp-validation-for="Agent.PhoneNumber" class="text-danger"></span>
+    <label asp-for="PhoneNumber" class="form-label"></label>
+    <input asp-for="PhoneNumber" class="form-control" />
+    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
 </div>
 
 <div class="mb-3">
-    <label asp-for="Agent.Email" class="form-label"></label>
-    <input asp-for="Agent.Email" class="form-control" />
-    <span asp-validation-for="Agent.Email" class="text-danger"></span>
+    <label asp-for="Email" class="form-label"></label>
+    <input asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
 </div>
 
 <div class="mb-4">
-    <label asp-for="Agent.AgentCompanyId" class="form-label"></label>
-    <select asp-for="Agent.AgentCompanyId" asp-items="Model.AgentCompanySelectList" class="form-select">
+    <label asp-for="AgentCompanyId" class="form-label"></label>
+    <select asp-for="AgentCompanyId" asp-items="Model.AgentCompanySelectList" class="form-select">
         <option value="">-- Select Company --</option>
     </select>
-    <span asp-validation-for="Agent.AgentCompanyId" class="text-danger"></span>
+    <span asp-validation-for="AgentCompanyId" class="text-danger"></span>
 </div>

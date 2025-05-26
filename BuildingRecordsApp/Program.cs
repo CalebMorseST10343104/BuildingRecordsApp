@@ -31,7 +31,7 @@ internal class Program
         });
         
         builder.Services.AddScoped<ISelectListService, SelectListService>();
-
+        builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
         var app = builder.Build();
 

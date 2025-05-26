@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Buildings
 {
     public class EditModel : PageModel
     {
         private readonly BuildingContext _context;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context)
+        public EditModel(BuildingContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -23,33 +26,28 @@ namespace BuildingRecordsApp.Pages.Buildings
             if (id == null)
                 return NotFound();
 
-            ViewModel = new BuildingFormViewModel
-            {
-                Building = await _context.Buildings.FirstOrDefaultAsync(m => m.BuildingId == id)
-            };
+            var building = await _context.Buildings
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.BuildingId == id);
 
-            if (ViewModel.Building == null)
+            if (building == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<BuildingFormViewModel>(building);
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
+            if (ViewModel.BuildingId == null)
                 ModelState.AddModelError("ViewModel", "Building details are required.");
-                return Page();
-            }
-            if (ViewModel.Building == null)
-            {
-                ModelState.AddModelError("ViewModel.Building", "Building details are required.");
-                return Page();
-            }
+            
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(ViewModel.Building).State = EntityState.Modified;
+            var building = _mapper.Map<Building>(ViewModel);
+            _context.Attach(building).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +55,7 @@ namespace BuildingRecordsApp.Pages.Buildings
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BuildingExists(ViewModel.Building.BuildingId))
+                if (!BuildingExists(building.BuildingId))
                     return NotFound();
 
                 throw;

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Leases
 {
@@ -9,11 +10,13 @@ namespace BuildingRecordsApp.Pages.Leases
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -23,7 +26,6 @@ namespace BuildingRecordsApp.Pages.Leases
         {
             ViewModel = new LeaseFormViewModel
             {
-                Lease = new Lease(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease)
             };
             return Page();
@@ -31,20 +33,20 @@ namespace BuildingRecordsApp.Pages.Leases
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.Lease == null)
-            {
-                ModelState.AddModelError("ViewModel.Lease", "Lease details are required.");
-                return Page();
-            }
-            if (ViewModel.Lease.Unit == null)
+            if (ViewModel.UnitId == null)
             {
                 ModelState.AddModelError("Lease.UnitId", "Unit is required.");
+            }
+            
+            if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
                 return Page();
             }
-            if (!ModelState.IsValid)
-                return Page();
 
-            _context.Leases.Add(ViewModel.Lease);
+            var lease = _mapper.Map<Lease>(ViewModel);
+
+            _context.Leases.Add(lease);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Leases/Index");

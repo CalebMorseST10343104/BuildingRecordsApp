@@ -1,12 +1,12 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.OwnerFormViewModel
 
 <div>
-    <label asp-for="Owner.PersonId"></label>
-    <select asp-for="Owner.PersonId" asp-items="@Model.PersonSelectList"></select>
-    <span asp-validation-for="Owner.PersonId" class="text-danger"></span>
+    <label asp-for="PersonId"></label>
+    <select asp-for="PersonId" asp-items="@Model.PersonSelectList"></select>
+    <span asp-validation-for="PersonId" class="text-danger"></span>
 </div>
 <div>
-    <label asp-for="Owner.OwnershipId"></label>
-    <select asp-for="Owner.OwnershipId" asp-items="@Model.OwnershipSelectList"></select>
-    <span asp-validation-for="Owner.OwnershipId" class="text-danger"></span>
+    <label asp-for="OwnershipId"></label>
+    <select asp-for="OwnershipId" asp-items="@Model.OwnershipSelectList"></select>
+    <span asp-validation-for="OwnershipId" class="text-danger"></span>
 </div>

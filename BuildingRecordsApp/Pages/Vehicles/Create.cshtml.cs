@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Vehicles
 {
@@ -9,11 +10,13 @@ namespace BuildingRecordsApp.Pages.Vehicles
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -23,7 +26,6 @@ namespace BuildingRecordsApp.Pages.Vehicles
         {
             ViewModel = new VehicleFormViewModel
             {
-                Vehicle = new Vehicle(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
             return Page();
@@ -31,25 +33,19 @@ namespace BuildingRecordsApp.Pages.Vehicles
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
+            if (ViewModel.UnitId == null)
             {
-                ModelState.AddModelError("ViewModel", "Vehicle details are required.");
-                return Page();
-            }
-            if (ViewModel.Vehicle == null)
-            {
-                ModelState.AddModelError("ViewModel.Vehicle", "Vehicle details are required.");
-                return Page();
-            }
-            if (ViewModel.Vehicle.UnitId == null)
-            {
-                ModelState.AddModelError("ViewModel.Vehicle.UnitId", "Unit is required.");
-                return Page();
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
             }
             if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
                 return Page();
+            }
 
-            _context.Vehicles.Add(ViewModel.Vehicle);
+            var vehicle = _mapper.Map<Vehicle>(ViewModel);
+
+            _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Vehicles/Index");

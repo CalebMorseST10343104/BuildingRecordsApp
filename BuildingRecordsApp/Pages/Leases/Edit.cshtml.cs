@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Leases
 {
@@ -11,11 +12,13 @@ namespace BuildingRecordsApp.Pages.Leases
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -26,37 +29,36 @@ namespace BuildingRecordsApp.Pages.Leases
             if (id == null)
                 return NotFound();
 
-            ViewModel = new LeaseFormViewModel
-            {
-                Lease = await _context.Leases
-                    .Include(l => l.Unit)
-                    .FirstOrDefaultAsync(m => m.LeaseId == id) ?? null!,
-                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease)
-            };
+            var lease = await _context.Leases
+                .Include(l => l.Unit)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(l => l.LeaseId == id);
 
-            if (ViewModel.Lease == null)
+            if (lease == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<LeaseFormViewModel>(lease);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.Lease == null)
-            {
-                ModelState.AddModelError("ViewModel.Lease", "Lease details are required.");
-                return Page();
-            }
-            if (ViewModel.Lease.UnitId == null)
-            {
-                ModelState.AddModelError("ViewModel.Lease.UnitId", "Unit is required.");
-                return Page();
-            }
+            if (ViewModel.LeaseId == null)
+                ModelState.AddModelError("ViewModel", "Lease details are required.");
+            
+            if (ViewModel.UnitId == null)
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
 
             if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
                 return Page();
+            }
 
-            _context.Attach(ViewModel.Lease).State = EntityState.Modified;
+            var lease = _mapper.Map<Lease>(ViewModel);
+            _context.Attach(lease).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +66,7 @@ namespace BuildingRecordsApp.Pages.Leases
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LeaseExists(ViewModel!.Lease.LeaseId))
+                if (!LeaseExists(lease.LeaseId))
                     return NotFound();
 
                 throw;

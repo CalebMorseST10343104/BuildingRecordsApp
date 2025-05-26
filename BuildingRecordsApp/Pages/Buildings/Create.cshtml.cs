@@ -4,16 +4,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Buildings
 {
     public class CreateModel : PageModel
     {
         private readonly BuildingContext _context;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context)
+        public CreateModel(BuildingContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -21,24 +24,18 @@ namespace BuildingRecordsApp.Pages.Buildings
 
         public IActionResult OnGet()
         {
-            ViewModel = new BuildingFormViewModel
-            {
-                Building = new Building()
-            };
+            ViewModel = new BuildingFormViewModel();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.Building == null)
-            {
-                ModelState.AddModelError("ViewModel.Building", "Building details are required.");
-                return Page();
-            }
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Buildings.Add(ViewModel.Building);
+            var building = _mapper.Map<Building>(ViewModel);
+
+            _context.Buildings.Add(building);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Buildings/Index");

@@ -1,18 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using BuildingRecordsApp.Models;
+using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.AgentCompanies
 {
     public class EditModel : PageModel
     {
         private readonly BuildingContext _context;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context)
+        public EditModel(BuildingContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -23,33 +26,30 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
             if (id == null)
                 return NotFound();
 
-            ViewModel = new AgentCompanyFormViewModel
-            {
-                AgentCompany = await _context.AgentCompanies.FirstOrDefaultAsync(ac => ac.AgentCompanyId == id)
-            };
+            var agentCompany = await _context.AgentCompanies
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.AgentCompanyId == id);
 
-            if (ViewModel.AgentCompany == null)
+            if (agentCompany == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<AgentCompanyFormViewModel>(agentCompany);
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
-                ModelState.AddModelError("ViewModel", "Agent company details are required.");
-                return Page();
-            }
-            if (ViewModel.AgentCompany == null)
-            {
-                ModelState.AddModelError("ViewModel.AgentCompany", "Agent company details are required.");
-                return Page();
-            }
+            if (ViewModel.AgentCompanyId == null)
+                ModelState.AddModelError("ViewModel", "Agent Company details are required.");
+
+            
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(ViewModel.AgentCompany).State = EntityState.Modified;
+            // Map the ViewModel to the Entity
+            var agentCompany = _mapper.Map<AgentCompany>(ViewModel);
+            _context.Attach(agentCompany).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AgentCompanyExists(ViewModel.AgentCompany.AgentCompanyId))
+                if (!AgentCompanyExists(agentCompany.AgentCompanyId))
                     return NotFound();
 
                 throw;

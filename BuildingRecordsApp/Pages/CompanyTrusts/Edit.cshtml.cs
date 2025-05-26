@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.CompanyTrusts
 {
     public class EditModel : PageModel
     {
         private readonly BuildingContext _context;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context)
+        public EditModel(BuildingContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         [BindProperty]
         public required CompanyTrustFormViewModel ViewModel { get; set; }
@@ -22,33 +25,28 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             if (id == null)
                 return NotFound();
 
-            ViewModel = new CompanyTrustFormViewModel
-            {
-                CompanyTrust = await _context.CompanyTrusts.FindAsync(id) ?? null!
-            };
+            var companyTrust = await _context.CompanyTrusts
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ct => ct.CompanyTrustId == id);
 
-            if (ViewModel.CompanyTrust == null)
+            if (companyTrust == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<CompanyTrustFormViewModel>(companyTrust);
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {   
-            if (ViewModel == null)
-            {
+            if (ViewModel.CompanyTrustId == null)
                 ModelState.AddModelError("ViewModel", "Company Trust details are required.");
-                return Page();
-            }
-            if (ViewModel.CompanyTrust == null)
-            {
-                ModelState.AddModelError("ViewModel.CompanyTrust", "Company Trust details are required.");
-                return Page();
-            }
+            
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(ViewModel.CompanyTrust).State = EntityState.Modified;
+            var companyTrust = _mapper.Map<CompanyTrust>(ViewModel);
+            _context.Attach(companyTrust).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +54,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CompanyTrustExists(ViewModel.CompanyTrust.CompanyTrustId))
+                if (!CompanyTrustExists(companyTrust.CompanyTrustId))
                     return NotFound();
 
                 throw;

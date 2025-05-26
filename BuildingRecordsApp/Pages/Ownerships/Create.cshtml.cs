@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.Ownerships
 {
@@ -10,11 +11,13 @@ namespace BuildingRecordsApp.Pages.Ownerships
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -24,7 +27,6 @@ namespace BuildingRecordsApp.Pages.Ownerships
         {
             ViewModel = new OwnershipFormViewModel
             {
-                Ownership = new Ownership(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership),
                 CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync()
             };
@@ -33,19 +35,9 @@ namespace BuildingRecordsApp.Pages.Ownerships
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
+            if (ViewModel.UnitId == null)
             {
-                ModelState.AddModelError("ViewModel", "Ownership details are required.");
-                return Page();
-            }
-            if (ViewModel.Ownership == null)
-            {
-                ModelState.AddModelError("ViewModel.Ownership", "Ownership details are required.");
-                return Page();
-            }
-            if (ViewModel.Ownership.UnitId == null)
-            {
-                ModelState.AddModelError("ViewModel.Ownership.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
                 return Page();
             }
 
@@ -54,8 +46,10 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 Console.WriteLine("ModelState is invalid");
                 return Page();
             }
+
+            var ownership = _mapper.Map<Ownership>(ViewModel);
             
-            _context.Ownerships.Add(ViewModel.Ownership);
+            _context.Ownerships.Add(ownership);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Ownerships/Index");

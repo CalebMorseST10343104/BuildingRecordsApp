@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.TagRemoteRecords
 {
@@ -9,11 +11,13 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
     {
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
+        private readonly IMapper _mapper;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
         {
             _context = context;
             _selectListService = selectListService;
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -24,42 +28,36 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             if (id == null)
                 return NotFound();
 
-            ViewModel = new TagRemoteRecordFormViewModel
-            {
-                TagRemoteRecord = await _context.TagRemoteRecords
-                    .Include(tr => tr.Unit)
-                    .FirstOrDefaultAsync(tr => tr.TagRemoteRecordId == id),
-                UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForTagRemoteRecord)
-            };
-            
-            if (ViewModel == null)
+            var tagRemoteRecord = await _context.TagRemoteRecords
+                .Include(tr => tr.Unit)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(tr => tr.TagRemoteRecordId == id);
+
+            if (tagRemoteRecord == null)
                 return NotFound();
+
+            ViewModel = _mapper.Map<TagRemoteRecordFormViewModel>(tagRemoteRecord);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
                 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel == null)
-            {
+            if (ViewModel.TagRemoteRecordId == null)
                 ModelState.AddModelError("ViewModel", "Tag Remote Record details are required.");
-                return Page();
-            }
-            if (ViewModel.TagRemoteRecord == null)
-            {
-                ModelState.AddModelError("ViewModel.TagRemoteRecord", "Tag Remote Record details are required.");
-                return Page();
-            }
-            if (ViewModel.TagRemoteRecord.UnitId == null)
-            {
+            
+            if (ViewModel.UnitId == null)
                 ModelState.AddModelError("ViewModel.TagRemoteRecord.UnitId", "Unit is required.");
-                return Page();
-            }
 
             if (!ModelState.IsValid)
+            {
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
                 return Page();
+            }
 
-            _context.Attach(ViewModel.TagRemoteRecord).State = EntityState.Modified;
+            var tagRemoteRecord = _mapper.Map<TagRemoteRecord>(ViewModel);
+            _context.Attach(tagRemoteRecord).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +65,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TagRemoteRecordExists(ViewModel.TagRemoteRecord.TagRemoteRecordId))
+                if (!TagRemoteRecordExists(tagRemoteRecord.TagRemoteRecordId))
                     return NotFound();
 
                 throw;
