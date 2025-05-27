@@ -9,6 +9,8 @@ namespace BuildingRecordsApp.Models.Entities
         [Display(Name = "Parking Bay Number")]
         public string ParkingBayNumber { get; set; } = string.Empty;
 
+        public bool IsNearEntrance { get; set; } = false;
+
 
         public int? UnitID { get; set; } // Foreign key
         public Unit? Unit { get; set; } // Navigation property

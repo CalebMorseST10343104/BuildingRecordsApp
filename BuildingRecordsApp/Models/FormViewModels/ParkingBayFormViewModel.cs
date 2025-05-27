@@ -12,6 +12,9 @@ public class ParkingBayFormViewModel
     [Display(Name = "Parking Bay Number")]
     public string? ParkingBayNumber { get; set; }
 
+    [Display(Name = "Is Near Entrance")]
+    public bool? IsNearEntrance { get; set; }
+
 
     public int? UnitID { get; set; } // Foreign key
 

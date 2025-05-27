@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models.FormViewModels;
 
 public class OccupancyFormViewModel
 {
-     public int? OccupancyId { get; set; }
+    public int? OccupancyId { get; set; }
 
     [Display(Name = "Occupation Type")]
     public string? OccupationType { get; set; } // e.g., "Owner", "Short-Term Rental", "Long-Term Rental"
