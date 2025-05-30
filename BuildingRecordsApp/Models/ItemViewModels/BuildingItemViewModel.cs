@@ -19,7 +19,7 @@ public class BuildingItemViewModel
     [Display(Name = "Number of Floors")]
     public int? NumberOfFloors { get; set; }
     
-    public Dictionary<string, object?> BuildingDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

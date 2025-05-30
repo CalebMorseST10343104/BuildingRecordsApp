@@ -10,7 +10,7 @@ public class OccupancyItemViewModel
     [Display(Name = "Occupation Type")]
     public string? OccupationType { get; set; }
 
-    public Dictionary<string, object?> OccupancyDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

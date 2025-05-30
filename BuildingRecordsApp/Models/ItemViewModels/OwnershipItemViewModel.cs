@@ -10,7 +10,7 @@ public class OwnershipItemViewModel
     [Display(Name = "Ownership Type")]
     public string? OwnershipType { get; set; }
 
-    public Dictionary<string, object?> OwnershipDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

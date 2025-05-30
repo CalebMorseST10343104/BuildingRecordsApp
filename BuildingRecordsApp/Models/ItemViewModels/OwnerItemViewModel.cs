@@ -7,7 +7,7 @@ public class OwnerItemViewModel
 {
     public int? OwnerId { get; set; }
 
-    public Dictionary<string, object?> OwnerDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

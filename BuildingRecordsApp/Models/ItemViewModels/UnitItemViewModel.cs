@@ -28,7 +28,7 @@ public class UnitItemViewModel
     [Display(Name = "AC Unit Count")]
     public int? AirconditioningUnits { get; set; }
 
-    public Dictionary<string, object?> UnitDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

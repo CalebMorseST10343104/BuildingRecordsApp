@@ -25,7 +25,7 @@ public class TagRemoteRecordItemViewModel
     [Display(Name = "Remotes Agent")]
     public int? RemotesAgent { get; set; }
 
-    public Dictionary<string, object?> TagRemoteRecordDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

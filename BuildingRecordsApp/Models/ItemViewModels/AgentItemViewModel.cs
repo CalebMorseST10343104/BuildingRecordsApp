@@ -19,7 +19,7 @@ public class AgentItemViewModel
     [Display(Name = "Email Address")]
     public string? Email { get; set; }
     
-    public Dictionary<string, object?> AgentDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

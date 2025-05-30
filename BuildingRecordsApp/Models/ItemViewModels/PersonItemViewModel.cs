@@ -25,7 +25,7 @@ public class PersonItemViewModel
     [Display(Name = "Phone Number")]
     public string? PhoneNumber { get; set; }
 
-    public Dictionary<string, object?> PersonDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

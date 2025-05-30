@@ -16,7 +16,7 @@ public class CompanyTrustItemViewModel
     [Display(Name = "Registration Number")]
     public string? RegistrationNumber { get; set; }
     
-    public Dictionary<string, object?> CompanyTrustDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

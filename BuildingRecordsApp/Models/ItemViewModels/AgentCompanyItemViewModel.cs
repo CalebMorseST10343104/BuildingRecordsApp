@@ -17,7 +17,7 @@ public class AgentCompanyItemViewModel
     [Display(Name = "Registration Number")]
     public string? RegistrationNumber { get; set; }
 
-    public Dictionary<string, object?> AgentCompanyDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

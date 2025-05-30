@@ -13,7 +13,7 @@ public class ParkingBayItemViewModel
     [Display(Name = "Is Near Entrance")]
     public bool? IsNearEntrance { get; set; }
 
-    public Dictionary<string, object?> ParkingBayDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

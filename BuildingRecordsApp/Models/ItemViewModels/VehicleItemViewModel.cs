@@ -19,7 +19,7 @@ public class VehicleItemViewModel
     [Display(Name = "Vehicle Colour")]
     public string? VehicleColor { get; set; }
 
-    public Dictionary<string, object?> VehicleDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

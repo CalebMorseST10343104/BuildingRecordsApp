@@ -10,7 +10,7 @@ public class StoreRoomItemViewModel
     [Display(Name = "Store Room Number")]
     public string? StoreRoomNumber { get; set; }
 
-    public Dictionary<string, object?> StoreRoomDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {

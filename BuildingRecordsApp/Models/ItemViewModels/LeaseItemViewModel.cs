@@ -28,7 +28,7 @@ public class LeaseItemViewModel
     [Display(Name = "Emergency Contact Number")]
     public string? EmergencyContactNumber { get; set; }
 
-    public Dictionary<string, object?> LeaseDetails()
+    public Dictionary<string, object?> ToDictionary()
     {
         return new Dictionary<string, object?>
         {
