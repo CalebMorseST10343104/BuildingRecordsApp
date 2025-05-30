@@ -1,33 +1,27 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using BuildingRecordsApp.Attributes;
+using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class BuildingItemViewModel
+public class BuildingItemViewModel : ItemViewModel
 {
     public int? BuildingId { get; set; }
 
     [Display(Name = "Building Name")]
+    [DisplayMode("Basic")]
     public string? Name { get; set; }
 
     [Display(Name = "Address")]
+    [DisplayMode("Detailed")]
     public string? Address { get; set; }
 
     [Display(Name = "Number of Units")]
+    [DisplayMode("Detailed")]
     public int? NumberOfUnits { get; set; }
 
     [Display(Name = "Number of Floors")]
+    [DisplayMode("Detailed")]
     public int? NumberOfFloors { get; set; }
-    
-    public Dictionary<string, object?> ToDictionary()
-    {
-        return new Dictionary<string, object?>
-        {
-            { nameof(BuildingId), BuildingId },
-            { nameof(Name), Name },
-            { nameof(Address), Address },
-            { nameof(NumberOfUnits), NumberOfUnits },
-            { nameof(NumberOfFloors), NumberOfFloors }
-        };
-    }
 }
