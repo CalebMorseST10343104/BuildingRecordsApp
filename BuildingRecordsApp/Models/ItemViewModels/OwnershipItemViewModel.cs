@@ -10,13 +10,12 @@ public class OwnershipItemViewModel
     [Display(Name = "Ownership Type")]
     public string? OwnershipType { get; set; }
 
-    //Related model display fields
-    [Display(Name = "Building Name")]
-    public string? BuildingName { get; set; }
-
-    [Display(Name = "Unit Number")]
-    public string? UnitNumber { get; set; }
-
-    [Display(Name = "Company Name")]
-    public string? CompanyName { get; set; }
+    public Dictionary<string, object?> OwnershipDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(OwnershipId), OwnershipId },
+            { nameof(OwnershipType), OwnershipType }
+        };
+    }
 }

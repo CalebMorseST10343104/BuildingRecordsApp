@@ -13,10 +13,13 @@ public class ParkingBayItemViewModel
     [Display(Name = "Is Near Entrance")]
     public bool? IsNearEntrance { get; set; }
 
-    // Related model display fields
-    [Display(Name = "Building Name")]
-    public string? BuildingName { get; set; }
-
-    [Display(Name = "Unit Number")]
-    public string? UnitNumber { get; set; }
+    public Dictionary<string, object?> ParkingBayDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(ParkingBayId), ParkingBayId },
+            { nameof(ParkingBayNumber), ParkingBayNumber },
+            { nameof(IsNearEntrance), IsNearEntrance }
+        };
+    }
 }

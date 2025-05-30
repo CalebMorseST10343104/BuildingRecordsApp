@@ -6,7 +6,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 public class CompanyTrustItemViewModel
 {
     public int? CompanyTrustId { get; set; }
-    
+
     [Display(Name = "Company/Trust Name")]
     public string? Name { get; set; }
 
@@ -15,4 +15,15 @@ public class CompanyTrustItemViewModel
 
     [Display(Name = "Registration Number")]
     public string? RegistrationNumber { get; set; }
+    
+    public Dictionary<string, object?> CompanyTrustDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(CompanyTrustId), CompanyTrustId },
+            { nameof(Name), Name },
+            { nameof(Address), Address },
+            { nameof(RegistrationNumber), RegistrationNumber }
+        };
+    }
 }

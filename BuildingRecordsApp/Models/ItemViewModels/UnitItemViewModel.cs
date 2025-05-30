@@ -27,4 +27,19 @@ public class UnitItemViewModel
 
     [Display(Name = "AC Unit Count")]
     public int? AirconditioningUnits { get; set; }
+
+    public Dictionary<string, object?> UnitDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(UnitId), UnitId },
+            { nameof(UnitNumber), UnitNumber },
+            { nameof(Bedrooms), Bedrooms },
+            { nameof(DbInverter), DbInverter },
+            { nameof(Housekeeping), Housekeeping },
+            { nameof(PetFriendly), PetFriendly },
+            { nameof(SublettingAllowed), SublettingAllowed },
+            { nameof(AirconditioningUnits), AirconditioningUnits }
+        };
+    }
 }

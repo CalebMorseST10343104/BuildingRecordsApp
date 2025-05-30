@@ -25,10 +25,17 @@ public class TagRemoteRecordItemViewModel
     [Display(Name = "Remotes Agent")]
     public int? RemotesAgent { get; set; }
 
-    // Related model display fields
-    [Display(Name = "Building Name")]
-    public string? BuildingName { get; set; }
-
-    [Display(Name = "Unit Number")]
-    public string? UnitNumber { get; set; }
+    public Dictionary<string, object?> TagRemoteRecordDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(TagRemoteRecordId), TagRemoteRecordId },
+            { nameof(TagsOwner), TagsOwner },
+            { nameof(RemotesOwner), RemotesOwner },
+            { nameof(TagsOccupant), TagsOccupant },
+            { nameof(RemotesOccupant), RemotesOccupant },
+            { nameof(TagsAgent), TagsAgent },
+            { nameof(RemotesAgent), RemotesAgent }
+        };
+    }
 }

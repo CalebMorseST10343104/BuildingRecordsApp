@@ -24,4 +24,18 @@ public class PersonItemViewModel
 
     [Display(Name = "Phone Number")]
     public string? PhoneNumber { get; set; }
+
+    public Dictionary<string, object?> PersonDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(PersonId), PersonId },
+            { nameof(FirstName), FirstName },
+            { nameof(LastName), LastName },
+            { nameof(Email), Email },
+            { nameof(PostalAddress), PostalAddress },
+            { nameof(IdNumber), IdNumber },
+            { nameof(PhoneNumber), PhoneNumber }
+        };
+    }
 }

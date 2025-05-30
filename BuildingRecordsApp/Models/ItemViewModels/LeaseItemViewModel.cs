@@ -28,10 +28,18 @@ public class LeaseItemViewModel
     [Display(Name = "Emergency Contact Number")]
     public string? EmergencyContactNumber { get; set; }
 
-    //Related model display fields
-    [Display(Name = "Building Name")]
-    public string? BuildingName { get; set; }
-
-    [Display(Name = "Unit Number")]
-    public string? UnitNumber { get; set; }
+    public Dictionary<string, object?> LeaseDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(LeaseId), LeaseId },
+            { nameof(LeaseHolderName), LeaseHolderName },
+            { nameof(StartDate), StartDate },
+            { nameof(EndDate), EndDate },
+            { nameof(PersonsOccupying), PersonsOccupying },
+            { nameof(SignedRules), SignedRules },
+            { nameof(AllowedPets), AllowedPets },
+            { nameof(EmergencyContactNumber), EmergencyContactNumber }
+        };
+    }
 }

@@ -19,7 +19,15 @@ public class AgentItemViewModel
     [Display(Name = "Email Address")]
     public string? Email { get; set; }
     
-    //Related model display fields
-    [Display(Name = "Company Name")]
-    public string? CompanyName { get; set; }
+    public Dictionary<string, object?> AgentDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(AgentId), AgentId },
+            { nameof(FirstName), FirstName },
+            { nameof(LastName), LastName },
+            { nameof(PhoneNumber), PhoneNumber },
+            { nameof(Email), Email }
+        };
+    }
 }

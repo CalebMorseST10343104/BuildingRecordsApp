@@ -10,16 +10,12 @@ public class OccupancyItemViewModel
     [Display(Name = "Occupation Type")]
     public string? OccupationType { get; set; }
 
-    //Related model display fields
-    [Display(Name = "Building")]
-    public string? BuildingName { get; set; }
-
-    [Display(Name = "Unit Number")]
-    public string? UnitNumber { get; set; }
-
-    [Display(Name = "First Name")]
-    public string? OccupantFirstName { get; set; }
-
-    [Display(Name = "Last Name")]
-    public string? OccupantLastName { get; set; }
+    public Dictionary<string, object?> OccupancyDetails()
+    {
+        return new Dictionary<string, object?>
+        {
+            { nameof(OccupancyId), OccupancyId },
+            { nameof(OccupationType), OccupationType }
+        };
+    }
 }
