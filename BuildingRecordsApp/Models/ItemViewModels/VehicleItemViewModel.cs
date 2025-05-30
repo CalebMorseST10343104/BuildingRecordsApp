@@ -18,4 +18,11 @@ public class VehicleItemViewModel
 
     [Display(Name = "Vehicle Colour")]
     public string? VehicleColor { get; set; }
+
+    // Related model display fields
+    [Display(Name = "Building Name")]
+    public string? BuildingName { get; set; }
+
+    [Display(Name = "Unit Number")]
+    public string? UnitNumber { get; set; }
 }

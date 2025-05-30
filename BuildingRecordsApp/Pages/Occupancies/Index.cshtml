@@ -24,10 +24,10 @@ Person Occupant // Navigation property for occupants
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.Name)
+                @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.Surname)
+                @Html.DisplayNameFor(model => model.Occupancies[0].Occupant!.LastName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Occupancies[0].Unit!.Building!.Name)
@@ -45,8 +45,8 @@ Person Occupant // Navigation property for occupants
         @foreach (var item in Model.Occupancies)
         {
             <tr>
-                <td>@item.Occupant!.Name</td>
-                <td>@item.Occupant!.Surname</td>
+                <td>@item.Occupant!.FirstName</td>
+                <td>@item.Occupant!.LastName</td>
                 <td>@item.Unit!.Building!.Name</td>
                 <td>@item.Unit!.UnitNumber</td>
                 <td>@item.OccupationType</td>

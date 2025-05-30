@@ -21,11 +21,11 @@ public static class DbInitializer
 
         var people = new[]
         {
-            new Person { Name = "John", Surname = "Doe", Email = "foo@example.com", PostalAddress = "123 Main St", IdNumber = "1234567890", PhoneNumber = "1234567890" },
-            new Person { Name = "Jane", Surname = "Smith", Email = "bar@example.com", PostalAddress = "456 Elm St", IdNumber = "0987654321", PhoneNumber = "0987654321" },
-            new Person { Name = "Alice", Surname = "Johnson", Email = "fuz@example.com", PostalAddress = "789 Oak St", IdNumber = "1122334455", PhoneNumber = "1122334455" },
-            new Person { Name = "Bob", Surname = "Brown", Email = "fiz@example.com", PostalAddress = "321 Pine St", IdNumber = "5566778899", PhoneNumber = "5566778899" }, 
-            new Person { Name = "Charlie", Surname = "Davis", Email = "buz@example.com", PostalAddress = "654 Cedar St", IdNumber = "9988776655", PhoneNumber = "9988776655" }
+            new Person { FirstName = "John", LastName = "Doe", Email = "foo@example.com", PostalAddress = "123 Main St", IdNumber = "1234567890", PhoneNumber = "1234567890" },
+            new Person { FirstName = "Jane", LastName = "Smith", Email = "bar@example.com", PostalAddress = "456 Elm St", IdNumber = "0987654321", PhoneNumber = "0987654321" },
+            new Person { FirstName = "Alice", LastName = "Johnson", Email = "fuz@example.com", PostalAddress = "789 Oak St", IdNumber = "1122334455", PhoneNumber = "1122334455" },
+            new Person { FirstName = "Bob", LastName = "Brown", Email = "fiz@example.com", PostalAddress = "321 Pine St", IdNumber = "5566778899", PhoneNumber = "5566778899" }, 
+            new Person { FirstName = "Charlie", LastName = "Davis", Email = "buz@example.com", PostalAddress = "654 Cedar St", IdNumber = "9988776655", PhoneNumber = "9988776655" }
         };
         context.Persons.AddRange(people);
         context.SaveChanges();
@@ -146,7 +146,7 @@ public static class DbInitializer
         
         var parkingBays = new[]
         {
-            new ParkingBay { ParkingBayNumber = "P1", Unit = units[0] },
+            new ParkingBay { ParkingBayNumber = "P1", Unit = units[0], IsNearEntrance = true },
             new ParkingBay { ParkingBayNumber = "P2", Unit = units[1] },
             new ParkingBay { ParkingBayNumber = "P3", Unit = units[2] },
             new ParkingBay { ParkingBayNumber = "P4", Unit = units[3] }

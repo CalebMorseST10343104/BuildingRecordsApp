@@ -19,4 +19,7 @@ public class AgentItemViewModel
     [Display(Name = "Email Address")]
     public string? Email { get; set; }
     
+    //Related model display fields
+    [Display(Name = "Company Name")]
+    public string? CompanyName { get; set; }
 }

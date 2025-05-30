@@ -6,7 +6,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 public class LeaseItemViewModel
 {
     public int? LeaseId { get; set; }
-    
+
     [Display(Name = "Lease Holder Name")]
     public string? LeaseHolderName { get; set; }
 
@@ -27,5 +27,11 @@ public class LeaseItemViewModel
 
     [Display(Name = "Emergency Contact Number")]
     public string? EmergencyContactNumber { get; set; }
-    
+
+    //Related model display fields
+    [Display(Name = "Building Name")]
+    public string? BuildingName { get; set; }
+
+    [Display(Name = "Unit Number")]
+    public string? UnitNumber { get; set; }
 }

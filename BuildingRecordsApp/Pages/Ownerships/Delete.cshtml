@@ -40,8 +40,8 @@
             @foreach (var owner in Model.Ownership.Owners)
             {
                 <tr>
-                    <td>@owner.Person?.Name</td>
-                    <td>@owner.Person?.Surname</td>
+                    <td>@owner.Person?.FirstName</td>
+                    <td>@owner.Person?.LastName</td>
                     <td>@owner.Person?.Email</td>
                 </tr>
             }

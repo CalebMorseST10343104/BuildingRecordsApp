@@ -7,10 +7,10 @@ namespace BuildingRecordsApp.Models.Entities
         public int PersonId { get; set; }
 
         [Display(Name = "First Name")]
-        public string Name { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
         [Display(Name = "Last Name")]
-        public string Surname { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
 
         [Display(Name = "Email Address")]
         public string Email { get; set; } = string.Empty;

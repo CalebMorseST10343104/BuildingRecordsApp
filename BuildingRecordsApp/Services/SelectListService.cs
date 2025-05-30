@@ -114,7 +114,7 @@ namespace BuildingRecordsApp.Services
             .Select(p => new
             {
                 p.PersonId,
-                Display = $"{p.Name} {p.Surname}"
+                Display = $"{p.FirstName} {p.LastName}"
             })
             .ToListAsync();
 

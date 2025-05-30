@@ -8,10 +8,10 @@ public class PersonItemViewModel
     public int? PersonId { get; set; }
 
     [Display(Name = "First Name")]
-    public string? Name { get; set; }
+    public string? FirstName { get; set; }
 
     [Display(Name = "Last Name")]
-    public string? Surname { get; set; }
+    public string? LastName { get; set; }
 
     [Display(Name = "Email Address")]
     public string? Email { get; set; }
