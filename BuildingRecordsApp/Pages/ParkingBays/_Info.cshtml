@@ -1,1 +1,55 @@
 ﻿@model BuildingRecordsApp.Models.DisplayViewModels.ParkingBayDisplayViewModel
+
+@switch (Model.DisplayLayout)
+{
+    case Enums.DisplayLayout.Table:
+        {
+            var headers = Model.ParkingBays.FirstOrDefault()?.GetHeaders(Model.DisplayMode) ?? new List<string> { "No Data Available" };
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        @foreach (var header in headers)
+                        {
+                            <th>@header</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var parkingBay in Model.ParkingBays)
+                    {
+                        <tr>
+                            @foreach (var value in parkingBay.GetValues(Model.DisplayMode))
+                            {
+                                <td>@value.Value</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        break;
+    case Enums.DisplayLayout.List:
+        {
+            foreach (var entry in Model.ParkingBays)
+            {
+                // This type of entry has a clear identifying header, so we can use it as a title for the entry.
+                bool hasHeader = entry.ParkingBayNumber != null;
+                var headerText = hasHeader ? $"Parking Bay {entry.ParkingBayNumber}" : "Parking Bay Details";
+                <div class="mb-4 border rounded p-3">
+                    <h4>@headerText</h4>
+                    <dl>
+                        @foreach (var value in entry.GetValues(Model.DisplayMode))
+                        {
+                            @if (value.Key != "ParkingBayNumber")
+                            {
+                                <dt>@value.Key</dt>
+                                <dd>@value.Value</dd>
+                            }
+                        }
+                    </dl>
+                </div>
+                <br />
+            }
+        }
+    break;
+}

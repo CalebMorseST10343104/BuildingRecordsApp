@@ -32,14 +32,15 @@
         {
             foreach (var entry in Model.Leases)
             {
-                // This type of entry does not have a clear identifying header, so we can use a generic title.
-                var headerText = "Lease Details";
+                // This type of entry has a clear identifying header, so we can use it as a title for the entry.
+                bool hasHeader = entry.BuildingName != null && entry.UnitNumber != null;
+                var headerText = hasHeader ? $"{entry.BuildingName} - {entry.UnitNumber}" : "Lease Details";
                 <div class="mb-4 border rounded p-3">
                     <h4>@headerText</h4>
                     <dl>
                         @foreach (var value in entry.GetValues(Model.DisplayMode))
                         {
-                            @if (value.Key != "Name")
+                            @if (value.Key != "BuildingName" && value.Key != "UnitNumber")
                             {
                                 <dt>@value.Key</dt>
                                 <dd>@value.Value</dd>

@@ -22,7 +22,7 @@ public class PersonItemViewModel : ItemViewModel
     public string? Email { get; set; }
 
     [Display(Name = "Postal Address")]
-    [DisplayMode("Detailed")]
+    [DisplayMode("Full")]
     public string? PostalAddress { get; set; }
 
     [Display(Name = "ID Number")]
@@ -30,6 +30,6 @@ public class PersonItemViewModel : ItemViewModel
     public string? IdNumber { get; set; }
 
     [Display(Name = "Phone Number")]
-    [DisplayMode("Full")]
+    [DisplayMode("Detailed")]
     public string? PhoneNumber { get; set; }
 }

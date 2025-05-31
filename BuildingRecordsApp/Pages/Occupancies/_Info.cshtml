@@ -39,11 +39,8 @@
                     <dl>
                         @foreach (var value in entry.GetValues(Model.DisplayMode))
                         {
-                            @if (value.Key != "Name")
-                            {
-                                <dt>@value.Key</dt>
-                                <dd>@value.Value</dd>
-                            }
+                            <dt>@value.Key</dt>
+                            <dd>@value.Value</dd>
                         }
                     </dl>
                 </div>

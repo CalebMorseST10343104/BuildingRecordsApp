@@ -1,1 +1,51 @@
 ﻿@model BuildingRecordsApp.Models.DisplayViewModels.OwnershipDisplayViewModel
+
+@switch (Model.DisplayLayout)
+{
+    case Enums.DisplayLayout.Table:
+        {
+            var headers = Model.Ownerships.FirstOrDefault()?.GetHeaders(Model.DisplayMode) ?? new List<string> { "No Data Available" };
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        @foreach (var header in headers)
+                        {
+                            <th>@header</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ownership in Model.Ownerships)
+                    {
+                        <tr>
+                            @foreach (var value in ownership.GetValues(Model.DisplayMode))
+                            {
+                                <td>@value.Value</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        break;
+    case Enums.DisplayLayout.List:
+        {
+            foreach (var entry in Model.Ownerships)
+            {
+                // This type of entry does not have a clear identifying header, so we can use a generic title.
+                var headerText = "Ownership Details";
+                <div class="mb-4 border rounded p-3">
+                    <h4>@headerText</h4>
+                    <dl>
+                        @foreach (var value in entry.GetValues(Model.DisplayMode))
+                        {
+                            <dt>@value.Key</dt>
+                            <dd>@value.Value</dd>
+                        }
+                    </dl>
+                </div>
+                <br />
+            }
+        }
+    break;
+}
