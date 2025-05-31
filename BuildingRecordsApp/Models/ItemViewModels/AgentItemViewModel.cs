@@ -5,7 +5,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class AgentItemViewModel : ItemViewModel, IItemViewModel
+public class AgentItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? AgentId { get; set; }
@@ -30,18 +30,19 @@ public class AgentItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Extended")]
     public string? CompanyName { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(FirstName) && string.IsNullOrEmpty(LastName))
+        {
+            return "Agent";
+        }
+        else
+        {
+            return $"{FirstName} {LastName}".Trim();
+        }
     }
-
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return item is nameof(FirstName) || item is nameof(LastName);
     }
 }

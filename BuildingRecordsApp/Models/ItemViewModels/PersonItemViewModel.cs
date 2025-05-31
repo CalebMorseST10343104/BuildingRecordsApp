@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class PersonItemViewModel : ItemViewModel, IItemViewModel
+public class PersonItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? PersonId { get; set; }
@@ -33,18 +33,20 @@ public class PersonItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Detailed")]
     public string? PhoneNumber { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(FirstName) && string.IsNullOrEmpty(LastName))
+        {
+            return "Person";
+        }
+        else
+        {
+            return $"{FirstName} {LastName}".Trim();
+        }
     }
 
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return item is nameof(FirstName) || item is nameof(LastName);
     }
 }

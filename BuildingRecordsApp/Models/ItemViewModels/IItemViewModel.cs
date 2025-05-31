@@ -4,9 +4,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public interface IItemViewModel
 {
-    bool HasTitleHeader();
+    string GetTitleHeader();
 
-    string GetTitleHeader(string valueIfNull);
-
-    string GetTitleHeaderFieldName(bool formatted = false);
+    bool IsTitleHeaderFieldName(object item);
 }

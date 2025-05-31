@@ -5,7 +5,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public abstract class ItemViewModel
+public abstract class ItemViewModel : IItemViewModel
 {
 
     public List<string> GetHeaders(DisplayMode displayMode = DisplayMode.Basic)
@@ -26,7 +26,6 @@ public abstract class ItemViewModel
         }
         return headers;
     }
-
     public Dictionary<string, object?> GetValues(DisplayMode displayMode = DisplayMode.Basic)
     {
         // Returns a dictionary of field names and their values based on the display mode
@@ -46,4 +45,8 @@ public abstract class ItemViewModel
         }
         return values;
     }
+
+    public abstract string GetTitleHeader();
+
+    public abstract bool IsTitleHeaderFieldName(object item);
 }

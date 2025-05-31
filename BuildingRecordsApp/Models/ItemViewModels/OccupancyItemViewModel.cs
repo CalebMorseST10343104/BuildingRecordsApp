@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class OccupancyItemViewModel : ItemViewModel, IItemViewModel
+public class OccupancyItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? OccupancyId { get; set; }
@@ -29,18 +29,13 @@ public class OccupancyItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Basic")]
     public string? OccupationType { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        return "Occupancy Details";
     }
 
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return false; // No specific field is used as a title header for OccupancyItemViewModel
     }
 }

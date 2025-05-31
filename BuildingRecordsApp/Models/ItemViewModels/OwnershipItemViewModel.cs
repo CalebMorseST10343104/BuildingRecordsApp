@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class OwnershipItemViewModel : ItemViewModel, IItemViewModel
+public class OwnershipItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? OwnershipId { get; set; }
@@ -25,18 +25,20 @@ public class OwnershipItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Basic")]
     public string? OwnershipType { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(BuildingName) && UnitNumber == null)
+        {
+            return "Ownership Details";
+        }
+        else
+        {
+            return $"{BuildingName} - Unit {UnitNumber}".Trim();
+        }
     }
 
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return item is nameof(BuildingName) || item is nameof(UnitNumber);
     }
 }

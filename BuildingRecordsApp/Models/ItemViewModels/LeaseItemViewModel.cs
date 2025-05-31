@@ -5,7 +5,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class LeaseItemViewModel : ItemViewModel, IItemViewModel
+public class LeaseItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? LeaseId { get; set; }
@@ -46,18 +46,13 @@ public class LeaseItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Full")]
     public string? EmergencyContactNumber { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        return "Lease Details";
     }
 
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return false; // No specific field is used as a title header for LeaseItemViewModel
     }
 }

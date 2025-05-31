@@ -15,10 +15,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var unit in Model.Entries)
+                    @foreach (var entry in Model.Entries)
                     {
                         <tr>
-                            @foreach (var value in unit.GetValues(Model.DisplayMode))
+                            @foreach (var value in entry.GetValues(Model.DisplayMode))
                             {
                                 <td>@value.Value</td>
                             }
@@ -32,15 +32,13 @@
         {
             foreach (var entry in Model.Entries)
             {
-                // This type of entry has a clear identifying header, so we can use it as a title for the entry.
-                bool hasHeader = entry.UnitNumber != null && entry.BuildingName != null;
-                var headerText = hasHeader ? $"{entry.BuildingName} - {entry.UnitNumber}" : "Unit Details";
+                var headerText = entry.GetTitleHeader;
                 <div class="mb-4 border rounded p-3">
                     <h4>@headerText</h4>
                     <dl>
                         @foreach (var value in entry.GetValues(Model.DisplayMode))
                         {
-                            @if (value.Key != "BuildingName" && value.Key != "UnitNumber")
+                            @if (entry.IsTitleHeaderFieldName(value.Key))
                             {
                                 <dt>@value.Key</dt>
                                 <dd>@value.Value</dd>

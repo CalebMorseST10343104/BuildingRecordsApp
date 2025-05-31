@@ -5,7 +5,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class BuildingItemViewModel : ItemViewModel, IItemViewModel
+public class BuildingItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? BuildingId { get; set; }
@@ -26,18 +26,20 @@ public class BuildingItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Detailed")]
     public int? NumberOfFloors { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(Name))
+        {
+            return "Building";
+        }
+        else
+        {
+            return Name;
+        }
     }
 
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return item is nameof(Name);
     }
 }

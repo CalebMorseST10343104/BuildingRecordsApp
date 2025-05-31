@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class AgentCompanyItemViewModel : ItemViewModel, IItemViewModel
+public class AgentCompanyItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? AgentCompanyId { get; set; }
@@ -24,18 +24,21 @@ public class AgentCompanyItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Detailed")]
     public string? RegistrationNumber { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(CompanyName))
+        {
+            return "Agent Company";
+        }
+        else
+        {
+            return CompanyName;
+        }
     }
 
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return item is nameof(CompanyName);
     }
 }

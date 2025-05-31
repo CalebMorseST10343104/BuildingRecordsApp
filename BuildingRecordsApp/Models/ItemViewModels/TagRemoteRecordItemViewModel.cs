@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class TagRemoteRecordItemViewModel : ItemViewModel, IItemViewModel
+public class TagRemoteRecordItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? TagRemoteRecordId { get; set; }
@@ -41,18 +41,13 @@ public class TagRemoteRecordItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Detailed")]
     public int? RemotesAgent { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        return "Tag Remote Record Details";
     }
 
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return false;
     }
 }

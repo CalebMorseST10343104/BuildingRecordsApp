@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class VehicleItemViewModel : ItemViewModel, IItemViewModel
+public class VehicleItemViewModel : ItemViewModel
 {
     [DisplayMode("Full")]
     public int? VehicleId { get; set; }
@@ -33,18 +33,20 @@ public class VehicleItemViewModel : ItemViewModel, IItemViewModel
     [DisplayMode("Extended")]
     public int? UnitNumber { get; set; }
 
-    public string GetTitleHeader(string valueIfNull)
+    public override string GetTitleHeader()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(VehicleRegistration))
+        {
+            return "Vehicle Details";
+        }
+        else
+        {
+            return $"Vehicle {VehicleRegistration}";
+        }
     }
 
-    public string GetTitleHeaderFieldName(bool formatted = false)
+    public override bool IsTitleHeaderFieldName(object item)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasTitleHeader()
-    {
-        throw new NotImplementedException();
+        return item is nameof(VehicleRegistration);
     }
 }
