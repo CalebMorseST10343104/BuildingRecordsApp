@@ -12,34 +12,34 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.Person!.FirstName)
+                @Html.DisplayNameFor(model => model.ViewModel.Person!.FirstName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.Person!.FirstName)
+                @Html.DisplayFor(model => model.ViewModel.Person!.FirstName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.Person!.LastName)
+                @Html.DisplayNameFor(model => model.ViewModel.Person!.LastName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.Person!.LastName)
+                @Html.DisplayFor(model => model.ViewModel.Person!.LastName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.Ownership!.Unit!.Building!.Name)
+                @Html.DisplayNameFor(model => model.ViewModel.Ownership!.Unit!.Building!.Name)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.Ownership!.Unit!.Building!.Name)
+                @Html.DisplayFor(model => model.ViewModel.Ownership!.Unit!.Building!.Name)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.Ownership!.Unit!.UnitNumber)
+                @Html.DisplayNameFor(model => model.ViewModel.Ownership!.Unit!.UnitNumber)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.Ownership!.Unit!.UnitNumber)
+                @Html.DisplayFor(model => model.ViewModel.Ownership!.Unit!.UnitNumber)
             </dd>
         </dl>
     </div>
 
     <form method="post">
-        <input type="hidden" asp-for="DisplayModel.OwnerId" />
+        <input type="hidden" asp-for="ViewModel.OwnerId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

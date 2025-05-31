@@ -4,6 +4,7 @@ using BuildingRecordsApp.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Vehicles
 {
@@ -19,7 +20,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
         }
 
         [BindProperty]
-        public VehicleDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<VehicleItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +38,13 @@ namespace BuildingRecordsApp.Pages.Vehicles
             {
                 return NotFound();
             }
-            DisplayModel = vehicle;
+            ViewModel = new DisplayViewModel<VehicleItemViewModel>
+            {
+                Entries = [_mapper.Map<VehicleItemViewModel>(vehicle)],
+                IdsToDisplay = [vehicle.VehicleId],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

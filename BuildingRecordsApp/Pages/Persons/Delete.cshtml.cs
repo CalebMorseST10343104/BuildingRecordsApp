@@ -6,6 +6,7 @@ using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Persons
 {
@@ -21,7 +22,7 @@ namespace BuildingRecordsApp.Pages.Persons
         }
 
         [BindProperty]
-        public PersonDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<PersonItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,7 +39,13 @@ namespace BuildingRecordsApp.Pages.Persons
                 return NotFound();
             }
 
-            this.DisplayModel = Person;
+            ViewModel = new DisplayViewModel<PersonItemViewModel>
+            {
+                Entries = [ _mapper.Map<PersonItemViewModel>(Person) ],
+                IdsToDisplay = [ Person.PersonId ],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

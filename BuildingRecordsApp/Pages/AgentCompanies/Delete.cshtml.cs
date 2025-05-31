@@ -20,7 +20,7 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
         }
 
         [BindProperty]
-        public AgentCompanyDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<AgentCompanyItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +37,7 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
             if (agentCompany == null)
                 return NotFound();
             
-            DisplayModel = new AgentCompanyDisplayViewModel
+            ViewModel = new DisplayViewModel<AgentCompanyItemViewModel>
             {
                 Entries = [_mapper.Map<AgentCompanyItemViewModel>(agentCompany)],
                 IdsToDisplay = [id.Value],

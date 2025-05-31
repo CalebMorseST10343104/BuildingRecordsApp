@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.CompanyTrusts
 {
@@ -20,7 +21,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
         }
 
         [BindProperty]
-        public CompanyTrustDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<CompanyTrustItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,7 +40,13 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             {
                 return NotFound();
             }
-            DisplayModel = companyTrust;
+            ViewModel = new DisplayViewModel<CompanyTrustItemViewModel>
+            {
+                Entries = [_mapper.Map<CompanyTrustItemViewModel>(companyTrust)],
+                IdsToDisplay = [companyTrust.CompanyTrustId],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

@@ -5,6 +5,7 @@ using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Occupancies
 {
@@ -20,7 +21,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
         }
 
         [BindProperty]
-        public OccupancyDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<OccupancyItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,7 +40,13 @@ namespace BuildingRecordsApp.Pages.Occupancies
             {
                 return NotFound();
             }
-            DisplayModel = occupancy;
+            ViewModel = new DisplayViewModel<OccupancyItemViewModel>
+            {
+                Entries = [_mapper.Map<OccupancyItemViewModel>(occupancy)],
+                IdsToDisplay = [occupancy.OccupancyId],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

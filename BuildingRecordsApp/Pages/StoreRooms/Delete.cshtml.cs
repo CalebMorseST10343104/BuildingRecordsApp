@@ -5,6 +5,7 @@ using BuildingRecordsApp.Models.FormViewModels;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.StoreRooms
 {
@@ -20,7 +21,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         }
 
         [BindProperty]
-        public StoreRoomDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<StoreRoomItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,7 +39,13 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             {
                 return NotFound();
             }
-            DisplayModel = storeRoom;
+            ViewModel = new DisplayViewModel<StoreRoomItemViewModel>
+            {
+                Entries = [_mapper.Map<StoreRoomItemViewModel>(storeRoom)],
+                IdsToDisplay = [storeRoom.StoreRoomId],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

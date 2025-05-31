@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Leases
 {
@@ -19,7 +20,7 @@ namespace BuildingRecordsApp.Pages.Leases
         }
 
         [BindProperty]
-        public LeaseDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<LeaseItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +38,13 @@ namespace BuildingRecordsApp.Pages.Leases
             {
                 return NotFound();
             }
-            DisplayModel = lease;
+            ViewModel = new DisplayViewModel<LeaseItemViewModel>
+            {
+                Entries = [_mapper.Map<LeaseItemViewModel>(lease)],
+                IdsToDisplay = [lease.LeaseId],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

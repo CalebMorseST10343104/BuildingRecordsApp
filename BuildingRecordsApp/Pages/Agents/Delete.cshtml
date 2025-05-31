@@ -12,34 +12,34 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.FirstName)
+                @Html.DisplayNameFor(model => model.ViewModel.FirstName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.FirstName)
+                @Html.DisplayFor(model => model.ViewModel.FirstName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.LastName)
+                @Html.DisplayNameFor(model => model.ViewModel.LastName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.LastName)
+                @Html.DisplayFor(model => model.ViewModel.LastName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.PhoneNumber)
+                @Html.DisplayNameFor(model => model.ViewModel.PhoneNumber)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.PhoneNumber)
+                @Html.DisplayFor(model => model.ViewModel.PhoneNumber)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.Email)
+                @Html.DisplayNameFor(model => model.ViewModel.Email)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.Email)
+                @Html.DisplayFor(model => model.ViewModel.Email)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DisplayModel.AgentCompany!.CompanyName)
+                @Html.DisplayNameFor(model => model.ViewModel.AgentCompany!.CompanyName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DisplayModel.AgentCompany!.CompanyName)
+                @Html.DisplayFor(model => model.ViewModel.AgentCompany!.CompanyName)
             </dd>
         </dl>
         <br />
@@ -54,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var unit in Model.DisplayModel.Units)
+                    @foreach (var unit in Model.ViewModel.Units)
                     {
                         <tr>
                             <td>@Html.DisplayFor(m => unit.Building!.Name)</td>
@@ -66,7 +66,7 @@
         </div>
     </div>
     <form method="post">
-        <input type="hidden" asp-for="DisplayModel.AgentId" />
+        <input type="hidden" asp-for="ViewModel.AgentId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

@@ -5,6 +5,7 @@ using BuildingRecordsApp.Models.FormViewModels;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.ParkingBays
 {
@@ -20,7 +21,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         }
 
         [BindProperty]
-        public ParkingBayDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<ParkingBayItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,7 +39,13 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             {
                 return NotFound();
             }
-            DisplayModel = parkingBay;
+            ViewModel = new DisplayViewModel<ParkingBayItemViewModel>
+            {
+                Entries = [_mapper.Map<ParkingBayItemViewModel>(parkingBay)],
+                IdsToDisplay = [parkingBay.ParkingBayId],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

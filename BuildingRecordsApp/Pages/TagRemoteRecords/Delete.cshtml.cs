@@ -4,6 +4,7 @@ using BuildingRecordsApp.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.TagRemoteRecords
 {
@@ -19,7 +20,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
         }
 
         [BindProperty]
-        public TagRemoteRecordDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<TagRemoteRecordItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +38,13 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             {
                 return NotFound();
             }
-            DisplayModel = tagRemoteRecord;
+            ViewModel = new DisplayViewModel<TagRemoteRecordItemViewModel>
+            {
+                Entries = [_mapper.Map<TagRemoteRecordItemViewModel>(tagRemoteRecord)],
+                IdsToDisplay = [tagRemoteRecord.TagRemoteRecordId],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

@@ -6,6 +6,7 @@ using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Ownerships
 {
@@ -21,7 +22,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
         }
 
         [BindProperty]
-        public OwnershipDisplayViewModel DisplayModel { get; set; } = default!;
+        public DisplayViewModel<OwnershipItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -41,7 +42,13 @@ namespace BuildingRecordsApp.Pages.Ownerships
             {
                 return NotFound();
             }
-            DisplayModel = ownership;
+            ViewModel = new DisplayViewModel<OwnershipItemViewModel>
+            {
+                Entries = [_mapper.Map<OwnershipItemViewModel>(ownership)],
+                IdsToDisplay = [ownership.OwnershipId],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
             return Page();
         }
 

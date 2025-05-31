@@ -11,22 +11,22 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DisplayModel.Name)
+            @Html.DisplayNameFor(model => model.ViewModel.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DisplayModel.Name)
+            @Html.DisplayFor(model => model.ViewModel.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DisplayModel.RegistrationNumber)
+            @Html.DisplayNameFor(model => model.ViewModel.RegistrationNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DisplayModel.RegistrationNumber)
+            @Html.DisplayFor(model => model.ViewModel.RegistrationNumber)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DisplayModel.Address)
+            @Html.DisplayNameFor(model => model.ViewModel.Address)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DisplayModel.Address)
+            @Html.DisplayFor(model => model.ViewModel.Address)
         </dd>
     </dl>
     <br />
@@ -41,7 +41,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var ownership in Model.DisplayModel.Ownerships)
+                @foreach (var ownership in Model.ViewModel.Ownerships)
                 {
                     <tr>
                         <td>@ownership.Unit!.Building!.Name</td>
@@ -52,7 +52,7 @@
         </table>
     </div>
     <form method="post">
-        <input type="hidden" asp-for="DisplayModel.CompanyTrustId" />
+        <input type="hidden" asp-for="ViewModel.CompanyTrustId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </form>
