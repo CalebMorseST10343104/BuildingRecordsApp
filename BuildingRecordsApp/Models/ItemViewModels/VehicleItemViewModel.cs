@@ -6,6 +6,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class VehicleItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? VehicleId { get; set; }
 
     [Display(Name = "Vehicle Registration")]
@@ -23,4 +24,12 @@ public class VehicleItemViewModel : ItemViewModel
     [Display(Name = "Vehicle Colour")]
     [DisplayMode("Detailed")]
     public string? VehicleColor { get; set; }
+
+    [Display(Name = "Building Name")]
+    [DisplayMode("Extended")]
+    public string? BuildingName { get; set; }
+
+    [Display(Name = "Unit Number")]
+    [DisplayMode("Extended")]
+    public int? UnitNumber { get; set; }
 }

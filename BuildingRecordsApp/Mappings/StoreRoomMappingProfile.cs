@@ -11,6 +11,12 @@ public class StoreRoomMappingProfile : Profile
     public StoreRoomMappingProfile()
     {
         CreateMap<StoreRoom, StoreRoomFormViewModel>().ReverseMap();
-        CreateMap<StoreRoom, StoreRoomItemViewModel>();
+        CreateMap<StoreRoom, StoreRoomItemViewModel>()
+            .ForMember(
+                dest => dest.BuildingName,
+                opt => opt.MapFrom(src => src.Unit != null && src.Unit.Building != null ? src.Unit.Building.Name : null))
+            .ForMember(
+                dest => dest.UnitNumber,
+                opt => opt.MapFrom(src => src.Unit != null ? src.Unit.UnitNumber : null));
     }
 }

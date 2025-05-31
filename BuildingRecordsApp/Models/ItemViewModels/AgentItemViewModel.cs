@@ -7,6 +7,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class AgentItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? AgentId { get; set; }
 
     [Display(Name = "First Name")]
@@ -24,4 +25,8 @@ public class AgentItemViewModel : ItemViewModel
     [Display(Name = "Email Address")]
     [DisplayMode("Detailed")]
     public string? Email { get; set; }
+
+    [Display(Name = "Company Name")]
+    [DisplayMode("Extended")]
+    public string? CompanyName { get; set; }
 }

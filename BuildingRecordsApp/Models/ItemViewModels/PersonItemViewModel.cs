@@ -6,6 +6,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class PersonItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? PersonId { get; set; }
 
     [Display(Name = "First Name")]

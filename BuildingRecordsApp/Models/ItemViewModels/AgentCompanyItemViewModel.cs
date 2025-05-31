@@ -9,6 +9,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class AgentCompanyItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? AgentCompanyId { get; set; }
 
     [Display(Name = "Company Name")]

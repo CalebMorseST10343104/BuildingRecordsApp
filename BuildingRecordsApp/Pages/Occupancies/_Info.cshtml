@@ -1,1 +1,54 @@
 ﻿@model BuildingRecordsApp.Models.DisplayViewModels.OccupancyDisplayViewModel
+
+@switch (Model.DisplayLayout)
+{
+    case Enums.DisplayLayout.Table:
+        {
+            var headers = Model.Occupancies.FirstOrDefault()?.GetHeaders(Model.DisplayMode) ?? new List<string> { "No Data Available" };
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        @foreach (var header in headers)
+                        {
+                            <th>@header</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var occupancy in Model.Occupancies)
+                    {
+                        <tr>
+                            @foreach (var value in occupancy.GetValues(Model.DisplayMode))
+                            {
+                                <td>@value.Value</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        break;
+    case Enums.DisplayLayout.List:
+        {
+            foreach (var entry in Model.Occupancies)
+            {
+                // This type of entry does not have a clear identifying header, so we can use a generic title.
+                var headerText = "Occupancy Details";
+                <div class="mb-4 border rounded p-3">
+                    <h4>@headerText</h4>
+                    <dl>
+                        @foreach (var value in entry.GetValues(Model.DisplayMode))
+                        {
+                            @if (value.Key != "Name")
+                            {
+                                <dt>@value.Key</dt>
+                                <dd>@value.Value</dd>
+                            }
+                        }
+                    </dl>
+                </div>
+                <br />
+            }
+        }
+    break;
+}

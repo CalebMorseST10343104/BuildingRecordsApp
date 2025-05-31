@@ -7,7 +7,16 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class LeaseItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? LeaseId { get; set; }
+
+    [Display(Name = "Building Name")]
+    [DisplayMode("Extended")]
+    public string? BuildingName { get; set; }
+
+    [Display(Name = "Unit Number")]
+    [DisplayMode("Extended")]
+    public string? UnitNumber { get; set; }
 
     [Display(Name = "Lease Holder Name")]
     [DisplayMode("Basic")]

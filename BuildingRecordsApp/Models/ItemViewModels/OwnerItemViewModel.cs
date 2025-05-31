@@ -6,5 +6,22 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class OwnerItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? OwnerId { get; set; }
+
+    [Display(Name = "Owner First Name")]
+    [DisplayMode("Extended")]
+    public string? FirstName { get; set; }
+
+    [Display(Name = "Owner Last Name")]
+    [DisplayMode("Extended")]
+    public string? LastName { get; set; }
+
+    [Display(Name = "Building Name")]
+    [DisplayMode("Extended")]
+    public string? BuildingName { get; set; }
+
+    [Display(Name = "Unit Number")]
+    [DisplayMode("Extended")]
+    public string? UnitNumber { get; set; }
 }

@@ -11,6 +11,9 @@ public class UnitMappingProfile : Profile
     public UnitMappingProfile()
     {
         CreateMap<Unit, UnitFormViewModel>().ReverseMap();
-        CreateMap<Unit, UnitItemViewModel>();
+        CreateMap<Unit, UnitItemViewModel>()
+            .ForMember(
+                dest => dest.BuildingName,
+                opt => opt.MapFrom(src => src.Building != null ? src.Building.Name : null));
     }
 }

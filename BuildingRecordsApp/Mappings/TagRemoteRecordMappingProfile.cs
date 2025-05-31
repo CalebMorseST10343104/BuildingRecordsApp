@@ -11,6 +11,12 @@ public class TagRemoteRecordMappingProfile : Profile
     public TagRemoteRecordMappingProfile()
     {
         CreateMap<TagRemoteRecord, TagRemoteRecordFormViewModel>().ReverseMap();
-        CreateMap<TagRemoteRecord, TagRemoteRecordItemViewModel>();
+        CreateMap<TagRemoteRecord, TagRemoteRecordItemViewModel>()
+            .ForMember(
+                dest => dest.BuildingName,
+                opt => opt.MapFrom(src => src.Unit != null && src.Unit.Building != null ? src.Unit.Building.Name : null))
+            .ForMember(
+                dest => dest.UnitNumber,
+                opt => opt.MapFrom(src => src.Unit != null ? src.Unit.UnitNumber : null));
     }
 }

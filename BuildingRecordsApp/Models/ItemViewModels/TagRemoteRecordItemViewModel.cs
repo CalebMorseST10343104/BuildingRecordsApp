@@ -6,7 +6,16 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class TagRemoteRecordItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? TagRemoteRecordId { get; set; }
+
+    [Display(Name = "Building Name")]
+    [DisplayMode("Extended")]
+    public string? BuildingName { get; set; }
+
+    [Display(Name = "Unit Number")]
+    [DisplayMode("Extended")]
+    public int? UnitNumber { get; set; }
 
     [Display(Name = "Tags Owner")]
     [DisplayMode("Detailed")]

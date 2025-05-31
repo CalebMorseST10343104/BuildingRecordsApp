@@ -7,6 +7,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class BuildingItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? BuildingId { get; set; }
 
     [Display(Name = "Building Name")]

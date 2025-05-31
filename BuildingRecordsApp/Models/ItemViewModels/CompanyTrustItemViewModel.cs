@@ -7,6 +7,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class CompanyTrustItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? CompanyTrustId { get; set; }
 
     [Display(Name = "Company/Trust Name")]

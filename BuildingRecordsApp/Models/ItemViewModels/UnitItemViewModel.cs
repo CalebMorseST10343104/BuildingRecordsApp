@@ -6,7 +6,12 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public class UnitItemViewModel : ItemViewModel
 {
+    [DisplayMode("Full")]
     public int? UnitId { get; set; }
+
+    [Display(Name = "Building Name")]
+    [DisplayMode("Extended")]
+    public string? BuildingName { get; set; }
 
     [Display(Name = "Unit Number")]
     [DisplayMode("Basic")]

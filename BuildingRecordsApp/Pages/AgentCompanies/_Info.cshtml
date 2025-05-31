@@ -1,1 +1,56 @@
 ﻿@model BuildingRecordsApp.Models.DisplayViewModels.AgentCompanyDisplayViewModel
+
+@switch (Model.DisplayLayout)
+{
+    case Enums.DisplayLayout.Table:
+        {
+            var headers = Model.AgentCompanies.FirstOrDefault()?.GetHeaders(Model.DisplayMode) ?? new List<string> { "No Data Available" };
+            
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        @foreach (var header in headers)
+                        {
+                            <th>@header</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var agentCompany in Model.AgentCompanies)
+                    {
+                        <tr>
+                            @foreach (var value in agentCompany.GetValues(Model.DisplayMode))
+                            {
+                                <td>@value.Value</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        break;
+    case Enums.DisplayLayout.List:
+        {
+            foreach (var entry in Model.AgentCompanies)
+            {
+                // This type of entry has a clear identifying header, so we can use it as a title for the entry.
+                bool hasHeader = entry.CompanyName != null;
+                var headerText = hasHeader ? entry.CompanyName : "No Company Name";
+                <div class="mb-4 border rounded p-3">
+                    <h4>@headerText</h4>
+                    <dl>
+                        @foreach (var value in entry.GetValues(Model.DisplayMode))
+                        {
+                            @if (value.Key != "CompanyName")
+                            {
+                                <dt>@value.Key</dt>
+                                <dd>@value.Value</dd>
+                            }
+                        }
+                    </dl>
+                </div>
+                <br />
+            }
+        }
+    break;
+}

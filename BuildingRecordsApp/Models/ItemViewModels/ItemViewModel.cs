@@ -7,20 +7,43 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 
 public abstract class ItemViewModel
 {
-    public Dictionary<string, (object?, DisplayMode)> ToDictionary()
-    {
-        var dict = new Dictionary<string, (object?, DisplayMode)>();
-        var type = GetType();
 
+    public List<string> GetHeaders(DisplayMode displayMode = DisplayMode.Basic)
+    {
+        // Returns a list of field names based on the display mode and includes headers of matching or lower display mode
+        var headers = new List<string>();
+        var type = GetType();
         foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
         {
-            var attr = prop.GetCustomAttributes(typeof(DisplayModeAttribute), false)
-                           .FirstOrDefault() as DisplayModeAttribute;
-            var displayMode = attr?.Mode ?? DisplayMode.Full;
-
-            dict[prop.Name] = (prop.GetValue(this), displayMode);
+            if (prop.CanRead)
+            {
+                var displayAttribute = prop.GetCustomAttribute<DisplayModeAttribute>();
+                if (displayAttribute != null && displayAttribute.Mode <= displayMode)
+                {
+                    headers.Add(prop.Name);
+                }
+            }
         }
+        return headers;
+    }
 
-        return dict;
+    public Dictionary<string, object?> GetValues(DisplayMode displayMode = DisplayMode.Basic)
+    {
+        // Returns a dictionary of field names and their values based on the display mode
+        var values = new Dictionary<string, object?>();
+        var type = GetType();
+        foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+        {
+            if (prop.CanRead)
+            {
+                var displayAttribute = prop.GetCustomAttribute<DisplayModeAttribute>();
+                if (displayAttribute != null && displayAttribute.Mode <= displayMode)
+                {
+                    var value = prop.GetValue(this);
+                    values.Add(prop.Name, value);
+                }
+            }
+        }
+        return values;
     }
 }
