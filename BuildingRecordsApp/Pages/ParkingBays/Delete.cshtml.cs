@@ -26,9 +26,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var parkingBay = await _context.ParkingBays
                 .Include(p => p.Unit)
@@ -36,9 +34,8 @@ namespace BuildingRecordsApp.Pages.ParkingBays
                 .FirstOrDefaultAsync(m => m.ParkingBayId == id);
 
             if (parkingBay == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<ParkingBayItemViewModel>
             {
                 Entries = [_mapper.Map<ParkingBayItemViewModel>(parkingBay)],
@@ -46,15 +43,14 @@ namespace BuildingRecordsApp.Pages.ParkingBays
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.ParkingBays == null)
                 return NotFound();
-            }
 
             var parkingBay = await _context.ParkingBays.FindAsync(id);
 

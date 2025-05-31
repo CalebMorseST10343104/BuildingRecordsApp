@@ -26,9 +26,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var storeRoom = await _context.StoreRooms
                 .Include(s => s.Unit)
@@ -36,9 +34,8 @@ namespace BuildingRecordsApp.Pages.StoreRooms
                 .FirstOrDefaultAsync(m => m.StoreRoomId == id);
 
             if (storeRoom == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<StoreRoomItemViewModel>
             {
                 Entries = [_mapper.Map<StoreRoomItemViewModel>(storeRoom)],
@@ -46,15 +43,14 @@ namespace BuildingRecordsApp.Pages.StoreRooms
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.StoreRooms == null)
                 return NotFound();
-            }
 
             var storeRoom = await _context.StoreRooms.FindAsync(id);
 

@@ -25,9 +25,7 @@ namespace BuildingRecordsApp.Pages.Leases
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var lease = await _context.Leases
                 .Include(l => l.Unit)
@@ -35,9 +33,8 @@ namespace BuildingRecordsApp.Pages.Leases
                 .FirstOrDefaultAsync(m => m.LeaseId == id);
 
             if (lease == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<LeaseItemViewModel>
             {
                 Entries = [_mapper.Map<LeaseItemViewModel>(lease)],
@@ -45,15 +42,14 @@ namespace BuildingRecordsApp.Pages.Leases
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.Leases == null)
                 return NotFound();
-            }
 
             var lease = await _context.Leases.FindAsync(id);
 

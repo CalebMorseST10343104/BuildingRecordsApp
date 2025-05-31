@@ -25,9 +25,7 @@ namespace BuildingRecordsApp.Pages.Units
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var unit = await _context.Units
                 .Include(u => u.Building)
@@ -35,9 +33,8 @@ namespace BuildingRecordsApp.Pages.Units
                 .FirstOrDefaultAsync(m => m.UnitId == id);
 
             if (unit == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<UnitItemViewModel>
             {
                 Entries = [_mapper.Map<UnitItemViewModel>(unit)],
@@ -45,15 +42,14 @@ namespace BuildingRecordsApp.Pages.Units
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.Units == null)
                 return NotFound();
-            }
 
             var unit = await _context.Units.FindAsync(id);
 

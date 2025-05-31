@@ -27,9 +27,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var ownership = await _context.Ownerships
                 .Include(o => o.Unit)
@@ -39,9 +37,8 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 .FirstOrDefaultAsync(m => m.OwnershipId == id);
 
             if (ownership == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<OwnershipItemViewModel>
             {
                 Entries = [_mapper.Map<OwnershipItemViewModel>(ownership)],
@@ -49,15 +46,14 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.Ownerships == null)
                 return NotFound();
-            }
 
             var ownership = await _context.Ownerships.FindAsync(id);
 

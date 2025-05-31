@@ -27,17 +27,13 @@ namespace BuildingRecordsApp.Pages.Persons
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var Person = await _context.Persons
                 .FirstOrDefaultAsync(m => m.PersonId == id);
 
             if (Person == null)
-            {
                 return NotFound();
-            }
 
             ViewModel = new DisplayViewModel<PersonItemViewModel>
             {
@@ -46,15 +42,14 @@ namespace BuildingRecordsApp.Pages.Persons
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.Persons == null)
                 return NotFound();
-            }
 
             var person = await _context.Persons.FindAsync(id);
 

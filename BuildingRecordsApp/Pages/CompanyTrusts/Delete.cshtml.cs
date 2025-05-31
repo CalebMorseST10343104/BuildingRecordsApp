@@ -26,9 +26,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var companyTrust = await _context.CompanyTrusts
                 .Include(c => c.Ownerships)
@@ -37,9 +35,8 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
                 .FirstOrDefaultAsync(m => m.CompanyTrustId == id);
 
             if (companyTrust == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<CompanyTrustItemViewModel>
             {
                 Entries = [_mapper.Map<CompanyTrustItemViewModel>(companyTrust)],
@@ -47,15 +44,14 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.CompanyTrusts == null)
                 return NotFound();
-            }
 
             var companyTrust = await _context.CompanyTrusts.FindAsync(id);
 

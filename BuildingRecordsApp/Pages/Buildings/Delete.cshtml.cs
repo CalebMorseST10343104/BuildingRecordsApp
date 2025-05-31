@@ -25,18 +25,15 @@ namespace BuildingRecordsApp.Pages.Buildings
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var building = await _context.Buildings
                 .Include(b => b.Units)
                 .FirstOrDefaultAsync(m => m.BuildingId == id);
 
             if (building == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<BuildingItemViewModel>
             {
                 Entries = [_mapper.Map<BuildingItemViewModel>(building)],
@@ -44,15 +41,14 @@ namespace BuildingRecordsApp.Pages.Buildings
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.Buildings == null)
                 return NotFound();
-            }
 
             var building = await _context.Buildings.FindAsync(id);
 

@@ -25,9 +25,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var tagRemoteRecord = await _context.TagRemoteRecords
                 .Include(t => t.Unit)
@@ -35,9 +33,8 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
                 .FirstOrDefaultAsync(m => m.TagRemoteRecordId == id);
 
             if (tagRemoteRecord == null)
-            {
                 return NotFound();
-            }
+
             ViewModel = new DisplayViewModel<TagRemoteRecordItemViewModel>
             {
                 Entries = [_mapper.Map<TagRemoteRecordItemViewModel>(tagRemoteRecord)],
@@ -45,15 +42,14 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.TagRemoteRecords == null)
                 return NotFound();
-            }
 
             var tagRemoteRecord = await _context.TagRemoteRecords.FindAsync(id);
 

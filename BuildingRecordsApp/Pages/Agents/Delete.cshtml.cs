@@ -25,9 +25,7 @@ namespace BuildingRecordsApp.Pages.Agents
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var agent = await _context.Agents
                 .Include(a => a.Units)
@@ -36,9 +34,8 @@ namespace BuildingRecordsApp.Pages.Agents
                 .FirstOrDefaultAsync(m => m.AgentId == id);
 
             if (agent == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<AgentItemViewModel>
             {
                 Entries = [_mapper.Map<AgentItemViewModel>(agent)],
@@ -46,15 +43,14 @@ namespace BuildingRecordsApp.Pages.Agents
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.Agents == null)
                 return NotFound();
-            }
 
             var agent = await _context.Agents.FindAsync(id);
 

@@ -26,9 +26,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var occupancy = await _context.Occupancies
                 .Include(o => o.Unit)
@@ -37,9 +35,8 @@ namespace BuildingRecordsApp.Pages.Occupancies
                 .FirstOrDefaultAsync(m => m.OccupancyId == id);
 
             if (occupancy == null)
-            {
                 return NotFound();
-            }
+            
             ViewModel = new DisplayViewModel<OccupancyItemViewModel>
             {
                 Entries = [_mapper.Map<OccupancyItemViewModel>(occupancy)],
@@ -47,15 +44,14 @@ namespace BuildingRecordsApp.Pages.Occupancies
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id == null || _context.Occupancies == null)
                 return NotFound();
-            }
 
             var occupancy = await _context.Occupancies.FindAsync(id);
 
