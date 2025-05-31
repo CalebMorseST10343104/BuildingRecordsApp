@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.CompanyTrusts
 {
@@ -19,7 +20,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
         }
 
         [BindProperty]
-        public CompanyTrust CompanyTrust { get; set; } = default!;
+        public CompanyTrustDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,7 +39,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             {
                 return NotFound();
             }
-            CompanyTrust = companyTrust;
+            DisplayModel = companyTrust;
             return Page();
         }
 

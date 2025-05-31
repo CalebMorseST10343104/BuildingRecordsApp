@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class UnitItemViewModel : ItemViewModel
+public class UnitItemViewModel : ItemViewModel, IItemViewModel
 {
     [DisplayMode("Full")]
     public int? UnitId { get; set; }
@@ -40,4 +40,19 @@ public class UnitItemViewModel : ItemViewModel
     [Display(Name = "AC Unit Count")]
     [DisplayMode("Full")]
     public int? AirconditioningUnits { get; set; }
+
+    public string GetTitleHeader(string valueIfNull)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetTitleHeaderFieldName(bool formatted = false)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool HasTitleHeader()
+    {
+        throw new NotImplementedException();
+    }
 }

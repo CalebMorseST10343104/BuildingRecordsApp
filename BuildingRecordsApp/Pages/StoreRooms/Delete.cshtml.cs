@@ -4,6 +4,7 @@ using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.StoreRooms
 {
@@ -19,7 +20,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         }
 
         [BindProperty]
-        public StoreRoom StoreRoom { get; set; } = default!;
+        public StoreRoomDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +38,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             {
                 return NotFound();
             }
-            StoreRoom = storeRoom;
+            DisplayModel = storeRoom;
             return Page();
         }
 

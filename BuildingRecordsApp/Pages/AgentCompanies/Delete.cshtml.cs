@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.AgentCompanies
 {
@@ -18,7 +20,7 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
         }
 
         [BindProperty]
-        public AgentCompany AgentCompany { get; set; } = default!;
+        public AgentCompanyDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,33 +29,35 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
                 return NotFound();
             }
 
-            var agentcompany = await _context.AgentCompanies
+            var agentCompany = await _context.AgentCompanies
                 .Include(a => a.Agents)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.AgentCompanyId == id);
 
-            if (agentcompany == null)
-            {
+            if (agentCompany == null)
                 return NotFound();
-            }
-            else
+            
+            DisplayModel = new AgentCompanyDisplayViewModel
             {
-                AgentCompany = agentcompany;
-            }
+                Entries = [_mapper.Map<AgentCompanyItemViewModel>(agentCompany)],
+                IdsToDisplay = [id.Value],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.List
+            };
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null || _context.AgentCompanies == null)
-            {
                 return NotFound();
-            }
+                
             var agentcompany = await _context.AgentCompanies.FindAsync(id);
 
             if (agentcompany != null)
             {
-                AgentCompany = agentcompany;
-                _context.AgentCompanies.Remove(AgentCompany);
+                _context.AgentCompanies.Remove(agentcompany);
                 await _context.SaveChangesAsync();
             }
 

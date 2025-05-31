@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.TagRemoteRecords
 {
@@ -18,7 +19,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
         }
 
         [BindProperty]
-        public TagRemoteRecord TagRemoteRecord { get; set; } = default!;
+        public TagRemoteRecordDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,7 +37,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             {
                 return NotFound();
             }
-            TagRemoteRecord = tagRemoteRecord;
+            DisplayModel = tagRemoteRecord;
             return Page();
         }
 

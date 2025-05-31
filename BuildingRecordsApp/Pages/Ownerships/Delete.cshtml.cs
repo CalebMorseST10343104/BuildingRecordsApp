@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.Ownerships
 {
@@ -20,7 +21,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
         }
 
         [BindProperty]
-        public Ownership Ownership { get; set; } = default!;
+        public OwnershipDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -40,7 +41,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
             {
                 return NotFound();
             }
-            Ownership = ownership;
+            DisplayModel = ownership;
             return Page();
         }
 

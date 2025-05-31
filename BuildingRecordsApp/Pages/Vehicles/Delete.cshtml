@@ -11,42 +11,42 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Vehicle.VehicleRegistration)
+            @Html.DisplayNameFor(model => model.DisplayModel.VehicleRegistration)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Vehicle.VehicleRegistration)
+            @Html.DisplayFor(model => model.DisplayModel.VehicleRegistration)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Vehicle.VehicleMake)
+            @Html.DisplayNameFor(model => model.DisplayModel.VehicleMake)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Vehicle.VehicleMake)
+            @Html.DisplayFor(model => model.DisplayModel.VehicleMake)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Vehicle.VehicleModel)
+            @Html.DisplayNameFor(model => model.DisplayModel.VehicleModel)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Vehicle.VehicleModel)
+            @Html.DisplayFor(model => model.DisplayModel.VehicleModel)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Vehicle.VehicleColor)
+            @Html.DisplayNameFor(model => model.DisplayModel.VehicleColor)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Vehicle.VehicleColor)
+            @Html.DisplayFor(model => model.DisplayModel.VehicleColor)
         </dd>
-        @if (Model.Vehicle.Unit != null)
+        @if (Model.DisplayModel.Unit != null)
         {
             <dt class="col-sm-2">
                 Unit Building
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Vehicle.Unit!.Building!.Name)
+                @Html.DisplayFor(model => model.DisplayModel.Unit!.Building!.Name)
             </dd>
             <dt class="col-sm-2">
                 Unit Number
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Vehicle.Unit!.UnitNumber)
+                @Html.DisplayFor(model => model.DisplayModel.Unit!.UnitNumber)
             </dd>
         }
         else
@@ -60,7 +60,7 @@
         }
     </dl>
     <form method="post">
-        <input type="hidden" asp-for="Vehicle.VehicleId" />
+        <input type="hidden" asp-for="DisplayModel.VehicleId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

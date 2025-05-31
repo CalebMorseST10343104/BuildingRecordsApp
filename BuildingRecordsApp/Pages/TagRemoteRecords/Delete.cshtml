@@ -11,16 +11,16 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TagRemoteRecord.Unit!.Building!.Name)
+            @Html.DisplayNameFor(model => model.DisplayModel.Unit!.Building!.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TagRemoteRecord.Unit!.Building!.Name)
+            @Html.DisplayFor(model => model.DisplayModel.Unit!.Building!.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TagRemoteRecord.Unit!.UnitNumber)
+            @Html.DisplayNameFor(model => model.DisplayModel.Unit!.UnitNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TagRemoteRecord.Unit!.UnitNumber)
+            @Html.DisplayFor(model => model.DisplayModel.Unit!.UnitNumber)
         </dd>
     </dl>
     <br />
@@ -38,32 +38,32 @@
                 <tr>
                     <td>Tags</td>
                     <td>
-                        @Html.DisplayFor(model => model.TagRemoteRecord.TagsOwner)
+                        @Html.DisplayFor(model => model.DisplayModel.TagsOwner)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.TagRemoteRecord.TagsOccupant)
+                        @Html.DisplayFor(model => model.DisplayModel.TagsOccupant)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.TagRemoteRecord.TagsAgent)
+                        @Html.DisplayFor(model => model.DisplayModel.TagsAgent)
                     </td>
                 </tr>
                 <tr>
                     <td>Remotes</td>
                     <td>
-                        @Html.DisplayFor(model => model.TagRemoteRecord.RemotesOwner)
+                        @Html.DisplayFor(model => model.DisplayModel.RemotesOwner)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.TagRemoteRecord.RemotesOccupant)
+                        @Html.DisplayFor(model => model.DisplayModel.RemotesOccupant)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.TagRemoteRecord.RemotesAgent)
+                        @Html.DisplayFor(model => model.DisplayModel.RemotesAgent)
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <form method="post">
-        <input type="hidden" asp-for="TagRemoteRecord.TagRemoteRecordId" />
+        <input type="hidden" asp-for="DisplayModel.TagRemoteRecordId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

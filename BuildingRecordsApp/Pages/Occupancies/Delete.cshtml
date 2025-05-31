@@ -11,32 +11,32 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Occupancy.Occupant!.FirstName)
+            @Html.DisplayNameFor(model => model.DisplayModel.Occupant!.FirstName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Occupancy.Occupant!.FirstName)
+            @Html.DisplayFor(model => model.DisplayModel.Occupant!.FirstName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Occupancy.Occupant!.LastName)
+            @Html.DisplayNameFor(model => model.DisplayModel.Occupant!.LastName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Occupancy.Occupant!.LastName)
+            @Html.DisplayFor(model => model.DisplayModel.Occupant!.LastName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Occupancy.Unit!.Building!.Name)
+            @Html.DisplayNameFor(model => model.DisplayModel.Unit!.Building!.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Occupancy.Unit!.Building!.Name)
+            @Html.DisplayFor(model => model.DisplayModel.Unit!.Building!.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Occupancy.Unit!.UnitNumber)
+            @Html.DisplayNameFor(model => model.DisplayModel.Unit!.UnitNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Occupancy.Unit!.UnitNumber)
+            @Html.DisplayFor(model => model.DisplayModel.Unit!.UnitNumber)
         </dd>
     </dl>
     <form method="post">
-        <input type="hidden" asp-for="Occupancy.OccupancyId" />
+        <input type="hidden" asp-for="DisplayModel.OccupancyId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </form>

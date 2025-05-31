@@ -11,44 +11,44 @@
     <hr/>
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Unit.UnitNumber)
+            @Html.DisplayNameFor(model => model.DisplayModel.UnitNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Unit.UnitNumber)
+            @Html.DisplayFor(model => model.DisplayModel.UnitNumber)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Unit.Building!.Name)
+            @Html.DisplayNameFor(model => model.DisplayModel.Building!.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Unit.Building!.Name)
+            @Html.DisplayFor(model => model.DisplayModel.Building!.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Unit.Bedrooms)
+            @Html.DisplayNameFor(model => model.DisplayModel.Bedrooms)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Unit.Bedrooms)
+            @Html.DisplayFor(model => model.DisplayModel.Bedrooms)
         </dd>
         <dt class="col-sm-2">
-            Primary Contact - @Html.DisplayNameFor(model => model.Unit.PrimaryContactPerson!.FirstName)
+            Primary Contact - @Html.DisplayNameFor(model => model.DisplayModel.PrimaryContactPerson!.FirstName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Unit.PrimaryContactPerson!.FirstName)
+            @Html.DisplayFor(model => model.DisplayModel.PrimaryContactPerson!.FirstName)
         </dd>
         <dt class="col-sm-2">
-            Primary Contact - @Html.DisplayNameFor(model => model.Unit.PrimaryContactPerson!.LastName)
+            Primary Contact - @Html.DisplayNameFor(model => model.DisplayModel.PrimaryContactPerson!.LastName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Unit.PrimaryContactPerson!.LastName)
+            @Html.DisplayFor(model => model.DisplayModel.PrimaryContactPerson!.LastName)
         </dd>
         <dt class="col-sm-2">
-            Primary Contact - @Html.DisplayNameFor(model => model.Unit.PrimaryContactPerson!.PhoneNumber)
+            Primary Contact - @Html.DisplayNameFor(model => model.DisplayModel.PrimaryContactPerson!.PhoneNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Unit.PrimaryContactPerson!.PhoneNumber)
+            @Html.DisplayFor(model => model.DisplayModel.PrimaryContactPerson!.PhoneNumber)
         </dd>
     </dl>
     <form method="post">
-        <input type="hidden" asp-for="Unit.UnitId" />
+        <input type="hidden" asp-for="DisplayModel.UnitId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </form>

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.Persons
 {
@@ -20,7 +21,7 @@ namespace BuildingRecordsApp.Pages.Persons
         }
 
         [BindProperty]
-        public Person Person { get; set; } = default!;
+        public PersonDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +38,7 @@ namespace BuildingRecordsApp.Pages.Persons
                 return NotFound();
             }
 
-            this.Person = Person;
+            this.DisplayModel = Person;
             return Page();
         }
 

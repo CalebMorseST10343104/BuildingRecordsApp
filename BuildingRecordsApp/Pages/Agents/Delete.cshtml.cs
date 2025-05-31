@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.Agents
 {
@@ -18,7 +19,7 @@ namespace BuildingRecordsApp.Pages.Agents
         }
 
         [BindProperty]
-        public Agent Agent { get; set; } = default!;
+        public AgentDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +38,7 @@ namespace BuildingRecordsApp.Pages.Agents
             {
                 return NotFound();
             }
-            Agent = agent;
+            DisplayModel = agent;
             return Page();
         }
 

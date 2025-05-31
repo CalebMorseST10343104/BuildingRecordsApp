@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.Units
 {
@@ -18,7 +19,7 @@ namespace BuildingRecordsApp.Pages.Units
         }
 
         [BindProperty]
-        public Unit Unit { get; set; } = default!;
+        public UnitDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,7 +37,7 @@ namespace BuildingRecordsApp.Pages.Units
             {
                 return NotFound();
             }
-            Unit = unit;
+            DisplayModel = unit;
             return Page();
         }
 

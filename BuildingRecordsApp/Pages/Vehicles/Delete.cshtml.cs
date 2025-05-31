@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.Vehicles
 {
@@ -18,7 +19,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
         }
 
         [BindProperty]
-        public Vehicle Vehicle { get; set; } = default!;
+        public VehicleDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,7 +37,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
             {
                 return NotFound();
             }
-            Vehicle = vehicle;
+            DisplayModel = vehicle;
             return Page();
         }
 

@@ -10,24 +10,24 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkingBay.ParkingBayNumber)
+            @Html.DisplayNameFor(model => model.DisplayModel.ParkingBayNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ParkingBay.ParkingBayNumber)
+            @Html.DisplayFor(model => model.DisplayModel.ParkingBayNumber)
         </dd>
-        @if (Model.ParkingBay.Unit != null)
+        @if (Model.DisplayModel.Unit != null)
         {
             <dt class="col-sm-2">
                 Unit Building
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ParkingBay.Unit!.Building!.Name)
+                @Html.DisplayFor(model => model.DisplayModel.Unit!.Building!.Name)
             </dd>
             <dt class="col-sm-2">
                 Unit Number
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ParkingBay.Unit!.UnitNumber)
+                @Html.DisplayFor(model => model.DisplayModel.Unit!.UnitNumber)
             </dd>
         }
         else
@@ -41,7 +41,7 @@
         }
     </dl>
     <form method="post">
-        <input type="hidden" asp-for="ParkingBay.ParkingBayId" />
+        <input type="hidden" asp-for="DisplayModel.ParkingBayId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

@@ -10,44 +10,44 @@
     <hr/>
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.FirstName)
+            @Html.DisplayNameFor(model => model.DisplayModel.FirstName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.FirstName)
+            @Html.DisplayFor(model => model.DisplayModel.FirstName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.LastName)
+            @Html.DisplayNameFor(model => model.DisplayModel.LastName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.LastName)
+            @Html.DisplayFor(model => model.DisplayModel.LastName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.Email)
+            @Html.DisplayNameFor(model => model.DisplayModel.Email)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.Email)
+            @Html.DisplayFor(model => model.DisplayModel.Email)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.PostalAddress)
+            @Html.DisplayNameFor(model => model.DisplayModel.PostalAddress)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.PostalAddress)
+            @Html.DisplayFor(model => model.DisplayModel.PostalAddress)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.IdNumber)
+            @Html.DisplayNameFor(model => model.DisplayModel.IdNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.IdNumber)
+            @Html.DisplayFor(model => model.DisplayModel.IdNumber)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.PhoneNumber)
+            @Html.DisplayNameFor(model => model.DisplayModel.PhoneNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.PhoneNumber)
+            @Html.DisplayFor(model => model.DisplayModel.PhoneNumber)
         </dd>
     </dl>
     <form method="post">
-        <input type="hidden" asp-for="Person.PersonId" />
+        <input type="hidden" asp-for="DisplayModel.PersonId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </form>

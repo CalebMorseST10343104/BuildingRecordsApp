@@ -11,24 +11,24 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StoreRoom.StoreRoomNumber)
+            @Html.DisplayNameFor(model => model.DisplayModel.StoreRoomNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StoreRoom.StoreRoomNumber)
+            @Html.DisplayFor(model => model.DisplayModel.StoreRoomNumber)
         </dd>
-        @if (Model.StoreRoom.Unit != null)
+        @if (Model.DisplayModel.Unit != null)
         {
             <dt class="col-sm-2">
                 Unit Building
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.StoreRoom.Unit!.Building!.Name)
+                @Html.DisplayFor(model => model.DisplayModel.Unit!.Building!.Name)
             </dd>
             <dt class="col-sm-2">
                 Unit Number
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.StoreRoom.Unit!.UnitNumber)
+                @Html.DisplayFor(model => model.DisplayModel.Unit!.UnitNumber)
             </dd>
         }
         else
@@ -42,7 +42,7 @@
         }
     </dl>
     <form method="post">
-        <input type="hidden" asp-for="StoreRoom.StoreRoomId" />
+        <input type="hidden" asp-for="DisplayModel.StoreRoomId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

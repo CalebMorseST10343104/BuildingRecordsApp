@@ -15,13 +15,13 @@
             Unit Number
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ownership.Unit!.UnitNumber)
+            @Html.DisplayFor(model => model.DisplayModel.Unit!.UnitNumber)
         </dd>
         <dt class="col-sm-2">
             Ownership Type
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ownership.OwnershipType)
+            @Html.DisplayFor(model => model.DisplayModel.OwnershipType)
         </dd>
     </dl>
     <br />
@@ -37,7 +37,7 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach (var owner in Model.Ownership.Owners)
+            @foreach (var owner in Model.DisplayModel.Owners)
             {
                 <tr>
                     <td>@owner.Person?.FirstName</td>
@@ -51,20 +51,20 @@
     <br />
     <h4>Company/Trust</h4>
     <hr />
-    @if (Model.Ownership.CompanyTrust != null)
+    @if (Model.DisplayModel.CompanyTrust != null)
     {
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Ownership.CompanyTrust!.Name)
+                @Html.DisplayNameFor(model => model.DisplayModel.CompanyTrust!.Name)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Ownership.CompanyTrust!.Name)
+                @Html.DisplayFor(model => model.DisplayModel.CompanyTrust!.Name)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Ownership.CompanyTrust!.RegistrationNumber)
+                @Html.DisplayNameFor(model => model.DisplayModel.CompanyTrust!.RegistrationNumber)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Ownership.CompanyTrust!.RegistrationNumber)
+                @Html.DisplayFor(model => model.DisplayModel.CompanyTrust!.RegistrationNumber)
             </dd>
         </dl>
     }
@@ -73,7 +73,7 @@
 </div>
 <div>
     <form method="post">
-        <input type="hidden" asp-for="Ownership.OwnershipId" />
+        <input type="hidden" asp-for="DisplayModel.OwnershipId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </form>

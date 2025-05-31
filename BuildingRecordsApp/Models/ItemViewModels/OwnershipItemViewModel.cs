@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class OwnershipItemViewModel : ItemViewModel
+public class OwnershipItemViewModel : ItemViewModel, IItemViewModel
 {
     [DisplayMode("Full")]
     public int? OwnershipId { get; set; }
@@ -24,4 +24,19 @@ public class OwnershipItemViewModel : ItemViewModel
     [Display(Name = "Ownership Type")]
     [DisplayMode("Basic")]
     public string? OwnershipType { get; set; }
+
+    public string GetTitleHeader(string valueIfNull)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetTitleHeaderFieldName(bool formatted = false)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool HasTitleHeader()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class AgentCompanyItemViewModel : ItemViewModel
+public class AgentCompanyItemViewModel : ItemViewModel, IItemViewModel
 {
     [DisplayMode("Full")]
     public int? AgentCompanyId { get; set; }
@@ -23,4 +23,19 @@ public class AgentCompanyItemViewModel : ItemViewModel
     [Display(Name = "Registration Number")]
     [DisplayMode("Detailed")]
     public string? RegistrationNumber { get; set; }
+
+    public string GetTitleHeader(string valueIfNull)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetTitleHeaderFieldName(bool formatted = false)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool HasTitleHeader()
+    {
+        throw new NotImplementedException();
+    }
 }

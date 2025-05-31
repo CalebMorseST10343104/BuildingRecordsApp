@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
 
 namespace BuildingRecordsApp.Pages.Occupancies
 {
@@ -19,7 +20,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
         }
 
         [BindProperty]
-        public Occupancy Occupancy { get; set; } = default!;
+        public OccupancyDisplayViewModel DisplayModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,7 +39,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
             {
                 return NotFound();
             }
-            Occupancy = occupancy;
+            DisplayModel = occupancy;
             return Page();
         }
 

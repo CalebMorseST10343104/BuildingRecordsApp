@@ -12,34 +12,34 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Owner.Person!.FirstName)
+                @Html.DisplayNameFor(model => model.DisplayModel.Person!.FirstName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Owner.Person!.FirstName)
+                @Html.DisplayFor(model => model.DisplayModel.Person!.FirstName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Owner.Person!.LastName)
+                @Html.DisplayNameFor(model => model.DisplayModel.Person!.LastName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Owner.Person!.LastName)
+                @Html.DisplayFor(model => model.DisplayModel.Person!.LastName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Owner.Ownership!.Unit!.Building!.Name)
+                @Html.DisplayNameFor(model => model.DisplayModel.Ownership!.Unit!.Building!.Name)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Owner.Ownership!.Unit!.Building!.Name)
+                @Html.DisplayFor(model => model.DisplayModel.Ownership!.Unit!.Building!.Name)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Owner.Ownership!.Unit!.UnitNumber)
+                @Html.DisplayNameFor(model => model.DisplayModel.Ownership!.Unit!.UnitNumber)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Owner.Ownership!.Unit!.UnitNumber)
+                @Html.DisplayFor(model => model.DisplayModel.Ownership!.Unit!.UnitNumber)
             </dd>
         </dl>
     </div>
 
     <form method="post">
-        <input type="hidden" asp-for="Owner.OwnerId" />
+        <input type="hidden" asp-for="DisplayModel.OwnerId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

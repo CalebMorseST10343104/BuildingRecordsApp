@@ -12,63 +12,63 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.LeaseHolderName)
+                @Html.DisplayNameFor(model => model.DisplayModel.LeaseHolderName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Lease.LeaseHolderName)
+                @Html.DisplayFor(model => model.DisplayModel.LeaseHolderName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.StartDate)
+                @Html.DisplayNameFor(model => model.DisplayModel.StartDate)
             </dt>
             <dd class="col-sm-10">
-                @Model.Lease.StartDate.ToShortDateString()
+                @Model.DisplayModel.StartDate.ToShortDateString()
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.EndDate)
+                @Html.DisplayNameFor(model => model.DisplayModel.EndDate)
             </dt>
             <dd class="col-sm-10">
-                @Model.Lease.EndDate.ToShortDateString()
+                @Model.DisplayModel.EndDate.ToShortDateString()
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.PersonsOccupying)
+                @Html.DisplayNameFor(model => model.DisplayModel.PersonsOccupying)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Lease.PersonsOccupying)
+                @Html.DisplayFor(model => model.DisplayModel.PersonsOccupying)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.SignedRules)
+                @Html.DisplayNameFor(model => model.DisplayModel.SignedRules)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Lease.SignedRules)
+                @Html.DisplayFor(model => model.DisplayModel.SignedRules)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.AllowedPets)
+                @Html.DisplayNameFor(model => model.DisplayModel.AllowedPets)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Lease.AllowedPets)
+                @Html.DisplayFor(model => model.DisplayModel.AllowedPets)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.EmergencyContactNumber)
+                @Html.DisplayNameFor(model => model.DisplayModel.EmergencyContactNumber)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Lease.EmergencyContactNumber)
+                @Html.DisplayFor(model => model.DisplayModel.EmergencyContactNumber)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.Unit!.Building!.Name)
+                @Html.DisplayNameFor(model => model.DisplayModel.Unit!.Building!.Name)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Lease.Unit!.Building!.Name)
+                @Html.DisplayFor(model => model.DisplayModel.Unit!.Building!.Name)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lease.Unit!.UnitNumber)
+                @Html.DisplayNameFor(model => model.DisplayModel.Unit!.UnitNumber)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Lease.Unit!.UnitNumber)
+                @Html.DisplayFor(model => model.DisplayModel.Unit!.UnitNumber)
             </dd>
         </dl>
     </div>
     <form method="post">
-        <input type="hidden" asp-for="Lease.LeaseId" />
+        <input type="hidden" asp-for="DisplayModel.LeaseId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>
