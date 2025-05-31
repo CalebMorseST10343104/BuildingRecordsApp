@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace BuildingRecordsApp.Pages.ParkingBays
 {
     public class DeleteModel : PageModel
     {
         private readonly BuildingContext _context;
+        private readonly IMapper _mapper;
 
-        public DeleteModel(BuildingContext context)
+        public DeleteModel(BuildingContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [BindProperty]
