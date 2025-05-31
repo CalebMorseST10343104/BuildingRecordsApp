@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models.DisplayViewModels;
 
 public class CompanyTrustDisplayViewModel
 {
-    public List<CompanyTrustItemViewModel> CompanyTrusts { get; set; } = [];
+    public List<CompanyTrustItemViewModel> Entries { get; set; } = [];
     public List<int> IdsToDisplay { get; set; } = [];
     public DisplayMode DisplayMode { get; set; } = DisplayMode.Basic;
     public DisplayLayout DisplayLayout { get; set; } = DisplayLayout.List;

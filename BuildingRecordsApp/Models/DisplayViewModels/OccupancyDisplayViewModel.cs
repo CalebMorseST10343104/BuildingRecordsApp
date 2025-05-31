@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models.DisplayViewModels;
 
 public class OccupancyDisplayViewModel
 {
-    public List<OccupancyItemViewModel> Occupancies { get; set; } = [];
+    public List<OccupancyItemViewModel> Entries { get; set; } = [];
     public List<int> IdsToDisplay { get; set; } = [];
     public DisplayMode DisplayMode { get; set; } = DisplayMode.Basic;
     public DisplayLayout DisplayLayout { get; set; } = DisplayLayout.List;

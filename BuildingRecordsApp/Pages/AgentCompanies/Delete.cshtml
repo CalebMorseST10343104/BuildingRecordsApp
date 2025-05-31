@@ -11,22 +11,22 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.AgentCompany.CompanyName)
+                @Html.DisplayNameFor(model => model.DisplayModel.CompanyName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.AgentCompany.CompanyName)
+                @Html.DisplayFor(model => model.DisplayModel.CompanyName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.AgentCompany.Address)
+                @Html.DisplayNameFor(model => model.DisplayModel.Address)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.AgentCompany.Address)
+                @Html.DisplayFor(model => model.DisplayModel.Address)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.AgentCompany.RegistrationNumber)
+                @Html.DisplayNameFor(model => model.DisplayModel.RegistrationNumber)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.AgentCompany.RegistrationNumber)
+                @Html.DisplayFor(model => model.DisplayModel.RegistrationNumber)
             </dd>
         </dl>
         <br />
@@ -42,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var agent in Model.AgentCompany.Agents)
+                    @foreach (var agent in Model.DisplayModel.Agents)
                     {
                         <tr>
                             <td>@Html.DisplayFor(m => agent.FirstName)</td>
@@ -55,7 +55,7 @@
         </div>
     </div>
     <form method="post">
-        <input type="hidden" asp-for="AgentCompany.AgentCompanyId" />
+        <input type="hidden" asp-for="DisplayModel.AgentCompanyId" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

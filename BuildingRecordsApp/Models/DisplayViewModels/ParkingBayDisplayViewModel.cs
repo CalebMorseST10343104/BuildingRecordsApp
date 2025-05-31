@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models.DisplayViewModels;
 
 public class ParkingBayDisplayViewModel
 {
-    public List<ParkingBayItemViewModel> ParkingBays { get; set; } = [];
+    public List<ParkingBayItemViewModel> Entries { get; set; } = [];
     public List<int> IdsToDisplay { get; set; } = [];
     public DisplayMode DisplayMode { get; set; } = DisplayMode.Basic;
     public DisplayLayout DisplayLayout { get; set; } = DisplayLayout.List;

@@ -4,7 +4,7 @@
 {
     case Enums.DisplayLayout.Table:
         {
-            var headers = Model.Owners.FirstOrDefault()?.GetHeaders(Model.DisplayMode) ?? new List<string> { "No Data Available" };
+            var headers = Model.Entries.FirstOrDefault()?.GetHeaders(Model.DisplayMode) ?? new List<string> { "No Data Available" };
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var owner in Model.Owners)
+                    @foreach (var owner in Model.Entries)
                     {
                         <tr>
                             @foreach (var value in owner.GetValues(Model.DisplayMode))
@@ -30,7 +30,7 @@
         break;
     case Enums.DisplayLayout.List:
         {
-            foreach (var entry in Model.Owners)
+            foreach (var entry in Model.Entries)
             {
                 // This type of entry does not have a clear identifying header, so we can use a generic title.
                 var headerText = "Owner Details";

@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models.DisplayViewModels;
 
 public class OwnershipDisplayViewModel
 {
-    public List<OwnershipItemViewModel> Ownerships { get; set; } = [];
+    public List<OwnershipItemViewModel> Entries { get; set; } = [];
     public List<int> IdsToDisplay { get; set; } = [];
     public DisplayMode DisplayMode { get; set; } = DisplayMode.Basic;
     public DisplayLayout DisplayLayout { get; set; } = DisplayLayout.List;

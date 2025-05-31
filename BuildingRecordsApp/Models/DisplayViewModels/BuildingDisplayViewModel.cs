@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models.DisplayViewModels;
 
 public class BuildingDisplayViewModel
 {
-    public List<BuildingItemViewModel> Buildings { get; set; } = [];
+    public List<BuildingItemViewModel> Entries { get; set; } = [];
     public List<int> IdsToDisplay { get; set; } = [];
     public DisplayMode DisplayMode { get; set; } = DisplayMode.Basic;
     public DisplayLayout DisplayLayout { get; set; } = DisplayLayout.List;
