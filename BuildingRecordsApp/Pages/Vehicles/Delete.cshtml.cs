@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
 using BuildingRecordsApp.Models.ItemViewModels;
+using BuildingRecordsApp.Interfaces;
 
 namespace BuildingRecordsApp.Pages.Vehicles
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : PageModel, ISingleDisplay
     {
         private readonly BuildingContext _context;
         private readonly IMapper _mapper;
@@ -34,7 +35,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
 
             if (vehicle == null)
                 return NotFound();
-            
+
             ViewModel = new DisplayViewModel<VehicleItemViewModel>
             {
                 Entries = [_mapper.Map<VehicleItemViewModel>(vehicle)],
@@ -42,7 +43,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
-            
+
             return Page();
         }
 
@@ -60,6 +61,15 @@ namespace BuildingRecordsApp.Pages.Vehicles
             }
 
             return RedirectToPage("./Index");
+        }
+
+        public int GetFirstId()
+        {
+            if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
+            {
+                return ViewModel.Entries[0].VehicleId ?? 0;
+            }
+            return 0;
         }
     }
 }

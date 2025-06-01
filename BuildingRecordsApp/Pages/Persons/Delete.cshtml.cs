@@ -7,10 +7,11 @@ using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
 using BuildingRecordsApp.Models.ItemViewModels;
+using BuildingRecordsApp.Interfaces;
 
 namespace BuildingRecordsApp.Pages.Persons
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : PageModel, ISingleDisplay
     {
         private readonly BuildingContext _context;
         private readonly IMapper _mapper;
@@ -37,12 +38,12 @@ namespace BuildingRecordsApp.Pages.Persons
 
             ViewModel = new DisplayViewModel<PersonItemViewModel>
             {
-                Entries = [ _mapper.Map<PersonItemViewModel>(Person) ],
-                IdsToDisplay = [ Person.PersonId ],
+                Entries = [_mapper.Map<PersonItemViewModel>(Person)],
+                IdsToDisplay = [Person.PersonId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
-            
+
             return Page();
         }
 
@@ -60,6 +61,15 @@ namespace BuildingRecordsApp.Pages.Persons
             }
 
             return RedirectToPage("./Index");
+        }
+
+        public int GetFirstId()
+        {
+            if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
+            {
+                return ViewModel.Entries[0].PersonId ?? 0;
+            }
+            return 0;
         }
     }
 }

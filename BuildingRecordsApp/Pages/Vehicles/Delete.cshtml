@@ -7,60 +7,12 @@
 <p>Are you sure you want to delete this vehicle?</p>
 
 <div>
-    <h4>Vehicle</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ViewModel.VehicleRegistration)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ViewModel.VehicleRegistration)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ViewModel.VehicleMake)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ViewModel.VehicleMake)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ViewModel.VehicleModel)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ViewModel.VehicleModel)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ViewModel.VehicleColor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ViewModel.VehicleColor)
-        </dd>
-        @if (Model.ViewModel.Unit != null)
-        {
-            <dt class="col-sm-2">
-                Unit Building
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.Unit!.Building!.Name)
-            </dd>
-            <dt class="col-sm-2">
-                Unit Number
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.Unit!.UnitNumber)
-            </dd>
-        }
-        else
-        {
-            <dt class="col-sm-2">
-                Unit Number
-            </dt>
-            <dd class="col-sm-10">
-                No unit assigned
-            </dd>
-        }
-    </dl>
+    <div>
+        <partial name="_Info" model="Model.ViewModel" />
+    </div>
+    <br />
     <form method="post">
-        <input type="hidden" asp-for="ViewModel.VehicleId" />
+        <input type="hidden" asp-for="GetFirstId()" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

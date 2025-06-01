@@ -6,10 +6,11 @@ using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
 using BuildingRecordsApp.Models.ItemViewModels;
+using BuildingRecordsApp.Interfaces;
 
 namespace BuildingRecordsApp.Pages.CompanyTrusts
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : PageModel, ISingleDisplay
     {
         private readonly BuildingContext _context;
         private readonly IMapper _mapper;
@@ -36,7 +37,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
 
             if (companyTrust == null)
                 return NotFound();
-            
+
             ViewModel = new DisplayViewModel<CompanyTrustItemViewModel>
             {
                 Entries = [_mapper.Map<CompanyTrustItemViewModel>(companyTrust)],
@@ -44,7 +45,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
-            
+
             return Page();
         }
 
@@ -62,6 +63,15 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             }
 
             return RedirectToPage("./Index");
+        }
+
+        public int GetFirstId()
+        {
+            if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
+            {
+                return ViewModel.Entries[0].CompanyTrustId ?? 0;
+            }
+            return 0;
         }
     }
 }

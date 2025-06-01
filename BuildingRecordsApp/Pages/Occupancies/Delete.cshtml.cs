@@ -6,10 +6,11 @@ using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
 using BuildingRecordsApp.Models.ItemViewModels;
+using BuildingRecordsApp.Interfaces;
 
 namespace BuildingRecordsApp.Pages.Occupancies
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : PageModel, ISingleDisplay
     {
         private readonly BuildingContext _context;
         private readonly IMapper _mapper;
@@ -36,7 +37,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
 
             if (occupancy == null)
                 return NotFound();
-            
+
             ViewModel = new DisplayViewModel<OccupancyItemViewModel>
             {
                 Entries = [_mapper.Map<OccupancyItemViewModel>(occupancy)],
@@ -44,7 +45,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
-            
+
             return Page();
         }
 
@@ -62,6 +63,15 @@ namespace BuildingRecordsApp.Pages.Occupancies
             }
 
             return RedirectToPage("./Index");
+        }
+
+        public int GetFirstId()
+        {
+            if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
+            {
+                return ViewModel.Entries[0].OccupancyId ?? 0;
+            }
+            return 0;
         }
     }
 }

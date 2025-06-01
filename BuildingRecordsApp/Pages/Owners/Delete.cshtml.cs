@@ -7,10 +7,11 @@ using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
 using BuildingRecordsApp.Models.ItemViewModels;
+using BuildingRecordsApp.Interfaces;
 
 namespace BuildingRecordsApp.Pages.Owners
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : PageModel, ISingleDisplay
     {
         private readonly BuildingContext _context;
         private readonly IMapper _mapper;
@@ -38,18 +39,18 @@ namespace BuildingRecordsApp.Pages.Owners
 
             if (Owner == null)
                 return NotFound();
-            
+
             ViewModel = new DisplayViewModel<OwnerItemViewModel>
             {
-                Entries = [ _mapper.Map<OwnerItemViewModel>(Owner) ],
-                IdsToDisplay = [ Owner.OwnerId ],
+                Entries = [_mapper.Map<OwnerItemViewModel>(Owner)],
+                IdsToDisplay = [Owner.OwnerId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
-            
+
             return Page();
         }
-        
+
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null || _context.Owners == null)
@@ -64,6 +65,15 @@ namespace BuildingRecordsApp.Pages.Owners
             }
 
             return RedirectToPage("./Index");
+        }
+
+        public int GetFirstId()
+        {
+            if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
+            {
+                return ViewModel.Entries[0].OwnerId ?? 0;
+            }
+            return 0;
         }
     }
 }

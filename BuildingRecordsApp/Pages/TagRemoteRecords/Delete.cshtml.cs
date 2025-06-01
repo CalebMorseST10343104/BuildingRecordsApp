@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
 using BuildingRecordsApp.Models.ItemViewModels;
+using BuildingRecordsApp.Interfaces;
 
 namespace BuildingRecordsApp.Pages.TagRemoteRecords
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : PageModel, ISingleDisplay
     {
         private readonly BuildingContext _context;
         private readonly IMapper _mapper;
@@ -39,10 +40,10 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             {
                 Entries = [_mapper.Map<TagRemoteRecordItemViewModel>(tagRemoteRecord)],
                 IdsToDisplay = [tagRemoteRecord.TagRemoteRecordId],
-                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayMode = Enums.DisplayMode.Extended,
                 DisplayLayout = Enums.DisplayLayout.List
             };
-            
+
             return Page();
         }
 
@@ -60,6 +61,15 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             }
 
             return RedirectToPage("./Index");
+        }
+
+        public int GetFirstId()
+        {
+            if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
+            {
+                return ViewModel.Entries[0].TagRemoteRecordId ?? 0;
+            }
+            return 0;
         }
     }
 }

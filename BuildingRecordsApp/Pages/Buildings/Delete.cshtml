@@ -8,37 +8,10 @@
 
 <div>
     <div>
-        <h4>Building</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.Name)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.Name)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.Address)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.Address)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.NumberOfUnits)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.NumberOfUnits)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.NumberOfFloors)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.NumberOfFloors)
-            </dd>
-        </dl>
+        <partial name="_Info" model="Model.ViewModel" />
     </div>
     <form method="post">
-        <input type="hidden" asp-for="ViewModel.BuildingId" />
+        <input type="hidden" asp-for="GetFirstId()" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
 

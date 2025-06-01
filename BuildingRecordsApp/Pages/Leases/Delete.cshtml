@@ -8,67 +8,10 @@
 
 <div>
     <div>
-        <h4>Lease</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.LeaseHolderName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.LeaseHolderName)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.StartDate)
-            </dt>
-            <dd class="col-sm-10">
-                @Model.ViewModel.StartDate.ToShortDateString()
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.EndDate)
-            </dt>
-            <dd class="col-sm-10">
-                @Model.ViewModel.EndDate.ToShortDateString()
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.PersonsOccupying)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.PersonsOccupying)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.SignedRules)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.SignedRules)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.AllowedPets)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.AllowedPets)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.EmergencyContactNumber)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.EmergencyContactNumber)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.Unit!.Building!.Name)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.Unit!.Building!.Name)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.Unit!.UnitNumber)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.Unit!.UnitNumber)
-            </dd>
-        </dl>
+        <partial name="_Info" model="Model.ViewModel" />
     </div>
     <form method="post">
-        <input type="hidden" asp-for="ViewModel.LeaseId" />
+        <input type="hidden" asp-for="GetFirstId()" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

@@ -5,10 +5,11 @@ using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
 using BuildingRecordsApp.Models.DisplayViewModels;
 using BuildingRecordsApp.Models.ItemViewModels;
+using BuildingRecordsApp.Interfaces;
 
 namespace BuildingRecordsApp.Pages.Units
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : PageModel, ISingleDisplay
     {
         private readonly BuildingContext _context;
         private readonly IMapper _mapper;
@@ -34,7 +35,7 @@ namespace BuildingRecordsApp.Pages.Units
 
             if (unit == null)
                 return NotFound();
-            
+
             ViewModel = new DisplayViewModel<UnitItemViewModel>
             {
                 Entries = [_mapper.Map<UnitItemViewModel>(unit)],
@@ -42,7 +43,7 @@ namespace BuildingRecordsApp.Pages.Units
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
-            
+
             return Page();
         }
 
@@ -60,6 +61,15 @@ namespace BuildingRecordsApp.Pages.Units
             }
 
             return RedirectToPage("./Index");
+        }
+
+        public int GetFirstId()
+        {
+            if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
+            {
+                return ViewModel.Entries[0].UnitId ?? 0;
+            }
+            return 0;
         }
     }
 }

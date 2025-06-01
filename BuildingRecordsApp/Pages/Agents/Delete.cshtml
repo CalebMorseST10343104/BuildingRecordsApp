@@ -8,65 +8,10 @@
 
 <div>
     <div>
-        <h4>Agent</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.FirstName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.FirstName)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.LastName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.LastName)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.PhoneNumber)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.PhoneNumber)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.Email)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.Email)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ViewModel.AgentCompany!.CompanyName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ViewModel.AgentCompany!.CompanyName)
-            </dd>
-        </dl>
-        <br />
-        <h4>Associated Units</h4>
-        <hr />
-        <div style="width: 50%; overflow-x: auto;">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Building Name</th>
-                        <th>Unit Number</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var unit in Model.ViewModel.Units)
-                    {
-                        <tr>
-                            <td>@Html.DisplayFor(m => unit.Building!.Name)</td>
-                            <td>@Html.DisplayFor(m => unit.UnitNumber)</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+        <partial name="_Info" model="Model" />
     </div>
     <form method="post">
-        <input type="hidden" asp-for="ViewModel.AgentId" />
+        <input type="hidden" asp-for="GetFirstId()" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>
