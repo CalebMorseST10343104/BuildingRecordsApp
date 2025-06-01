@@ -4,7 +4,7 @@ using BuildingRecordsApp.Enums;
 namespace BuildingRecordsApp.Models.DisplayViewModels;
 
 public class DisplayViewModel<TItem> : IDisplayViewModel
-    where TItem : ItemViewModels.ItemViewModel
+    where TItem : ItemViewModels.IDisplayEntry
 {
     public List<TItem> Entries { get; set; } = [];
     public List<int> IdsToDisplay { get; set; } = [];

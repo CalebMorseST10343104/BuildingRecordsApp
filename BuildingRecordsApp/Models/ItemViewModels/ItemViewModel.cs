@@ -5,7 +5,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public abstract class ItemViewModel : IItemViewModel
+public abstract class ItemViewModel : IDisplayEntry
 {
 
     public List<string> GetHeaders(DisplayMode displayMode = DisplayMode.Basic)
