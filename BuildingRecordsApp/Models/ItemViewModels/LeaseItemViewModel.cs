@@ -46,6 +46,11 @@ public class LeaseItemViewModel : ItemViewModel
     [DisplayMode("Full")]
     public string? EmergencyContactNumber { get; set; }
 
+    public override int GetId()
+    {
+        return LeaseId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         return "Lease Details";

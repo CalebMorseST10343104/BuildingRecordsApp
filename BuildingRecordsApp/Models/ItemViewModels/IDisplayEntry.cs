@@ -12,4 +12,6 @@ public interface IDisplayEntry
     string GetTitleHeader();
 
     bool IsTitleHeaderFieldName(object item);
+
+    int GetId();
 }

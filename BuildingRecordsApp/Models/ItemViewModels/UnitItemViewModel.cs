@@ -41,6 +41,11 @@ public class UnitItemViewModel : ItemViewModel
     [DisplayMode("Full")]
     public int? AirconditioningUnits { get; set; }
 
+    public override int GetId()
+    {
+        return UnitId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         if (string.IsNullOrEmpty(BuildingName) && string.IsNullOrEmpty(UnitNumber))

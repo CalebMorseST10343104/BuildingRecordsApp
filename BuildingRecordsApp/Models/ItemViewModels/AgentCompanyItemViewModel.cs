@@ -24,6 +24,10 @@ public class AgentCompanyItemViewModel : ItemViewModel
     [DisplayMode("Detailed")]
     public string? RegistrationNumber { get; set; }
 
+    public override int GetId()
+    {
+        return AgentCompanyId ?? 0;
+    }
 
     public override string GetTitleHeader()
     {

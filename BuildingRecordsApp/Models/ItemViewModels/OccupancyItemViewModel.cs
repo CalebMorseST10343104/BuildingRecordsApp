@@ -29,6 +29,11 @@ public class OccupancyItemViewModel : ItemViewModel
     [DisplayMode("Basic")]
     public string? OccupationType { get; set; }
 
+    public override int GetId()
+    {
+        return OccupancyId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         return "Occupancy Details";

@@ -41,6 +41,11 @@ public class TagRemoteRecordItemViewModel : ItemViewModel
     [DisplayMode("Detailed")]
     public int? RemotesAgent { get; set; }
 
+    public override int GetId()
+    {
+        return TagRemoteRecordId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         return "Tag Remote Record Details";

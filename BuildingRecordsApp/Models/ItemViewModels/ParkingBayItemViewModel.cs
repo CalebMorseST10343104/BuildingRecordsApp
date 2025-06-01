@@ -25,6 +25,11 @@ public class ParkingBayItemViewModel : ItemViewModel
     [DisplayMode("Extended")]
     public int? UnitNumber { get; set; }
 
+    public override int GetId()
+    {
+        return ParkingBayId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         if (string.IsNullOrEmpty(ParkingBayNumber))

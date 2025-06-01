@@ -8,4 +8,7 @@ public interface IDisplayViewModel
     List<int> IdsToDisplay { get; set; }
     DisplayMode DisplayMode { get; set; }
     DisplayLayout DisplayLayout { get; set; }
+    bool ShowDetailButton { get; set; }
+    bool ShowEditButton { get; set; }
+    bool ShowDeleteButton { get; set; }
 }

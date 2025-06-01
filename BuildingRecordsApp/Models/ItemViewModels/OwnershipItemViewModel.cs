@@ -25,6 +25,11 @@ public class OwnershipItemViewModel : ItemViewModel
     [DisplayMode("Basic")]
     public string? OwnershipType { get; set; }
 
+    public override int GetId()
+    {
+        return OwnershipId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         if (string.IsNullOrEmpty(BuildingName) && UnitNumber == null)

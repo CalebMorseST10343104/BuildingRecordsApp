@@ -49,4 +49,6 @@ public abstract class ItemViewModel : IDisplayEntry
     public abstract string GetTitleHeader();
 
     public abstract bool IsTitleHeaderFieldName(object item);
+
+    public abstract int GetId();
 }

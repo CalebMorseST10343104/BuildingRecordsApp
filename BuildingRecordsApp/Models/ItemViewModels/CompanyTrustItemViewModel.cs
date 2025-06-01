@@ -22,6 +22,11 @@ public class CompanyTrustItemViewModel : ItemViewModel
     [DisplayMode("Detailed")]
     public string? RegistrationNumber { get; set; }
 
+    public override int GetId()
+    {
+        return CompanyTrustId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         if (string.IsNullOrEmpty(Name))

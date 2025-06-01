@@ -26,6 +26,11 @@ public class BuildingItemViewModel : ItemViewModel
     [DisplayMode("Detailed")]
     public int? NumberOfFloors { get; set; }
 
+    public override int GetId()
+    {
+        return BuildingId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         if (string.IsNullOrEmpty(Name))

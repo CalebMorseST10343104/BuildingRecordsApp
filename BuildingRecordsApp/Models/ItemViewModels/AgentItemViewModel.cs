@@ -30,6 +30,11 @@ public class AgentItemViewModel : ItemViewModel
     [DisplayMode("Extended")]
     public string? CompanyName { get; set; }
 
+    public override int GetId()
+    {
+        return AgentId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         if (string.IsNullOrEmpty(FirstName) && string.IsNullOrEmpty(LastName))

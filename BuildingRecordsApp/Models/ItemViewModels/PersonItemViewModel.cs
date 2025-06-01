@@ -33,6 +33,11 @@ public class PersonItemViewModel : ItemViewModel
     [DisplayMode("Detailed")]
     public string? PhoneNumber { get; set; }
 
+    public override int GetId()
+    {
+        return PersonId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         if (string.IsNullOrEmpty(FirstName) && string.IsNullOrEmpty(LastName))

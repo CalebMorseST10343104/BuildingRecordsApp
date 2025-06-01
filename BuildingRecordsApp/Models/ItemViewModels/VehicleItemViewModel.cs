@@ -33,6 +33,11 @@ public class VehicleItemViewModel : ItemViewModel
     [DisplayMode("Extended")]
     public int? UnitNumber { get; set; }
 
+    public override int GetId()
+    {
+        return VehicleId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         if (string.IsNullOrEmpty(VehicleRegistration))

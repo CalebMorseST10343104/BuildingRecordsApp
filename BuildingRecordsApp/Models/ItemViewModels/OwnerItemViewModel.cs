@@ -25,6 +25,11 @@ public class OwnerItemViewModel : ItemViewModel
     [DisplayMode("Extended")]
     public string? UnitNumber { get; set; }
 
+    public override int GetId()
+    {
+        return OwnerId ?? 0;
+    }
+
     public override string GetTitleHeader()
     {
         return "Owner Details";
