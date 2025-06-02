@@ -63,8 +63,8 @@ namespace BuildingRecordsApp.Migrations
                 {
                     PersonId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Surname = table.Column<string>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     PostalAddress = table.Column<string>(type: "TEXT", nullable: false),
                     IdNumber = table.Column<string>(type: "TEXT", nullable: false),
@@ -211,7 +211,7 @@ namespace BuildingRecordsApp.Migrations
                         column: x => x.CompanyTrustId,
                         principalTable: "CompanyTrusts",
                         principalColumn: "CompanyTrustId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Ownerships_Units_UnitId",
                         column: x => x.UnitId,
@@ -224,14 +224,15 @@ namespace BuildingRecordsApp.Migrations
                 name: "ParkingBays",
                 columns: table => new
                 {
-                    ParkingBayID = table.Column<int>(type: "INTEGER", nullable: false)
+                    ParkingBayId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ParkingBayNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    IsNearEntrance = table.Column<bool>(type: "INTEGER", nullable: false),
                     UnitID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ParkingBays", x => x.ParkingBayID);
+                    table.PrimaryKey("PK_ParkingBays", x => x.ParkingBayId);
                     table.ForeignKey(
                         name: "FK_ParkingBays_Units_UnitID",
                         column: x => x.UnitID,
