@@ -14,6 +14,10 @@
                         {
                             <th>@header</th>
                         }
+                        @if (Model.ShowActions)
+                        {
+                            <th>Actions</th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +28,16 @@
                             {
                                 <td>@value.Value</td>
                             }
+                            @if (Model.ShowActions)
+                            {
+                                var basePath = ViewData["BasePath"]?.ToString() ?? string.Empty;
+                                <component type="typeof(BuildingRecordsApp.Components.IndexRowActions)" 
+                                    render-mode="Static"
+                                    param-Id="entry.GetId()" 
+                                    param-BasePath="basePath" />
+                            }
                         </tr>
+                        }
                     }
                 </tbody>
             </table>

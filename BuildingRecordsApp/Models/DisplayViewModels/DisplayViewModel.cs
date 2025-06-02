@@ -10,7 +10,5 @@ public class DisplayViewModel<TItem> : IDisplayViewModel
     public List<int> IdsToDisplay { get; set; } = [];
     public DisplayMode DisplayMode { get; set; } = DisplayMode.Basic;
     public DisplayLayout DisplayLayout { get; set; } = DisplayLayout.List;
-    public bool ShowDetailButton { get; set; } = false;
-    public bool ShowEditButton { get; set; } = false;
-    public bool ShowDeleteButton { get; set; } = false;
+    public bool ShowActions { get; set; } = false;
 }

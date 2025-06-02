@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Vehicles
 {
@@ -16,14 +18,27 @@ namespace BuildingRecordsApp.Pages.Vehicles
             _mapper = mapper;
         }
 
-        public List<Vehicle> Vehicles { get; set; } = new();
+        public DisplayViewModel<VehicleItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Vehicles = await _context.Vehicles
-            .Include(v => v.Unit)
-            .ThenInclude(u => u!.Building)
-            .ToListAsync();
+            ViewData["BasePath"] = "/Vehicles";
+
+            List<VehicleItemViewModel> vehicleItems = await _context.Vehicles
+                .Include(v => v.Unit)
+                .ThenInclude(u => u!.Building)
+                .AsNoTracking()
+                .Select(v => _mapper.Map<VehicleItemViewModel>(v))
+                .ToListAsync();
+
+            ViewModel = new DisplayViewModel<VehicleItemViewModel>
+            {
+                Entries = vehicleItems,
+                IdsToDisplay = [.. vehicleItems.Select(v => v.VehicleId ?? 0)],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.Table,
+                ShowActions = true
+            };
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Occupancies
 {
@@ -17,15 +19,28 @@ namespace BuildingRecordsApp.Pages.Occupancies
             _mapper = mapper;
         }
 
-        public List<Occupancy> Occupancies { get; set; } = new();
+        public DisplayViewModel<OccupancyItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Occupancies = await _context.Occupancies
+            ViewData["BasePath"] = "/Occupancies";
+
+            List<OccupancyItemViewModel> occupancyItems = await _context.Occupancies
                 .Include(o => o.Occupant)
                 .Include(o => o.Unit)
                 .ThenInclude(u => u!.Building)
+                .AsNoTracking()
+                .Select(o => _mapper.Map<OccupancyItemViewModel>(o))
                 .ToListAsync();
+
+            ViewModel = new DisplayViewModel<OccupancyItemViewModel>
+            {
+                Entries = occupancyItems,
+                IdsToDisplay = [.. occupancyItems.Select(o => o.OccupancyId ?? 0)],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.Table,
+                ShowActions = true
+            };
         }
     }
 }

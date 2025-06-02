@@ -10,55 +10,6 @@
     <a asp-page="./Create" class="btn btn-primary">Create New Ownership</a>
 </p>
 
-@* 
-Ownership has following fields:
-int OwnershipId
-string OwnershipType // e.g., "Natural", "Juristic"
-string UnitId // Foreign key for Unit
-Unit Unit // Navigation property for Unit
- *@
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ownerships[0].Unit!.Building!.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ownerships[0].Unit!.UnitNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ownerships[0].OwnershipType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ownerships[0].CompanyTrust)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Ownerships)
-        {
-            <tr>
-                <td>@item.Unit!.Building!.Name</td>
-                <td>@item.Unit!.UnitNumber</td>
-                <td>@item.OwnershipType</td>
-                <td>
-                    @if (item.CompanyTrust != null)
-                    {
-                        @item.CompanyTrust.Name
-                    }
-                    else
-                    {
-                        <span>No Company/Trust</span>
-                    }
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.OwnershipId" class="btn btn-sm btn-primary me-1">Edit</a>
-                    <a asp-page="./Details" asp-route-id="@item.OwnershipId" class="btn btn-sm btn-info text-white me-1">Details</a>
-                    <a asp-page="./Delete" asp-route-id="@item.OwnershipId" class="btn btn-sm btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div>
+    <partial name="_Info" model="Model.ViewModel" />
+</div>

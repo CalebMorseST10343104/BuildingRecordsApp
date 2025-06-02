@@ -10,58 +10,7 @@
     <a asp-page="./Create" class="btn btn-primary">Create New Tag & Remote Record</a>
 </p>
 
-@* 
-TagRemoteRecord has the following properties:
-int TagRemoteRecordId
-int TagsOwner
-int RemotesOwner
-int TagsOccupant
-int RemotesOccupant
-int TagsAgent
-int RemotesAgent
- *@
-
-<table class="table">
-    <thead>
-        <tr>
-            <th rowspan="2">
-                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].Unit!.Building!.Name)
-            </th>
-            <th rowspan="2">
-                @Html.DisplayNameFor(model => model.TagRemoteRecords[0].Unit!.UnitNumber)
-            </th>
-            <th colspan="2" class="text-center">Owner</th>
-            <th colspan="2" class="text-center">Occupant</th>
-            <th colspan="2" class="text-center">Agent</th>
-            <th rowspan="2"></th>
-        </tr>
-        <tr>
-            <th>Tags</th>
-            <th>Remotes</th>
-            <th>Tags</th>
-            <th>Remotes</th>
-            <th>Tags</th>
-            <th>Remotes</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.TagRemoteRecords)
-        {
-            <tr>
-                <td>@item.Unit!.Building!.Name</td>
-                <td>@item.Unit!.UnitNumber</td>
-                <td>@item.TagsOwner</td>
-                <td>@item.RemotesOwner</td>
-                <td>@item.TagsOccupant</td>
-                <td>@item.RemotesOccupant</td>
-                <td>@item.TagsAgent</td>
-                <td>@item.RemotesAgent</td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.TagRemoteRecordId" class="btn btn-sm btn-primary me-1">Edit</a>
-                    <a asp-page="./Delete" asp-route-id="@item.TagRemoteRecordId" class="btn btn-sm btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div>
+    <partial name="_Info" model="Model.ViewModel" />
+</div>
 

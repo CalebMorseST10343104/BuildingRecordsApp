@@ -8,47 +8,6 @@
     <a asp-page="./Create" class="btn btn-primary">Create New Owner</a>
 </p>
 
-@* 
-Owner has following fields:
-int OwnerId 
-Person Person // Navigation property for the person
-int PersonId // Foreign key for Person
-Ownership Ownership // Navigation property for ownership
-int OwnershipId // Foreign key for Ownership
- *@
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Owners[0].Ownership!.Unit!.Building!.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Owners[0].Ownership!.Unit!.UnitNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Owners[0].Person!.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Owners[0].Person!.LastName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Owners)
-        {
-            <tr>
-                <td>@item.Ownership!.Unit!.Building!.Name</td>
-                <td>@item.Ownership!.Unit!.UnitNumber</td>
-                <td>@item.Person!.FirstName</td>
-                <td>@item.Person!.LastName</td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.OwnerId" class="btn btn-sm btn-primary me-1">Edit</a>
-                    <a asp-page="./Details" asp-route-id="@item.OwnerId" class="btn btn-sm btn-info text-white me-1">Details</a>
-                    <a asp-page="./Delete" asp-route-id="@item.OwnerId" class="btn btn-sm btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div>
+    <partial name="_Info" model="Model.ViewModel" />
+</div>

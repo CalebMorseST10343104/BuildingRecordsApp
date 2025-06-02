@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.CompanyTrusts
 {
@@ -17,11 +19,25 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             _mapper = mapper;
         }
 
-        public List<CompanyTrust> CompanyTrusts { get; set; } = new();
+        public DisplayViewModel<CompanyTrustItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            CompanyTrusts = await _context.CompanyTrusts.ToListAsync();
+            ViewData["BasePath"] = "/CompanyTrusts";
+
+            List<CompanyTrustItemViewModel> companyTrustItems = await _context.CompanyTrusts
+                .AsNoTracking()
+                .Select(ct => _mapper.Map<CompanyTrustItemViewModel>(ct))
+                .ToListAsync();
+
+            ViewModel = new DisplayViewModel<CompanyTrustItemViewModel>
+            {
+                Entries = companyTrustItems,
+                IdsToDisplay = [.. companyTrustItems.Select(ct => ct.CompanyTrustId ?? 0)],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.Table,
+                ShowActions = true
+            };
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.StoreRooms
 {
@@ -17,14 +19,27 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             _mapper = mapper;
         }
 
-        public List<StoreRoom> StoreRooms { get; set; } = new();
+        public DisplayViewModel<StoreRoomItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            StoreRooms = await _context.StoreRooms
-            .Include(s => s.Unit)
-            .ThenInclude(u => u!.Building)
-            .ToListAsync();
+            ViewData["BasePath"] = "/StoreRooms";
+
+            List<StoreRoomItemViewModel> storeRoomItems = await _context.StoreRooms
+                .Include(s => s.Unit)
+                .ThenInclude(u => u!.Building)
+                .AsNoTracking()
+                .Select(s => _mapper.Map<StoreRoomItemViewModel>(s))
+                .ToListAsync();
+
+            ViewModel = new DisplayViewModel<StoreRoomItemViewModel>
+            {
+                Entries = storeRoomItems,
+                IdsToDisplay = [.. storeRoomItems.Select(s => s.StoreRoomId ?? 0)],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.Table,
+                ShowActions = true
+            };
         }
     }
 }

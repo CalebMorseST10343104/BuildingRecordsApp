@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Buildings
 {
@@ -16,11 +18,25 @@ namespace BuildingRecordsApp.Pages.Buildings
             _mapper = mapper;
         }
 
-        public List<Building> Buildings { get; set; } = new();
+        public DisplayViewModel<BuildingItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Buildings = await _context.Buildings.ToListAsync();
+            ViewData["BasePath"] = "/Buildings";
+
+            List<BuildingItemViewModel> buildingItems = await _context.Buildings
+                .AsNoTracking()
+                .Select(b => _mapper.Map<BuildingItemViewModel>(b))
+                .ToListAsync();
+
+            ViewModel = new DisplayViewModel<BuildingItemViewModel>
+            {
+                Entries = buildingItems,
+                IdsToDisplay = [.. buildingItems.Select(b => b.BuildingId ?? 0)],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.Table,
+                ShowActions = true
+            };
         }
     }
 }

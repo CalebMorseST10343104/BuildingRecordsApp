@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Persons
 {
@@ -17,11 +19,25 @@ namespace BuildingRecordsApp.Pages.Persons
             _mapper = mapper;
         }
 
-        public List<Person> Persons { get; set; } = [];
+        public DisplayViewModel<PersonItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Persons = await _context.Persons.ToListAsync();
+            ViewData["BasePath"] = "/Persons";
+
+            List<PersonItemViewModel> personItems = await _context.Persons
+                .AsNoTracking()
+                .Select(p => _mapper.Map<PersonItemViewModel>(p))
+                .ToListAsync();
+
+            ViewModel = new DisplayViewModel<PersonItemViewModel>
+            {
+                Entries = personItems,
+                IdsToDisplay = [.. personItems.Select(p => p.PersonId ?? 0)],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.Table,
+                ShowActions = true
+            };
         }
     }
 }

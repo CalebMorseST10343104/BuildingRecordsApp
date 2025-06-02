@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.ParkingBays
 {
@@ -17,14 +19,27 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             _mapper = mapper;
         }
 
-        public List<ParkingBay> ParkingBays { get; set; } = new();
+        public DisplayViewModel<ParkingBayItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            ParkingBays = await _context.ParkingBays
-            .Include(p => p.Unit)
-            .ThenInclude(u => u!.Building)
-            .ToListAsync();
+            ViewData["BasePath"] = "/ParkingBays";
+
+            List<ParkingBayItemViewModel> parkingBayItems = await _context.ParkingBays
+                .Include(p => p.Unit)
+                .ThenInclude(u => u!.Building)
+                .AsNoTracking()
+                .Select(p => _mapper.Map<ParkingBayItemViewModel>(p))
+                .ToListAsync();
+
+            ViewModel = new DisplayViewModel<ParkingBayItemViewModel>
+            {
+                Entries = parkingBayItems,
+                IdsToDisplay = [.. parkingBayItems.Select(p => p.ParkingBayId ?? 0)],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.Table,
+                ShowActions = true
+            };
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Models.DisplayViewModels;
+using BuildingRecordsApp.Models.ItemViewModels;
 
 namespace BuildingRecordsApp.Pages.Owners
 {
@@ -17,16 +19,29 @@ namespace BuildingRecordsApp.Pages.Owners
             _mapper = mapper;
         }
 
-        public List<Owner> Owners { get; set; } = [];
+        public DisplayViewModel<OwnerItemViewModel> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Owners = await _context.Owners
-            .Include(o => o.Person)
-            .Include(o => o.Ownership)
-            .ThenInclude(u => u!.Unit)
-            .ThenInclude(u => u!.Building)
-            .ToListAsync();
+            ViewData["BasePath"] = "/Owners";
+
+            List<OwnerItemViewModel> ownerItems = await _context.Owners
+                .Include(o => o.Person)
+                .Include(o => o.Ownership)
+                .ThenInclude(ow => ow!.Unit)
+                .ThenInclude(u => u!.Building)
+                .AsNoTracking()
+                .Select(o => _mapper.Map<OwnerItemViewModel>(o))
+                .ToListAsync();
+
+            ViewModel = new DisplayViewModel<OwnerItemViewModel>
+            {
+                Entries = ownerItems,
+                IdsToDisplay = [.. ownerItems.Select(o => o.OwnerId ?? 0)],
+                DisplayMode = Enums.DisplayMode.Detailed,
+                DisplayLayout = Enums.DisplayLayout.Table,
+                ShowActions = true
+            };
         }
     }
 }
