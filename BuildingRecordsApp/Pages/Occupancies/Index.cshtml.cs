@@ -23,8 +23,6 @@ namespace BuildingRecordsApp.Pages.Occupancies
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/Occupancies";
-
             List<OccupancyItemViewEntry> occupancyItems = await _context.Occupancies
                 .Include(o => o.Occupant)
                 .Include(o => o.Unit)

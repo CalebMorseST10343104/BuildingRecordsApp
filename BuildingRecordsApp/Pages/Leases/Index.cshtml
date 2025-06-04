@@ -11,5 +11,12 @@
 </p>
 
 <div>
-    <partial name="_Info" model="Model.ViewModel" />
+    @{
+        var BasePath = "BuildingRecordsApp/Pages/Leases";
+        var CompType = typeof(BuildingRecordsApp.Components.InfoDisplay<BuildingRecordsApp.Models.ItemViewModels.LeaseItemViewEntry>);
+        <component type="CompType"
+            render-mode="Static"
+            param-Model="Model.ViewModel"
+            param-BasePath="BasePath" />
+    }
 </div>

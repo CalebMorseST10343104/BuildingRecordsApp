@@ -22,8 +22,6 @@ namespace BuildingRecordsApp.Pages.Leases
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/Leases";
-
             List<LeaseItemViewEntry> leaseItems = await _context.Leases
                 .Include(l => l.Unit)
                 .ThenInclude(u => u!.Building)

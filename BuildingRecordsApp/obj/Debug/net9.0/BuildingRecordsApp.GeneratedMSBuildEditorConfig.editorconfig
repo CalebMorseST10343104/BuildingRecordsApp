@@ -32,6 +32,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9JbmRleFJvd0FjdGlvbnMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Components/InfoDisplay.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9JbmZvRGlzcGxheS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/AgentCompanies/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWdlbnRDb21wYW5pZXMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -242,10 +246,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJpdmFjeS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Shared/_Info.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19JbmZvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/calebmorse/Documents/Projects/chelsea/buildingapp.nosync/BuildingRecordsApp/Pages/Shared/_ValidationScriptsPartial.cshtml]

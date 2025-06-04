@@ -22,8 +22,6 @@ namespace BuildingRecordsApp.Pages.Vehicles
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/Vehicles";
-
             List<VehicleItemViewEntry> vehicleItems = await _context.Vehicles
                 .Include(v => v.Unit)
                 .ThenInclude(u => u!.Building)

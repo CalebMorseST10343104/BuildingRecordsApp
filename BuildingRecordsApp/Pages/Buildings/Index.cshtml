@@ -1,4 +1,5 @@
 @page
+@using BuildingRecordsApp.Pages.Buildings
 @model BuildingRecordsApp.Pages.Buildings.IndexModel
 @{
     ViewData["Title"] = "Buildings";
@@ -9,5 +10,12 @@
 </p>
 
 <div>
-    <partial name="_Info" model="Model.ViewModel" />
+    @{
+        var BasePath = "BuildingRecordsApp/Pages/Buildings";
+        var CompType = typeof(BuildingRecordsApp.Components.InfoDisplay<BuildingRecordsApp.Models.ItemViewModels.BuildingItemViewEntry>);
+        <component type="CompType"
+            render-mode="Static"
+            param-Model="Model.ViewModel" 
+            param-BasePath="BasePath" />
+    }
 </div>

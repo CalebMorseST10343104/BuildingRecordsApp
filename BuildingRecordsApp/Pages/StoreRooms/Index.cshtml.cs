@@ -23,8 +23,6 @@ namespace BuildingRecordsApp.Pages.StoreRooms
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/StoreRooms";
-
             List<StoreRoomItemViewEntry> storeRoomItems = await _context.StoreRooms
                 .Include(s => s.Unit)
                 .ThenInclude(u => u!.Building)

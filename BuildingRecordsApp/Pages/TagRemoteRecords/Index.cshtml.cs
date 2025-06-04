@@ -22,8 +22,6 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/TagRemoteRecords";
-
             List<TagRemoteRecordItemViewEntry> tagRemoteRecordItems = await _context.TagRemoteRecords
                 .Include(t => t.Unit)
                 .ThenInclude(u => u!.Building)

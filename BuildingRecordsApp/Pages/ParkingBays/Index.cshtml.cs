@@ -23,8 +23,6 @@ namespace BuildingRecordsApp.Pages.ParkingBays
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/ParkingBays";
-
             List<ParkingBayItemViewEntry> parkingBayItems = await _context.ParkingBays
                 .Include(p => p.Unit)
                 .ThenInclude(u => u!.Building)

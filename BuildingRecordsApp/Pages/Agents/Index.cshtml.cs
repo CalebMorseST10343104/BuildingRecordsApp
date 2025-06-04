@@ -22,8 +22,6 @@ namespace BuildingRecordsApp.Pages.Agents
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/Agents";
-
             List<AgentItemViewEntry> agentItems = await _context.Agents
                 .AsNoTracking()
                 .Select(a => _mapper.Map<AgentItemViewEntry>(a))

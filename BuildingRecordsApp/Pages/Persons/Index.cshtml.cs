@@ -23,8 +23,6 @@ namespace BuildingRecordsApp.Pages.Persons
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/Persons";
-
             List<PersonItemViewEntry> personItems = await _context.Persons
                 .AsNoTracking()
                 .Select(p => _mapper.Map<PersonItemViewEntry>(p))

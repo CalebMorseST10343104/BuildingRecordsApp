@@ -23,8 +23,6 @@ namespace BuildingRecordsApp.Pages.Ownerships
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/Ownerships";
-
             List<OwnershipItemViewEntry> ownershipItems = await _context.Ownerships
                 .Include(o => o.CompanyTrust)
                 .Include(o => o.Unit)

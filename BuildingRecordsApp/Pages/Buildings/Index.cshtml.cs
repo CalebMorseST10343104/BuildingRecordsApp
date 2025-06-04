@@ -22,8 +22,6 @@ namespace BuildingRecordsApp.Pages.Buildings
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/Buildings";
-
             List<BuildingItemViewEntry> buildingItems = await _context.Buildings
                 .AsNoTracking()
                 .Select(b => _mapper.Map<BuildingItemViewEntry>(b))

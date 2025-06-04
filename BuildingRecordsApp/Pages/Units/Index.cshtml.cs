@@ -23,8 +23,6 @@ namespace BuildingRecordsApp.Pages.Units
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/Units";
-
             List<UnitItemViewEntry> unitItems = await _context.Units
                 .Include(u => u.Building)
                 .AsNoTracking()

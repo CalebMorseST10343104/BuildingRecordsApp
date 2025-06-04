@@ -1,0 +1,79 @@
+﻿@typeparam TItem where TItem : IItemViewEntry
+@using BuildingRecordsApp.Models.DisplayViewModels
+@using BuildingRecordsApp.Models.ItemViewModels
+@using BuildingRecordsApp.Enums
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+
+@inject Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper Html
+
+@if (Model is not null)
+{
+    @switch (Model.DisplayLayout)
+    {
+        case Enums.DisplayLayout.Table:
+            {
+                var headers = Model.Entries.FirstOrDefault()?.GetHeaders(Model.DisplayMode) ?? new List<string> { "No Data Available" };
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            @foreach (var header in headers)
+                            {
+                                <th>@header</th>
+                            }
+                            @if (Model.ShowActions)
+                            {
+                                <th>Actions</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var entry in Model.Entries)
+                        {
+                            <tr>
+                                @foreach (var value in entry.GetValues(Model.DisplayMode))
+                                {
+                                    <td>@value.Value</td>
+                                }
+                                @if (Model.ShowActions)
+                                {
+                                    <component type="typeof(BuildingRecordsApp.Components.IndexRowActions)" 
+                                        render-mode="Static"
+                                        param-Id="entry.GetId()" 
+                                        param-BasePath="Model.Entries.FirstOrDefault()?.GetBasePath() ?? string.Empty" />
+                                }
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            break;
+        case Enums.DisplayLayout.List:
+            {
+                foreach (var entry in Model.Entries)
+                {
+                    var headerText = entry.GetTitleHeader;
+                    <div class="mb-4 border rounded p-3">
+                        <h4>@headerText</h4>
+                        <dl>
+                            @foreach (var value in entry.GetValues(Model.DisplayMode))
+                            {
+                                @if (entry.IsTitleHeaderFieldName(value.Key))
+                                {
+                                    <dt>@value.Key</dt>
+                                    <dd>@value.Value</dd>
+                                }
+                            }
+                        </dl>
+                    </div>
+                    <br />
+                }
+            }
+        break;
+    }
+}
+
+@code {
+    [Parameter] public DisplayViewModel<TItem>? Model { get; set; }
+    [Parameter] public string BasePath { get; set; } = string.Empty;
+}

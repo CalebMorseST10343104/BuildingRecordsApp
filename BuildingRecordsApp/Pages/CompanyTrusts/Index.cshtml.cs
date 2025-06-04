@@ -23,8 +23,6 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
 
         public async Task OnGetAsync()
         {
-            ViewData["BasePath"] = "/CompanyTrusts";
-
             List<CompanyTrustItemViewEntry> companyTrustItems = await _context.CompanyTrusts
                 .AsNoTracking()
                 .Select(ct => _mapper.Map<CompanyTrustItemViewEntry>(ct))
