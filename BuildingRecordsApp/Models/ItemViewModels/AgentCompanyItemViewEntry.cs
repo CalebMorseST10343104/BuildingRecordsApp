@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class AgentCompanyItemViewModel : ItemViewModel
+public class AgentCompanyItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
     public int? AgentCompanyId { get; set; }

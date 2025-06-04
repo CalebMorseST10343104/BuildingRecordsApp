@@ -18,18 +18,18 @@ namespace BuildingRecordsApp.Pages.Buildings
             _mapper = mapper;
         }
 
-        public DisplayViewModel<BuildingItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<BuildingItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/Buildings";
 
-            List<BuildingItemViewModel> buildingItems = await _context.Buildings
+            List<BuildingItemViewEntry> buildingItems = await _context.Buildings
                 .AsNoTracking()
-                .Select(b => _mapper.Map<BuildingItemViewModel>(b))
+                .Select(b => _mapper.Map<BuildingItemViewEntry>(b))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<BuildingItemViewModel>
+            ViewModel = new DisplayViewModel<BuildingItemViewEntry>
             {
                 Entries = buildingItems,
                 IdsToDisplay = [.. buildingItems.Select(b => b.BuildingId ?? 0)],

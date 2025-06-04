@@ -4,18 +4,14 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class ParkingBayItemViewModel : ItemViewModel
+public class StoreRoomItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
-    public int? ParkingBayId { get; set; }
+    public int? StoreRoomId { get; set; }
 
-    [Display(Name = "Parking Bay Number")]
+    [Display(Name = "Store Room Number")]
     [DisplayMode("Basic")]
-    public string? ParkingBayNumber { get; set; }
-
-    [Display(Name = "Is Near Entrance")]
-    [DisplayMode("Detailed")]
-    public bool? IsNearEntrance { get; set; }
+    public string? StoreRoomNumber { get; set; }
 
     [Display(Name = "Building Name")]
     [DisplayMode("Extended")]
@@ -27,23 +23,23 @@ public class ParkingBayItemViewModel : ItemViewModel
 
     public override int GetId()
     {
-        return ParkingBayId ?? 0;
+        return StoreRoomId ?? 0;
     }
 
     public override string GetTitleHeader()
     {
-        if (string.IsNullOrEmpty(ParkingBayNumber))
+        if (string.IsNullOrEmpty(StoreRoomNumber))
         {
-            return "Parking Bay";
+            return "Store Room";
         }
         else
         {
-            return $"Parking Bay {ParkingBayNumber}";
+            return $"Store Room {StoreRoomNumber}";
         }
     }
 
     public override bool IsTitleHeaderFieldName(object item)
     {
-        return item is nameof(ParkingBayNumber);
+        return item is nameof(StoreRoomNumber);
     }
 }

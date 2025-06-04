@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class PersonItemViewModel : ItemViewModel
+public class PersonItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
     public int? PersonId { get; set; }

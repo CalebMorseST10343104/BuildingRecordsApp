@@ -22,7 +22,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         }
 
         [BindProperty]
-        public DisplayViewModel<StoreRoomItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<StoreRoomItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,9 +37,9 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             if (storeRoom == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<StoreRoomItemViewModel>
+            ViewModel = new DisplayViewModel<StoreRoomItemViewEntry>
             {
-                Entries = [_mapper.Map<StoreRoomItemViewModel>(storeRoom)],
+                Entries = [_mapper.Map<StoreRoomItemViewEntry>(storeRoom)],
                 IdsToDisplay = [storeRoom.StoreRoomId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

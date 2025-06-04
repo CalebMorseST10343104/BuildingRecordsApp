@@ -19,20 +19,20 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             _mapper = mapper;
         }
 
-        public DisplayViewModel<ParkingBayItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<ParkingBayItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/ParkingBays";
 
-            List<ParkingBayItemViewModel> parkingBayItems = await _context.ParkingBays
+            List<ParkingBayItemViewEntry> parkingBayItems = await _context.ParkingBays
                 .Include(p => p.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()
-                .Select(p => _mapper.Map<ParkingBayItemViewModel>(p))
+                .Select(p => _mapper.Map<ParkingBayItemViewEntry>(p))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<ParkingBayItemViewModel>
+            ViewModel = new DisplayViewModel<ParkingBayItemViewEntry>
             {
                 Entries = parkingBayItems,
                 IdsToDisplay = [.. parkingBayItems.Select(p => p.ParkingBayId ?? 0)],

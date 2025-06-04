@@ -19,18 +19,18 @@ namespace BuildingRecordsApp.Pages.Persons
             _mapper = mapper;
         }
 
-        public DisplayViewModel<PersonItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<PersonItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/Persons";
 
-            List<PersonItemViewModel> personItems = await _context.Persons
+            List<PersonItemViewEntry> personItems = await _context.Persons
                 .AsNoTracking()
-                .Select(p => _mapper.Map<PersonItemViewModel>(p))
+                .Select(p => _mapper.Map<PersonItemViewEntry>(p))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<PersonItemViewModel>
+            ViewModel = new DisplayViewModel<PersonItemViewEntry>
             {
                 Entries = personItems,
                 IdsToDisplay = [.. personItems.Select(p => p.PersonId ?? 0)],

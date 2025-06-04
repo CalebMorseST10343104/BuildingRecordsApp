@@ -3,8 +3,8 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.DisplayViewModels;
 
-public class DisplayViewModel<TItem> : IDisplayViewModel
-    where TItem : ItemViewModels.IDisplayEntry
+public class DisplayViewModel<TItem> : IDisplayViewModel<TItem>
+    where TItem : ItemViewModels.IItemViewEntry
 {
     public List<TItem> Entries { get; set; } = [];
     public List<int> IdsToDisplay { get; set; } = [];

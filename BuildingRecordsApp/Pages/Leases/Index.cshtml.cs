@@ -18,20 +18,20 @@ namespace BuildingRecordsApp.Pages.Leases
             _mapper = mapper;
         }
 
-        public DisplayViewModel<LeaseItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<LeaseItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/Leases";
 
-            List<LeaseItemViewModel> leaseItems = await _context.Leases
+            List<LeaseItemViewEntry> leaseItems = await _context.Leases
                 .Include(l => l.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()
-                .Select(l => _mapper.Map<LeaseItemViewModel>(l))
+                .Select(l => _mapper.Map<LeaseItemViewEntry>(l))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<LeaseItemViewModel>
+            ViewModel = new DisplayViewModel<LeaseItemViewEntry>
             {
                 Entries = leaseItems,
                 IdsToDisplay = [.. leaseItems.Select(l => l.LeaseId ?? 0)],

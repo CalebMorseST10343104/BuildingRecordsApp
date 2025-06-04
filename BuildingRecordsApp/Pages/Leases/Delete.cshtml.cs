@@ -21,7 +21,7 @@ namespace BuildingRecordsApp.Pages.Leases
         }
 
         [BindProperty]
-        public DisplayViewModel<LeaseItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<LeaseItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,9 +36,9 @@ namespace BuildingRecordsApp.Pages.Leases
             if (lease == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<LeaseItemViewModel>
+            ViewModel = new DisplayViewModel<LeaseItemViewEntry>
             {
-                Entries = [_mapper.Map<LeaseItemViewModel>(lease)],
+                Entries = [_mapper.Map<LeaseItemViewEntry>(lease)],
                 IdsToDisplay = [lease.LeaseId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

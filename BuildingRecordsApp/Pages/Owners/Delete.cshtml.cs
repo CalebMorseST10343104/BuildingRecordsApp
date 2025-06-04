@@ -23,7 +23,7 @@ namespace BuildingRecordsApp.Pages.Owners
         }
 
         [BindProperty]
-        public DisplayViewModel<OwnerItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<OwnerItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -40,9 +40,9 @@ namespace BuildingRecordsApp.Pages.Owners
             if (Owner == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<OwnerItemViewModel>
+            ViewModel = new DisplayViewModel<OwnerItemViewEntry>
             {
-                Entries = [_mapper.Map<OwnerItemViewModel>(Owner)],
+                Entries = [_mapper.Map<OwnerItemViewEntry>(Owner)],
                 IdsToDisplay = [Owner.OwnerId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

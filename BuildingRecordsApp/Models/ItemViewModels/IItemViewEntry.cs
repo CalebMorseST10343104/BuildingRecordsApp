@@ -3,7 +3,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public interface IDisplayEntry
+public interface IItemViewEntry
 {
     public List<string> GetHeaders(DisplayMode displayMode);
 

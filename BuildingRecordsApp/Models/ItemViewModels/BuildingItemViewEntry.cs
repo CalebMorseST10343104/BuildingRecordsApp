@@ -5,7 +5,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class BuildingItemViewModel : ItemViewModel
+public class BuildingItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
     public int? BuildingId { get; set; }

@@ -11,7 +11,7 @@ public class AgentMappingProfile : Profile
     public AgentMappingProfile()
     {
         CreateMap<Agent, AgentFormViewModel>().ReverseMap();
-        CreateMap<Agent, AgentItemViewModel>()
+        CreateMap<Agent, AgentItemViewEntry>()
             .ForMember(
                 dest => dest.CompanyName,
                 opt => opt.MapFrom(src => src.AgentCompany != null ? src.AgentCompany.CompanyName : null));

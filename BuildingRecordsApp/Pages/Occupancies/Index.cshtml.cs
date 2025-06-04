@@ -19,21 +19,21 @@ namespace BuildingRecordsApp.Pages.Occupancies
             _mapper = mapper;
         }
 
-        public DisplayViewModel<OccupancyItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<OccupancyItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/Occupancies";
 
-            List<OccupancyItemViewModel> occupancyItems = await _context.Occupancies
+            List<OccupancyItemViewEntry> occupancyItems = await _context.Occupancies
                 .Include(o => o.Occupant)
                 .Include(o => o.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()
-                .Select(o => _mapper.Map<OccupancyItemViewModel>(o))
+                .Select(o => _mapper.Map<OccupancyItemViewEntry>(o))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<OccupancyItemViewModel>
+            ViewModel = new DisplayViewModel<OccupancyItemViewEntry>
             {
                 Entries = occupancyItems,
                 IdsToDisplay = [.. occupancyItems.Select(o => o.OccupancyId ?? 0)],

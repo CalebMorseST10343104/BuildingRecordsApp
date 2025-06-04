@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class OwnershipItemViewModel : ItemViewModel
+public class OwnershipItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
     public int? OwnershipId { get; set; }

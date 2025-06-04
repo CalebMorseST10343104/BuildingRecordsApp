@@ -22,7 +22,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
         }
 
         [BindProperty]
-        public DisplayViewModel<OccupancyItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<OccupancyItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,9 +38,9 @@ namespace BuildingRecordsApp.Pages.Occupancies
             if (occupancy == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<OccupancyItemViewModel>
+            ViewModel = new DisplayViewModel<OccupancyItemViewEntry>
             {
-                Entries = [_mapper.Map<OccupancyItemViewModel>(occupancy)],
+                Entries = [_mapper.Map<OccupancyItemViewEntry>(occupancy)],
                 IdsToDisplay = [occupancy.OccupancyId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

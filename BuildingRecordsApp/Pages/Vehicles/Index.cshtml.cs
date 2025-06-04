@@ -18,20 +18,20 @@ namespace BuildingRecordsApp.Pages.Vehicles
             _mapper = mapper;
         }
 
-        public DisplayViewModel<VehicleItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<VehicleItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/Vehicles";
 
-            List<VehicleItemViewModel> vehicleItems = await _context.Vehicles
+            List<VehicleItemViewEntry> vehicleItems = await _context.Vehicles
                 .Include(v => v.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()
-                .Select(v => _mapper.Map<VehicleItemViewModel>(v))
+                .Select(v => _mapper.Map<VehicleItemViewEntry>(v))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<VehicleItemViewModel>
+            ViewModel = new DisplayViewModel<VehicleItemViewEntry>
             {
                 Entries = vehicleItems,
                 IdsToDisplay = [.. vehicleItems.Select(v => v.VehicleId ?? 0)],

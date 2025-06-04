@@ -18,20 +18,20 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             _mapper = mapper;
         }
 
-        public DisplayViewModel<TagRemoteRecordItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<TagRemoteRecordItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/TagRemoteRecords";
 
-            List<TagRemoteRecordItemViewModel> tagRemoteRecordItems = await _context.TagRemoteRecords
+            List<TagRemoteRecordItemViewEntry> tagRemoteRecordItems = await _context.TagRemoteRecords
                 .Include(t => t.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()
-                .Select(t => _mapper.Map<TagRemoteRecordItemViewModel>(t))
+                .Select(t => _mapper.Map<TagRemoteRecordItemViewEntry>(t))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<TagRemoteRecordItemViewModel>
+            ViewModel = new DisplayViewModel<TagRemoteRecordItemViewEntry>
             {
                 Entries = tagRemoteRecordItems,
                 IdsToDisplay = [.. tagRemoteRecordItems.Select(t => t.TagRemoteRecordId ?? 0)],

@@ -19,21 +19,21 @@ namespace BuildingRecordsApp.Pages.Ownerships
             _mapper = mapper;
         }
 
-        public DisplayViewModel<OwnershipItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<OwnershipItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/Ownerships";
 
-            List<OwnershipItemViewModel> ownershipItems = await _context.Ownerships
+            List<OwnershipItemViewEntry> ownershipItems = await _context.Ownerships
                 .Include(o => o.CompanyTrust)
                 .Include(o => o.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()
-                .Select(o => _mapper.Map<OwnershipItemViewModel>(o))
+                .Select(o => _mapper.Map<OwnershipItemViewEntry>(o))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<OwnershipItemViewModel>
+            ViewModel = new DisplayViewModel<OwnershipItemViewEntry>
             {
                 Entries = ownershipItems,
                 IdsToDisplay = [.. ownershipItems.Select(o => o.OwnershipId ?? 0)],

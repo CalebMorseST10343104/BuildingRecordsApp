@@ -19,19 +19,19 @@ namespace BuildingRecordsApp.Pages.Units
             _mapper = mapper;
         }
 
-        public DisplayViewModel<UnitItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<UnitItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/Units";
 
-            List<UnitItemViewModel> unitItems = await _context.Units
+            List<UnitItemViewEntry> unitItems = await _context.Units
                 .Include(u => u.Building)
                 .AsNoTracking()
-                .Select(u => _mapper.Map<UnitItemViewModel>(u))
+                .Select(u => _mapper.Map<UnitItemViewEntry>(u))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<UnitItemViewModel>
+            ViewModel = new DisplayViewModel<UnitItemViewEntry>
             {
                 Entries = unitItems,
                 IdsToDisplay = [.. unitItems.Select(u => u.UnitId ?? 0)],

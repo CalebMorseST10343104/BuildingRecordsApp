@@ -21,7 +21,7 @@ namespace BuildingRecordsApp.Pages.Buildings
         }
 
         [BindProperty]
-        public DisplayViewModel<BuildingItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<BuildingItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,9 +35,9 @@ namespace BuildingRecordsApp.Pages.Buildings
             if (building == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<BuildingItemViewModel>
+            ViewModel = new DisplayViewModel<BuildingItemViewEntry>
             {
-                Entries = [_mapper.Map<BuildingItemViewModel>(building)],
+                Entries = [_mapper.Map<BuildingItemViewEntry>(building)],
                 IdsToDisplay = [building.BuildingId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class VehicleItemViewModel : ItemViewModel
+public class VehicleItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
     public int? VehicleId { get; set; }

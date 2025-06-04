@@ -11,7 +11,7 @@ public class OccupancyMappingProfile : Profile
     public OccupancyMappingProfile()
     {
         CreateMap<Occupancy, OccupancyFormViewModel>().ReverseMap();
-        CreateMap<Occupancy, OccupancyItemViewModel>()
+        CreateMap<Occupancy, OccupancyItemViewEntry>()
             .ForMember(
                 dest => dest.OccupantFirstName,
                 opt => opt.MapFrom(src => src.Occupant != null ? src.Occupant.FirstName : null))

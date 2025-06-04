@@ -19,18 +19,18 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             _mapper = mapper;
         }
 
-        public DisplayViewModel<CompanyTrustItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<CompanyTrustItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/CompanyTrusts";
 
-            List<CompanyTrustItemViewModel> companyTrustItems = await _context.CompanyTrusts
+            List<CompanyTrustItemViewEntry> companyTrustItems = await _context.CompanyTrusts
                 .AsNoTracking()
-                .Select(ct => _mapper.Map<CompanyTrustItemViewModel>(ct))
+                .Select(ct => _mapper.Map<CompanyTrustItemViewEntry>(ct))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<CompanyTrustItemViewModel>
+            ViewModel = new DisplayViewModel<CompanyTrustItemViewEntry>
             {
                 Entries = companyTrustItems,
                 IdsToDisplay = [.. companyTrustItems.Select(ct => ct.CompanyTrustId ?? 0)],

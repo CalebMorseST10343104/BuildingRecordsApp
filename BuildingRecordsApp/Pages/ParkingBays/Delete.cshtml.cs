@@ -22,7 +22,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         }
 
         [BindProperty]
-        public DisplayViewModel<ParkingBayItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<ParkingBayItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,9 +37,9 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             if (parkingBay == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<ParkingBayItemViewModel>
+            ViewModel = new DisplayViewModel<ParkingBayItemViewEntry>
             {
-                Entries = [_mapper.Map<ParkingBayItemViewModel>(parkingBay)],
+                Entries = [_mapper.Map<ParkingBayItemViewEntry>(parkingBay)],
                 IdsToDisplay = [parkingBay.ParkingBayId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

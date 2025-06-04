@@ -19,20 +19,20 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             _mapper = mapper;
         }
 
-        public DisplayViewModel<StoreRoomItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<StoreRoomItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/StoreRooms";
 
-            List<StoreRoomItemViewModel> storeRoomItems = await _context.StoreRooms
+            List<StoreRoomItemViewEntry> storeRoomItems = await _context.StoreRooms
                 .Include(s => s.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()
-                .Select(s => _mapper.Map<StoreRoomItemViewModel>(s))
+                .Select(s => _mapper.Map<StoreRoomItemViewEntry>(s))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<StoreRoomItemViewModel>
+            ViewModel = new DisplayViewModel<StoreRoomItemViewEntry>
             {
                 Entries = storeRoomItems,
                 IdsToDisplay = [.. storeRoomItems.Select(s => s.StoreRoomId ?? 0)],

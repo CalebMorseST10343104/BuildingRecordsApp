@@ -21,7 +21,7 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
         }
 
         [BindProperty]
-        public DisplayViewModel<TagRemoteRecordItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<TagRemoteRecordItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,9 +36,9 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
             if (tagRemoteRecord == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<TagRemoteRecordItemViewModel>
+            ViewModel = new DisplayViewModel<TagRemoteRecordItemViewEntry>
             {
-                Entries = [_mapper.Map<TagRemoteRecordItemViewModel>(tagRemoteRecord)],
+                Entries = [_mapper.Map<TagRemoteRecordItemViewEntry>(tagRemoteRecord)],
                 IdsToDisplay = [tagRemoteRecord.TagRemoteRecordId],
                 DisplayMode = Enums.DisplayMode.Extended,
                 DisplayLayout = Enums.DisplayLayout.List

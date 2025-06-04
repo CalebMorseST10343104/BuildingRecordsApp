@@ -21,7 +21,7 @@ namespace BuildingRecordsApp.Pages.Agents
         }
 
         [BindProperty]
-        public DisplayViewModel<AgentItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<AgentItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,9 +37,9 @@ namespace BuildingRecordsApp.Pages.Agents
             if (agent == null)
                 return NotFound();
             
-            ViewModel = new DisplayViewModel<AgentItemViewModel>
+            ViewModel = new DisplayViewModel<AgentItemViewEntry>
             {
-                Entries = [_mapper.Map<AgentItemViewModel>(agent)],
+                Entries = [_mapper.Map<AgentItemViewEntry>(agent)],
                 IdsToDisplay = [agent.AgentId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

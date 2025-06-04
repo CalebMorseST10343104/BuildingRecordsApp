@@ -11,7 +11,7 @@ public class OwnershipMappingProfile : Profile
     public OwnershipMappingProfile()
     {
         CreateMap<Ownership, OwnershipFormViewModel>().ReverseMap();
-        CreateMap<Ownership, OwnershipItemViewModel>()
+        CreateMap<Ownership, OwnershipItemViewEntry>()
             .ForMember(
                 dest => dest.BuildingName,
                 opt => opt.MapFrom(src => src.Unit != null && src.Unit.Building != null ? src.Unit.Building.Name : null))

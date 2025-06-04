@@ -18,18 +18,18 @@ namespace BuildingRecordsApp.Pages.AgentCompanies
             _mapper = mapper;
         }
 
-        public DisplayViewModel<AgentCompanyItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<AgentCompanyItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             ViewData["BasePath"] = "/AgentCompanies";
 
-            List<AgentCompanyItemViewModel> agentCompanyItems = await _context.AgentCompanies
+            List<AgentCompanyItemViewEntry> agentCompanyItems = await _context.AgentCompanies
                 .AsNoTracking()
-                .Select(ac => _mapper.Map<AgentCompanyItemViewModel>(ac))
+                .Select(ac => _mapper.Map<AgentCompanyItemViewEntry>(ac))
                 .ToListAsync();
 
-            ViewModel = new DisplayViewModel<AgentCompanyItemViewModel>
+            ViewModel = new DisplayViewModel<AgentCompanyItemViewEntry>
             {
                 Entries = agentCompanyItems,
                 IdsToDisplay = [.. agentCompanyItems.Select(ac => ac.AgentCompanyId ?? 0)],

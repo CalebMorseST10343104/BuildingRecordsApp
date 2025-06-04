@@ -12,6 +12,6 @@ public class AgentCompanyMappingProfile : Profile
     public AgentCompanyMappingProfile()
     {
         CreateMap<AgentCompany, AgentCompanyFormViewModel>().ReverseMap();
-        CreateMap<AgentCompany, AgentCompanyItemViewModel>();
+        CreateMap<AgentCompany, AgentCompanyItemViewEntry>();
     }
 }

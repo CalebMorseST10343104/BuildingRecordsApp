@@ -21,7 +21,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
         }
 
         [BindProperty]
-        public DisplayViewModel<VehicleItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<VehicleItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,9 +36,9 @@ namespace BuildingRecordsApp.Pages.Vehicles
             if (vehicle == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<VehicleItemViewModel>
+            ViewModel = new DisplayViewModel<VehicleItemViewEntry>
             {
-                Entries = [_mapper.Map<VehicleItemViewModel>(vehicle)],
+                Entries = [_mapper.Map<VehicleItemViewEntry>(vehicle)],
                 IdsToDisplay = [vehicle.VehicleId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

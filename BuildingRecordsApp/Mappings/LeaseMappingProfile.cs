@@ -11,7 +11,7 @@ public class LeaseMappingProfile : Profile
     public LeaseMappingProfile()
     {
         CreateMap<Lease, LeaseFormViewModel>().ReverseMap();
-        CreateMap<Lease, LeaseItemViewModel>()
+        CreateMap<Lease, LeaseItemViewEntry>()
             .ForMember(
                 dest => dest.UnitNumber,
                 opt => opt.MapFrom(src => src.Unit != null ? src.Unit.UnitNumber : null))

@@ -11,7 +11,7 @@ public class ParkingBayMappingProfile : Profile
     public ParkingBayMappingProfile()
     {
         CreateMap<ParkingBay, ParkingBayFormViewModel>().ReverseMap();
-        CreateMap<ParkingBay, ParkingBayItemViewModel>()
+        CreateMap<ParkingBay, ParkingBayItemViewEntry>()
             .ForMember(
                 dest => dest.BuildingName,
                 opt => opt.MapFrom(src => src.Unit != null && src.Unit.Building != null ? src.Unit.Building.Name : null))

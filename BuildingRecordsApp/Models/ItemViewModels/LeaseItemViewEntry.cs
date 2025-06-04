@@ -5,7 +5,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class LeaseItemViewModel : ItemViewModel
+public class LeaseItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
     public int? LeaseId { get; set; }

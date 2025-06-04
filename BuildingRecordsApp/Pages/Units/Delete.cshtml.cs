@@ -21,7 +21,7 @@ namespace BuildingRecordsApp.Pages.Units
         }
 
         [BindProperty]
-        public DisplayViewModel<UnitItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<UnitItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,9 +36,9 @@ namespace BuildingRecordsApp.Pages.Units
             if (unit == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<UnitItemViewModel>
+            ViewModel = new DisplayViewModel<UnitItemViewEntry>
             {
-                Entries = [_mapper.Map<UnitItemViewModel>(unit)],
+                Entries = [_mapper.Map<UnitItemViewEntry>(unit)],
                 IdsToDisplay = [unit.UnitId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

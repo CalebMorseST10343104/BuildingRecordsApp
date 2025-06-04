@@ -23,7 +23,7 @@ namespace BuildingRecordsApp.Pages.Persons
         }
 
         [BindProperty]
-        public DisplayViewModel<PersonItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<PersonItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,9 +36,9 @@ namespace BuildingRecordsApp.Pages.Persons
             if (Person == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<PersonItemViewModel>
+            ViewModel = new DisplayViewModel<PersonItemViewEntry>
             {
-                Entries = [_mapper.Map<PersonItemViewModel>(Person)],
+                Entries = [_mapper.Map<PersonItemViewEntry>(Person)],
                 IdsToDisplay = [Person.PersonId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List

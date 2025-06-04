@@ -11,6 +11,6 @@ public class BuildingMappingProfile : Profile
     public BuildingMappingProfile()
     {
         CreateMap<Building, BuildingFormViewModel>().ReverseMap();
-        CreateMap<Building, BuildingItemViewModel>();
+        CreateMap<Building, BuildingItemViewEntry>();
     }
 }

@@ -4,7 +4,7 @@ using BuildingRecordsApp.Attributes;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class TagRemoteRecordItemViewModel : ItemViewModel
+public class TagRemoteRecordItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
     public int? TagRemoteRecordId { get; set; }

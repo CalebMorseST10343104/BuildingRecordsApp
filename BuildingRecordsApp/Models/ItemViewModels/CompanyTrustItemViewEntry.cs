@@ -5,7 +5,7 @@ using BuildingRecordsApp.Enums;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
-public class CompanyTrustItemViewModel : ItemViewModel
+public class CompanyTrustItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
     public int? CompanyTrustId { get; set; }

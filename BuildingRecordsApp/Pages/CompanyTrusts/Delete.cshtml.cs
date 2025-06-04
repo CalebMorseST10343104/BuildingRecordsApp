@@ -22,7 +22,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
         }
 
         [BindProperty]
-        public DisplayViewModel<CompanyTrustItemViewModel> ViewModel { get; set; } = default!;
+        public DisplayViewModel<CompanyTrustItemViewEntry> ViewModel { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,9 +38,9 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             if (companyTrust == null)
                 return NotFound();
 
-            ViewModel = new DisplayViewModel<CompanyTrustItemViewModel>
+            ViewModel = new DisplayViewModel<CompanyTrustItemViewEntry>
             {
-                Entries = [_mapper.Map<CompanyTrustItemViewModel>(companyTrust)],
+                Entries = [_mapper.Map<CompanyTrustItemViewEntry>(companyTrust)],
                 IdsToDisplay = [companyTrust.CompanyTrustId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
