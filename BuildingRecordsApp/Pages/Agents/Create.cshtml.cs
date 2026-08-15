@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Services;
 
 namespace BuildingRecordsApp.Pages.Agents
 {
@@ -13,12 +14,14 @@ namespace BuildingRecordsApp.Pages.Agents
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
         private readonly IMapper _mapper;
+        private readonly IAgentService _agentService;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper, IAgentService agentService)
         {
             _context = context;
             _selectListService = selectListService;
             _mapper = mapper;
+            _agentService = agentService;
         }
 
         [BindProperty]
@@ -51,10 +54,17 @@ namespace BuildingRecordsApp.Pages.Agents
                 return Page();
             }
 
-            var agent = _mapper.Map<Agent>(ViewModel);
-
-            _context.Agents.Add(agent);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _agentService.CreateProfileAsync(ViewModel.PersonId!.Value, ViewModel.AgentCompanyId!.Value);
+            }
+            catch (BusinessRuleException exception)
+            {
+                ModelState.AddModelError(string.Empty, exception.Message);
+                ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+                return Page();
+            }
 
             return RedirectToPage("/Agents/Index");
         }

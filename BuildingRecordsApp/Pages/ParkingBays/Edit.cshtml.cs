@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Services;
 
 namespace BuildingRecordsApp.Pages.ParkingBays
 {
@@ -13,12 +14,14 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
         private readonly IMapper _mapper;
+        private readonly IPropertyAllocationService _allocationService;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper, IPropertyAllocationService allocationService)
         {
             _context = context;
             _selectListService = selectListService;
             _mapper = mapper;
+            _allocationService = allocationService;
         }
 
         [BindProperty]
@@ -54,19 +57,20 @@ namespace BuildingRecordsApp.Pages.ParkingBays
                 return Page();
             }
 
-            var parkingBay = _mapper.Map<ParkingBay>(ViewModel);
-            _context.Attach(parkingBay).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ParkingBayExists(parkingBay.ParkingBayId))
+                var parkingBay = await _context.ParkingBays.SingleOrDefaultAsync(p => p.ParkingBayId == ViewModel.ParkingBayId.GetValueOrDefault());
+                if (parkingBay is null)
                     return NotFound();
-
-                throw;
+                parkingBay.ParkingBayNumber = ViewModel.ParkingBayNumber?.Trim() ?? string.Empty;
+                parkingBay.IsNearEntrance = ViewModel.IsNearEntrance;
+                await _allocationService.AllocateParkingBayAsync(parkingBay.ParkingBayId, ViewModel.UnitID);
+            }
+            catch (BusinessRuleException exception)
+            {
+                ModelState.AddModelError("ViewModel.UnitID", exception.Message);
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                return Page();
             }
 
             return RedirectToPage("/ParkingBays/Index");

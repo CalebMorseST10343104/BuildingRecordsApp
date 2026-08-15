@@ -20,6 +20,10 @@ internal class Program
         });
         
         builder.Services.AddScoped<ISelectListService, SelectListService>();
+        builder.Services.AddScoped<IUnitService, UnitService>();
+        builder.Services.AddScoped<IPropertyAllocationService, PropertyAllocationService>();
+        builder.Services.AddScoped<IOwnershipService, OwnershipService>();
+        builder.Services.AddScoped<IAgentService, AgentService>();
         builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
         var app = builder.Build();

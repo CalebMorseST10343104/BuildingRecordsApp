@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Services;
 
 namespace BuildingRecordsApp.Pages.Units
 {
@@ -11,12 +12,14 @@ namespace BuildingRecordsApp.Pages.Units
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
         private readonly IMapper _mapper;
+        private readonly IUnitService _unitService;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper, IUnitService unitService)
         {
             _context = context;
             _selectListService = selectListService;
             _mapper = mapper;
+            _unitService = unitService;
         }
 
         [BindProperty]
@@ -46,10 +49,16 @@ namespace BuildingRecordsApp.Pages.Units
 
             var unit = _mapper.Map<Unit>(ViewModel);
 
-            _context.Units.Add(unit);
-            await _context.SaveChangesAsync();
-            _context.TagRemoteRecords.Add(new TagRemoteRecord { UnitId = unit.UnitId });
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _unitService.CreateAsync(unit);
+            }
+            catch (BusinessRuleException exception)
+            {
+                ModelState.AddModelError(string.Empty, exception.Message);
+                ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+                return Page();
+            }
 
             return RedirectToPage("/Units/Index");
         }

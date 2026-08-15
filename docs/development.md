@@ -9,6 +9,8 @@
 - AutoMapper
 - xUnit with real in-memory SQLite databases
 
+Core write operations are exposed through `UnitService`, `PropertyAllocationService`, `OwnershipService`, and `AgentService`. New UI and import code should use these services instead of reproducing their rules in page handlers.
+
 ## Build and run
 
 From the `buildingapp` directory:

@@ -31,7 +31,7 @@ This is the authoritative catalogue of currently agreed register behavior.
 | A parking-bay number is unique within its property. | Database, tested |
 | A storeroom number is unique within its property. | Database, tested |
 | A parking bay or storeroom may be unallocated or allocated to one unit. | Database |
-| A bay or storeroom may only be allocated to a unit in the same property. | Application on creation; incomplete on all edit/direct-data paths |
+| A bay or storeroom may only be allocated to a unit in the same property. | Application service and current create/edit workflows; direct database writes can bypass it |
 | Deleting a property that still contains buildings, bays, or storerooms is prohibited. | Database |
 | Deleting a building that still contains units is prohibited. | Database |
 
@@ -111,7 +111,7 @@ This is the authoritative catalogue of currently agreed register behavior.
 | Rule | Enforcement |
 |---|---|
 | Access devices are represented as counts, not individually identified assets. | Model design |
-| Every unit should have exactly one access-count record. | Application creates one with a unit; database prevents duplicates but cannot require existence |
+| Every unit should have exactly one access-count record. | Transactional unit service creates one; database prevents duplicates but cannot require existence |
 | An access-count record cannot be deleted independently through the current UI. | Application |
 | Deleting a unit deletes its access-count record. | Database, tested |
 | Counts may be null, meaning unknown. | Database, tested |
@@ -122,8 +122,7 @@ This is the authoritative catalogue of currently agreed register behavior.
 
 These are useful candidates for subsequent implementation and tests:
 
-1. Enforce same-property bay and storeroom allocations on every create and edit path, ideally through a reusable service.
-2. Guarantee application-level creation of ownership and access-count records as a single unit-creation transaction.
-3. Prevent independent access-count deletion outside the current Razor Page handler.
-4. Make genuinely optional person fields nullable consistently in the database, forms, and imports.
-5. Add friendly validation messages for uniqueness violations rather than exposing database errors.
+1. Decide how and when a newly created unit receives its initially incomplete ownership record; access-count creation is already transactional.
+2. Prevent independent access-count deletion outside the current Razor Page handler.
+3. Make genuinely optional person fields nullable consistently in the database, forms, and imports.
+4. Add friendly validation messages for uniqueness violations rather than exposing database errors.

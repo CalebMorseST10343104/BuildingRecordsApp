@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Services;
 
 namespace BuildingRecordsApp.Pages.Ownerships
 {
@@ -12,12 +13,14 @@ namespace BuildingRecordsApp.Pages.Ownerships
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
         private readonly IMapper _mapper;
+        private readonly IOwnershipService _ownershipService;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper, IOwnershipService ownershipService)
         {
             _context = context;
             _selectListService = selectListService;
             _mapper = mapper;
+            _ownershipService = ownershipService;
         }
 
         [BindProperty]
@@ -38,19 +41,26 @@ namespace BuildingRecordsApp.Pages.Ownerships
             if (ViewModel.UnitId == null)
             {
                 ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
-                return Page();
             }
 
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("ModelState is invalid");
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
+                ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
                 return Page();
             }
 
-            var ownership = _mapper.Map<Ownership>(ViewModel);
-            
-            _context.Ownerships.Add(ownership);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _ownershipService.SetOwnershipAsync(ViewModel.UnitId.GetValueOrDefault(), ViewModel.OwnershipType ?? string.Empty, ViewModel.OrganizationId);
+            }
+            catch (BusinessRuleException exception)
+            {
+                ModelState.AddModelError(string.Empty, exception.Message);
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
+                ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
+                return Page();
+            }
 
             return RedirectToPage("/Ownerships/Index");
         }

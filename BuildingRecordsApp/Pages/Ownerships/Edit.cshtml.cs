@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Services;
 
 namespace BuildingRecordsApp.Pages.Ownerships
 {
@@ -13,12 +14,14 @@ namespace BuildingRecordsApp.Pages.Ownerships
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
         private readonly IMapper _mapper;
+        private readonly IOwnershipService _ownershipService;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper, IOwnershipService ownershipService)
         {
             _context = context;
             _selectListService = selectListService;
             _mapper = mapper;
+            _ownershipService = ownershipService;
         }
 
         [BindProperty]
@@ -60,19 +63,26 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 return Page();
             }
 
-            var ownership = _mapper.Map<Ownership>(ViewModel);
-            _context.Attach(ownership).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OwnershipExists(ownership.OwnershipId))
+                var existing = await _context.Ownerships.AsNoTracking()
+                    .SingleOrDefaultAsync(o => o.OwnershipId == ViewModel.OwnershipId.GetValueOrDefault());
+                if (existing is null)
                     return NotFound();
+                if (existing.UnitId != ViewModel.UnitId.GetValueOrDefault())
+                    throw new BusinessRuleException("An ownership cannot be moved to another unit.");
 
-                throw;
+                await _ownershipService.SetOwnershipAsync(
+                    ViewModel.UnitId.GetValueOrDefault(),
+                    ViewModel.OwnershipType ?? string.Empty,
+                    ViewModel.OrganizationId);
+            }
+            catch (BusinessRuleException exception)
+            {
+                ModelState.AddModelError(string.Empty, exception.Message);
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
+                ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
+                return Page();
             }
 
             return RedirectToPage("/Ownerships/Index");

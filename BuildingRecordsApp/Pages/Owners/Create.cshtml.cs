@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Services;
 
 namespace BuildingRecordsApp.Pages.Owners
 {
@@ -12,12 +13,14 @@ namespace BuildingRecordsApp.Pages.Owners
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
         private readonly IMapper _mapper;
+        private readonly IOwnershipService _ownershipService;
 
-        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
+        public CreateModel(BuildingContext context, ISelectListService selectListService, IMapper mapper, IOwnershipService ownershipService)
         {
             _context = context;
             _selectListService = selectListService;
             _mapper = mapper;
+            _ownershipService = ownershipService;
         }
 
         [BindProperty]
@@ -48,10 +51,17 @@ namespace BuildingRecordsApp.Pages.Owners
                 return Page();
             }
 
-            var owner = _mapper.Map<OwnershipContact>(ViewModel);
-
-            _context.Owners.Add(owner);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _ownershipService.AddContactAsync(ViewModel.OwnershipId!.Value, ViewModel.PersonId!.Value);
+            }
+            catch (BusinessRuleException exception)
+            {
+                ModelState.AddModelError(string.Empty, exception.Message);
+                ViewModel.OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync();
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+                return Page();
+            }
 
             return RedirectToPage("/Owners/Index");
         }

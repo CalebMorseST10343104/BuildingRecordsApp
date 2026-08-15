@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using BuildingRecordsApp.Services;
 
 namespace BuildingRecordsApp.Pages.StoreRooms
 {
@@ -13,12 +14,14 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         private readonly BuildingContext _context;
         private readonly ISelectListService _selectListService;
         private readonly IMapper _mapper;
+        private readonly IPropertyAllocationService _allocationService;
 
-        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper)
+        public EditModel(BuildingContext context, ISelectListService selectListService, IMapper mapper, IPropertyAllocationService allocationService)
         {
             _context = context;
             _selectListService = selectListService;
             _mapper = mapper;
+            _allocationService = allocationService;
         }
 
         [BindProperty]
@@ -54,19 +57,19 @@ namespace BuildingRecordsApp.Pages.StoreRooms
                 return Page();
             }
 
-            var storeRoom = _mapper.Map<StoreRoom>(ViewModel);
-            _context.Attach(storeRoom).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StoreRoomExists(storeRoom.StoreRoomId))
+                var storeRoom = await _context.StoreRooms.SingleOrDefaultAsync(s => s.StoreRoomId == ViewModel.StoreRoomId.GetValueOrDefault());
+                if (storeRoom is null)
                     return NotFound();
-
-                throw;
+                storeRoom.StoreRoomNumber = ViewModel.StoreRoomNumber?.Trim() ?? string.Empty;
+                await _allocationService.AllocateStoreRoomAsync(storeRoom.StoreRoomId, ViewModel.UnitId);
+            }
+            catch (BusinessRuleException exception)
+            {
+                ModelState.AddModelError("ViewModel.UnitId", exception.Message);
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                return Page();
             }
 
             return RedirectToPage("/StoreRooms/Index");
