@@ -39,4 +39,6 @@ public class UnitFormViewModel
     public int? TagRemoteRecordId { get; set; }
 
     public SelectList BuildingSelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
+    public SelectList PersonSelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
+    public SelectList AgentSelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
 }

@@ -1,0 +1,41 @@
+@page
+@model BuildingRecordsApp.Pages.Properties.DetailsModel
+@{
+    ViewData["Title"] = Model.Property.Name;
+}
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <a asp-page="./Index" class="text-decoration-none">← Properties</a>
+        <h1 class="mt-2">@Model.Property.Name</h1>
+        <p class="text-muted">@Model.Property.Address</p>
+    </div>
+    <a asp-page="./Edit" asp-route-id="@Model.Property.PropertyId" class="btn btn-outline-secondary">Edit property</a>
+</div>
+
+<div class="card mb-4">
+            <div class="card-header d-flex justify-content-between"><strong>Buildings</strong><a asp-page="/Buildings/Create" asp-route-propertyId="@Model.Property.PropertyId" class="btn btn-sm btn-primary">Add building</a></div>
+    <div class="list-group list-group-flush">
+    @foreach (var building in Model.Property.Buildings.OrderBy(b => b.Name))
+    {
+        <a asp-page="/Units/Index" class="list-group-item list-group-item-action d-flex justify-content-between">
+            <span>@building.Name</span><span class="badge text-bg-secondary">@building.Units.Count units</span>
+        </a>
+    }
+    @if (Model.Property.Buildings.Count == 0) { <div class="list-group-item text-muted">No buildings recorded.</div> }
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between"><strong>Parking bays</strong><a asp-page="/ParkingBays/Create" asp-route-propertyId="@Model.Property.PropertyId" class="btn btn-sm btn-outline-primary">Add</a></div>
+            <div class="card-body"><strong>@Model.Property.ParkingBays.Count</strong> total · <strong>@Model.Property.ParkingBays.Count(b => b.UnitID == null)</strong> unallocated</div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between"><strong>Storerooms</strong><a asp-page="/StoreRooms/Create" asp-route-propertyId="@Model.Property.PropertyId" class="btn btn-sm btn-outline-primary">Add</a></div>
+            <div class="card-body"><strong>@Model.Property.StoreRooms.Count</strong> total · <strong>@Model.Property.StoreRooms.Count(s => s.UnitId == null)</strong> unallocated</div>
+        </div>
+    </div>
+</div>

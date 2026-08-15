@@ -42,7 +42,8 @@
                                             <DynamicComponent Type="compType" Parameters="@(new Dictionary<string, object?>
                                             {
                                                 ["Id"] = entry.GetId(),
-                                                ["BasePath"] = BasePath
+                                                ["BasePath"] = BasePath,
+                                                ["DetailsPath"] = DetailsPath
                                             })" />
                                         }
                                     </td>
@@ -81,4 +82,5 @@
 @code {
     [Parameter] public DisplayViewModel<TItem>? Model { get; set; }
     [Parameter] public string BasePath { get; set; } = string.Empty;
+    [Parameter] public string? DetailsPath { get; set; }
 }

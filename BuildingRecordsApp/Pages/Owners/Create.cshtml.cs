@@ -5,6 +5,7 @@ using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
 using BuildingRecordsApp.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.Owners
 {
@@ -26,10 +27,11 @@ namespace BuildingRecordsApp.Pages.Owners
         [BindProperty]
         public OwnerFormViewModel ViewModel { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? ownershipId)
         {
             ViewModel = new OwnerFormViewModel
             {
+                OwnershipId = ownershipId,
                 OwnershipSelectList = await _selectListService.GetOwnershipSelectListAsync(),
                 PersonSelectList = await _selectListService.GetPersonSelectListAsync()
             };
@@ -63,7 +65,8 @@ namespace BuildingRecordsApp.Pages.Owners
                 return Page();
             }
 
-            return RedirectToPage("/Owners/Index");
+            var unitId = await _context.Ownerships.Where(o => o.OwnershipId == ViewModel.OwnershipId).Select(o => o.UnitId).SingleAsync();
+            return RedirectToPage("/Units/Details", new { id = unitId });
         }
     }
 }

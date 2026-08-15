@@ -9,6 +9,7 @@ public class StoreRoomFormViewModel
 {
     public int? StoreRoomId { get; set; }
     public int PropertyId { get; set; }
+    public SelectList PropertySelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
 
     [Display(Name = "Store Room Number")]
     public string? StoreRoomNumber { get; set; }

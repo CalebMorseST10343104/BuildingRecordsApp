@@ -30,6 +30,8 @@ namespace BuildingRecordsApp.Pages.Units
             ViewModel = new UnitFormViewModel
             {
                 BuildingSelectList = await _selectListService.GetBuildingSelectListAsync()
+                ,PersonSelectList = await _selectListService.GetPersonSelectListAsync()
+                ,AgentSelectList = await _selectListService.GetAgentSelectListAsync()
             };
             return Page();
         }
@@ -44,6 +46,8 @@ namespace BuildingRecordsApp.Pages.Units
             if (!ModelState.IsValid)
             {
                 ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+                ViewModel.AgentSelectList = await _selectListService.GetAgentSelectListAsync();
                 return Page();
             }
 
@@ -57,10 +61,12 @@ namespace BuildingRecordsApp.Pages.Units
             {
                 ModelState.AddModelError(string.Empty, exception.Message);
                 ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+                ViewModel.AgentSelectList = await _selectListService.GetAgentSelectListAsync();
                 return Page();
             }
 
-            return RedirectToPage("/Units/Index");
+            return RedirectToPage("/Units/Details", new { id = unit.UnitId });
         }
     }
 }

@@ -24,11 +24,12 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         [BindProperty]
         public StoreRoomFormViewModel ViewModel { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? propertyId)
         {
             ViewModel = new StoreRoomFormViewModel
             {
-                PropertyId = await _context.Properties.Select(p => p.PropertyId).FirstAsync(),
+                PropertyId = propertyId.GetValueOrDefault(),
+                PropertySelectList = await _selectListService.GetPropertySelectListAsync(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
             return Page();
@@ -36,7 +37,8 @@ namespace BuildingRecordsApp.Pages.StoreRooms
 
         public async Task<IActionResult> OnPostAsync()
         {
- 
+            if (!await _context.Properties.AnyAsync(p => p.PropertyId == ViewModel.PropertyId))
+                ModelState.AddModelError("ViewModel.PropertyId", "Property is required.");
             if (ViewModel.UnitId is int unitId)
             {
                 var unitPropertyId = await _context.Units.Where(u => u.UnitId == unitId).Select(u => u.Building!.PropertyId).SingleOrDefaultAsync();
@@ -46,6 +48,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             if (!ModelState.IsValid)
             {
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
 

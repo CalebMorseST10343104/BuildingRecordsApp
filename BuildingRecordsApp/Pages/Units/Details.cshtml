@@ -1,0 +1,139 @@
+@page
+@model BuildingRecordsApp.Pages.Units.DetailsModel
+@{
+    var unit = Model.Unit;
+    ViewData["Title"] = $"Unit {unit.UnitNumber}";
+    string YesNo(bool value) => value ? "Yes" : "No";
+}
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <a asp-page="./Index" class="text-decoration-none">← Units</a>
+        <h1 class="mt-2 mb-1">Unit @unit.UnitNumber</h1>
+        <p class="text-muted mb-0">@unit.Building?.Property?.Name · @unit.Building?.Name</p>
+    </div>
+    <a asp-page="./Edit" asp-route-id="@unit.UnitId" class="btn btn-primary">Edit unit</a>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <section class="card h-100">
+            <div class="card-header d-flex justify-content-between"><strong>Unit information</strong><a asp-page="./Edit" asp-route-id="@unit.UnitId">Edit</a></div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-7">Bedrooms</dt><dd class="col-5">@unit.Bedrooms</dd>
+                    <dt class="col-7">Air-conditioning units</dt><dd class="col-5">@unit.AirconditioningUnits</dd>
+                    <dt class="col-7">DB inverter</dt><dd class="col-5">@YesNo(unit.DbInverter)</dd>
+                    <dt class="col-7">Housekeeping</dt><dd class="col-5">@YesNo(unit.Housekeeping)</dd>
+                    <dt class="col-7">Pets permitted</dt><dd class="col-5">@YesNo(unit.PetFriendly)</dd>
+                    <dt class="col-7">Subletting allowed</dt><dd class="col-5">@YesNo(unit.SublettingAllowed)</dd>
+                </dl>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6">
+        <section class="card h-100">
+            <div class="card-header"><strong>Primary contact and letting agent</strong></div>
+            <div class="card-body">
+                <h2 class="h6">Primary contact</h2>
+                @if (unit.PrimaryContactPerson is null) { <p class="text-muted">Not recorded.</p> }
+                else { <p>@unit.PrimaryContactPerson.FirstName @unit.PrimaryContactPerson.LastName<br /><span class="text-muted">@unit.PrimaryContactPerson.PhoneNumber · @unit.PrimaryContactPerson.Email</span></p> }
+                <h2 class="h6 mt-3">Letting agent</h2>
+                @if (unit.Agent is null) { <p class="text-muted mb-0">No letting agent assigned.</p> }
+                else { <p class="mb-0">@unit.Agent.Person.FirstName @unit.Agent.Person.LastName<br /><span class="text-muted">@unit.Agent.AgentCompany.CompanyName</span></p> }
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6">
+        <section class="card h-100">
+            <div class="card-header d-flex justify-content-between"><strong>Ownership</strong>
+                @if (unit.Ownership is null) { <a asp-page="/Ownerships/Create" asp-route-unitId="@unit.UnitId">Add ownership</a> }
+                else { <a asp-page="/Ownerships/Edit" asp-route-id="@unit.Ownership.OwnershipId">Edit</a> }
+            </div>
+            <div class="card-body">
+            @if (unit.Ownership is null)
+            {
+                <div class="alert alert-warning mb-0">Ownership has not been recorded.</div>
+            }
+            else
+            {
+                <p><strong>@unit.Ownership.OwnershipType</strong>@if (unit.Ownership.Organization is not null) { <span> · @unit.Ownership.Organization.Name</span> }</p>
+                <h2 class="h6">Ownership contacts</h2>
+                <ul class="mb-2">
+                @foreach (var contact in unit.Ownership.OwnershipContacts.OrderBy(c => c.Person.LastName))
+                { <li>@contact.Person.FirstName @contact.Person.LastName</li> }
+                </ul>
+                <a asp-page="/Owners/Create" asp-route-ownershipId="@unit.Ownership.OwnershipId" class="btn btn-sm btn-outline-primary">Add contact</a>
+            }
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6">
+        <section class="card h-100">
+            <div class="card-header d-flex justify-content-between"><strong>Occupants</strong><a asp-page="/Occupancies/Create" asp-route-unitId="@unit.UnitId">Add occupant</a></div>
+            <div class="card-body">
+                @if (unit.Occupants.Count == 0) { <p class="text-muted mb-0">No occupants recorded.</p> }
+                else { <ul class="mb-0">@foreach (var occupancy in unit.Occupants.OrderBy(o => o.Occupant!.LastName)) { <li>@occupancy.Occupant!.FirstName @occupancy.Occupant.LastName <span class="text-muted">(@occupancy.OccupationType)</span></li> }</ul> }
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6">
+        <section class="card h-100">
+            <div class="card-header d-flex justify-content-between"><strong>Current lease</strong>
+                @if (unit.Lease is null) { <a asp-page="/Leases/Create" asp-route-unitId="@unit.UnitId">Add lease</a> }
+                else { <a asp-page="/Leases/Edit" asp-route-id="@unit.Lease.LeaseId">Edit</a> }
+            </div>
+            <div class="card-body">
+            @if (unit.Lease is null) { <p class="text-muted mb-0">No lease summary recorded.</p> }
+            else
+            {
+                <p class="mb-1"><strong>@unit.Lease.LeaseHolderName</strong></p>
+                <p class="text-muted">@unit.Lease.StartDate.ToString("d MMM yyyy") – @unit.Lease.EndDate.ToString("d MMM yyyy")</p>
+                <span>@unit.Lease.DeclaredOccupantCount declared occupants · Pets present: @YesNo(unit.Lease.PetsPresent)</span>
+            }
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6">
+        <section class="card h-100">
+            <div class="card-header d-flex justify-content-between"><strong>Vehicles</strong><a asp-page="/Vehicles/Create" asp-route-unitId="@unit.UnitId">Add vehicle</a></div>
+            <div class="card-body">
+                @if (unit.Vehicles.Count == 0) { <p class="text-muted mb-0">No vehicles recorded.</p> }
+                else { <ul class="mb-0">@foreach (var vehicle in unit.Vehicles.OrderBy(v => v.VehicleRegistration)) { <li><strong>@vehicle.VehicleRegistration</strong> · @vehicle.VehicleColor @vehicle.VehicleMake @vehicle.VehicleModel</li> }</ul> }
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6">
+        <section class="card h-100">
+            <div class="card-header"><strong>Allocated infrastructure</strong></div>
+            <div class="card-body">
+                <p><strong>Parking:</strong> @(unit.ParkingBays.Count == 0 ? "None" : string.Join(", ", unit.ParkingBays.Select(p => p.ParkingBayNumber)))</p>
+                <p class="mb-0"><strong>Storerooms:</strong> @(unit.StoreRooms.Count == 0 ? "None" : string.Join(", ", unit.StoreRooms.Select(s => s.StoreRoomNumber)))</p>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6">
+        <section class="card h-100">
+            <div class="card-header d-flex justify-content-between"><strong>Access-device counts</strong>@if (unit.TagRemoteRecord is not null) { <a asp-page="/TagRemoteRecords/Edit" asp-route-id="@unit.TagRemoteRecord.TagRemoteRecordId">Edit</a> }</div>
+            <div class="card-body">
+            @if (unit.TagRemoteRecord is null) { <div class="alert alert-danger mb-0">Access-count record is missing.</div> }
+            else
+            {
+                string Count(int? value) => value?.ToString() ?? "Unknown";
+                <div class="table-responsive"><table class="table table-sm mb-0"><thead><tr><th>Held by</th><th>Tags</th><th>Remotes</th></tr></thead><tbody>
+                    <tr><td>Ownership</td><td>@Count(unit.TagRemoteRecord.TagsOwner)</td><td>@Count(unit.TagRemoteRecord.RemotesOwner)</td></tr>
+                    <tr><td>Occupants</td><td>@Count(unit.TagRemoteRecord.TagsOccupant)</td><td>@Count(unit.TagRemoteRecord.RemotesOccupant)</td></tr>
+                    <tr><td>Agent</td><td>@Count(unit.TagRemoteRecord.TagsAgent)</td><td>@Count(unit.TagRemoteRecord.RemotesAgent)</td></tr>
+                </tbody></table></div>
+            }
+            </div>
+        </section>
+    </div>
+</div>

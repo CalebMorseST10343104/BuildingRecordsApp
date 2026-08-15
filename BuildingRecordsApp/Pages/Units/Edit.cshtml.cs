@@ -38,6 +38,8 @@ namespace BuildingRecordsApp.Pages.Units
 
             ViewModel = _mapper.Map<UnitFormViewModel>(unit);
             ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+            ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+            ViewModel.AgentSelectList = await _selectListService.GetAgentSelectListAsync();
 
             return Page();
         }
@@ -53,6 +55,8 @@ namespace BuildingRecordsApp.Pages.Units
             if (!ModelState.IsValid)
             {
                 ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
+                ViewModel.AgentSelectList = await _selectListService.GetAgentSelectListAsync();
                 return Page();
             }
 
@@ -70,7 +74,7 @@ namespace BuildingRecordsApp.Pages.Units
 
                 throw;
             }
-            return RedirectToPage("/Units/Index");
+            return RedirectToPage("/Units/Details", new { id = unit.UnitId });
         }
 
         private bool UnitExists(int id)

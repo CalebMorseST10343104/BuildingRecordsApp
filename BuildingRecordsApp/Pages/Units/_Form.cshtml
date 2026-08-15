@@ -8,6 +8,18 @@
     <span asp-validation-for="BuildingId" class="text-danger"></span>
 </div>
 <div>
+    <label asp-for="PrimaryContactPersonId">Primary Contact</label>
+    <select asp-for="PrimaryContactPersonId" asp-items="Model.PersonSelectList">
+        <option value="">No primary contact</option>
+    </select>
+</div>
+<div>
+    <label asp-for="AgentId">Letting Agent</label>
+    <select asp-for="AgentId" asp-items="Model.AgentSelectList">
+        <option value="">No letting agent</option>
+    </select>
+</div>
+<div>
     <label asp-for="UnitNumber"></label>
     <input asp-for="UnitNumber" />
     <span asp-validation-for="UnitNumber" class="text-danger"></span>
@@ -47,4 +59,4 @@
     <label asp-for="AirconditioningUnits"></label>
     <input asp-for="AirconditioningUnits" />
     <span asp-validation-for="AirconditioningUnits" class="text-danger"></span>
-</div>    
+</div>

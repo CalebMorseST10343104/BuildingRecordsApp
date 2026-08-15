@@ -1,6 +1,11 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.StoreRoomFormViewModel
 
-<input asp-for="PropertyId" type="hidden" />
+<div class="mb-3">
+    <label asp-for="PropertyId">Property</label>
+    <select asp-for="PropertyId" asp-items="Model.PropertySelectList">
+        <option value="">Select property</option>
+    </select>
+</div>
 <div>
     <label asp-for="StoreRoomNumber"></label>
     <input asp-for="StoreRoomNumber" />

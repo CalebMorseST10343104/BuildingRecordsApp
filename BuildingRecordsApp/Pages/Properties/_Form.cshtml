@@ -1,0 +1,14 @@
+@model BuildingRecordsApp.Models.FormViewModels.PropertyFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input asp-for="PropertyId" type="hidden" />
+<div class="mb-3">
+    <label asp-for="Name" class="form-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Address" class="form-label"></label>
+    <textarea asp-for="Address" class="form-control" rows="2"></textarea>
+    <span asp-validation-for="Address" class="text-danger"></span>
+</div>

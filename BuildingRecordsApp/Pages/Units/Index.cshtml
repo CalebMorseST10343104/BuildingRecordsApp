@@ -13,10 +13,12 @@
 <div>
     @{
         var BasePath = "/Units";
+        var DetailsPath = "/Units/Details";
         var CompType = typeof(BuildingRecordsApp.Components.InfoDisplay<BuildingRecordsApp.Models.ItemViewModels.UnitItemViewEntry>);
         <component type="CompType"
             render-mode="Static"
             param-Model="Model.ViewModel"
-            param-BasePath="BasePath" />
+            param-BasePath="BasePath"
+            param-DetailsPath="DetailsPath" />
     }
 </div>

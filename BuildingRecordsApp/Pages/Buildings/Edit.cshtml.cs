@@ -11,11 +11,13 @@ namespace BuildingRecordsApp.Pages.Buildings
     {
         private readonly BuildingContext _context;
         private readonly IMapper _mapper;
+        private readonly ISelectListService _selectListService;
 
-        public EditModel(BuildingContext context, IMapper mapper)
+        public EditModel(BuildingContext context, IMapper mapper, ISelectListService selectListService)
         {
             _context = context;
             _mapper = mapper;
+            _selectListService = selectListService;
         }
 
         [BindProperty]
@@ -34,6 +36,7 @@ namespace BuildingRecordsApp.Pages.Buildings
                 return NotFound();
 
             ViewModel = _mapper.Map<BuildingFormViewModel>(building);
+            ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
 
             return Page();
         }
@@ -42,9 +45,23 @@ namespace BuildingRecordsApp.Pages.Buildings
         {
             if (ViewModel.BuildingId == null)
                 ModelState.AddModelError("ViewModel", "Building details are required.");
+
+            if (!await _context.Properties.AnyAsync(p => p.PropertyId == ViewModel.PropertyId))
+                ModelState.AddModelError("ViewModel.PropertyId", "Property is required.");
+
+            if (ViewModel.BuildingId is int buildingId && await _context.Units
+                .Where(u => u.BuildingId == buildingId)
+                .AnyAsync(u => u.ParkingBays.Any(p => p.PropertyId != ViewModel.PropertyId)
+                    || u.StoreRooms.Any(s => s.PropertyId != ViewModel.PropertyId)))
+            {
+                ModelState.AddModelError("ViewModel.PropertyId", "This building has units with parking bays or storerooms in its current property. Reassign those records before moving the building.");
+            }
             
             if (!ModelState.IsValid)
+            {
+                ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
+            }
 
             var building = _mapper.Map<Building>(ViewModel);
             _context.Attach(building).State = EntityState.Modified;

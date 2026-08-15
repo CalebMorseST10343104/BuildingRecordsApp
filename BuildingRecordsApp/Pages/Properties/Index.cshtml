@@ -1,0 +1,42 @@
+@page
+@model BuildingRecordsApp.Pages.Properties.IndexModel
+@{
+    ViewData["Title"] = "Properties";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">Properties</h1>
+        <p class="text-muted mb-0">Managed properties and their shared infrastructure.</p>
+    </div>
+    <a asp-page="./Create" class="btn btn-primary">Add property</a>
+</div>
+
+<div class="row row-cols-1 row-cols-lg-2 g-4">
+@foreach (var property in Model.Properties)
+{
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 card-title">@property.Name</h2>
+                <p class="text-muted">@(string.IsNullOrWhiteSpace(property.Address) ? "No address recorded" : property.Address)</p>
+                <div class="d-flex gap-4">
+                    <span><strong>@property.BuildingCount</strong> buildings</span>
+                    <span><strong>@property.UnitCount</strong> units</span>
+                    <span><strong>@property.InfrastructureCount</strong> bays/storerooms</span>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent d-flex gap-2">
+                <a asp-page="./Details" asp-route-id="@property.PropertyId" class="btn btn-sm btn-primary">Open</a>
+                <a asp-page="./Edit" asp-route-id="@property.PropertyId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a asp-page="./Delete" asp-route-id="@property.PropertyId" class="btn btn-sm btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+}
+</div>
+
+@if (Model.Properties.Count == 0)
+{
+    <div class="alert alert-info">No properties exist yet. Add the first property before creating buildings.</div>
+}

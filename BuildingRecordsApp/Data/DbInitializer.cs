@@ -10,9 +10,10 @@ public static class DbInitializer
         context.Database.Migrate();
 
         // Check if there are any records in the database
-        if (context.Buildings.Any())
+        if (context.Buildings.Any() || context.Persons.Any())
             return; // Database has been seeded
-        
+
+        using var transaction = context.Database.BeginTransaction();
 
         // Seed data in the following order to maintain foreign key constraints
         #region SeedPersons
@@ -29,9 +30,13 @@ public static class DbInitializer
         context.SaveChanges();
 
         #endregion
-        var property = new Property { Name = "Chelsea", Address = "Shared property" };
-        context.Properties.Add(property);
-        context.SaveChanges();
+        var property = context.Properties.SingleOrDefault(p => p.Name == "Chelsea");
+        if (property is null)
+        {
+            property = new Property { Name = "Chelsea", Address = "Shared property" };
+            context.Properties.Add(property);
+            context.SaveChanges();
+        }
 
         #region SeedBuildings
 
@@ -196,5 +201,6 @@ public static class DbInitializer
 
         #endregion
         context.SaveChanges();
+        transaction.Commit();
     }
 }

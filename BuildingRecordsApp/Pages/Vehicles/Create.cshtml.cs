@@ -22,10 +22,11 @@ namespace BuildingRecordsApp.Pages.Vehicles
         [BindProperty]
         public VehicleFormViewModel ViewModel { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? unitId)
         {
             ViewModel = new VehicleFormViewModel
             {
+                UnitId = unitId,
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
             return Page();
@@ -48,7 +49,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
             _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Vehicles/Index");
+            return RedirectToPage("/Units/Details", new { id = ViewModel.UnitId });
         }
     }
 }

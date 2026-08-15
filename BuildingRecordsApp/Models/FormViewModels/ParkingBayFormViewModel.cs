@@ -9,6 +9,7 @@ public class ParkingBayFormViewModel
 {
     public int? ParkingBayId { get; set; }
     public int PropertyId { get; set; }
+    public SelectList PropertySelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
 
     [Display(Name = "Parking Bay Number")]
     public string? ParkingBayNumber { get; set; }

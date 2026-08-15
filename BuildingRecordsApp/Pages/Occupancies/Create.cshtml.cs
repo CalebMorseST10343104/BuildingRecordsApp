@@ -23,10 +23,11 @@ namespace BuildingRecordsApp.Pages.Occupancies
         [BindProperty]
         public OccupancyFormViewModel ViewModel { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? unitId)
         {
             ViewModel = new OccupancyFormViewModel
             {
+                UnitId = unitId,
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy),
                 PersonSelectList = await _selectListService.GetPersonSelectListAsync()
             };
@@ -53,7 +54,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
             _context.Occupancies.Add(occupancy);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Occupancies/Index");
+            return RedirectToPage("/Units/Details", new { id = ViewModel.UnitId });
         }
     }
 }

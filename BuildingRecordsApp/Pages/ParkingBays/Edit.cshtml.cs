@@ -42,6 +42,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
 
             ViewModel = _mapper.Map<ParkingBayFormViewModel>(parkingBay);
             ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 
             return Page();
         }
@@ -54,6 +55,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             if (!ModelState.IsValid)
             {
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
 
@@ -62,6 +64,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
                 var parkingBay = await _context.ParkingBays.SingleOrDefaultAsync(p => p.ParkingBayId == ViewModel.ParkingBayId.GetValueOrDefault());
                 if (parkingBay is null)
                     return NotFound();
+                parkingBay.PropertyId = ViewModel.PropertyId;
                 parkingBay.ParkingBayNumber = ViewModel.ParkingBayNumber?.Trim() ?? string.Empty;
                 parkingBay.IsNearEntrance = ViewModel.IsNearEntrance;
                 await _allocationService.AllocateParkingBayAsync(parkingBay.ParkingBayId, ViewModel.UnitID);
@@ -70,6 +73,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             {
                 ModelState.AddModelError("ViewModel.UnitID", exception.Message);
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
 

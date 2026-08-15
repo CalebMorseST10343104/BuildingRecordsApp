@@ -22,10 +22,11 @@ namespace BuildingRecordsApp.Pages.Leases
         [BindProperty]
         public LeaseFormViewModel ViewModel { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? unitId)
         {
             ViewModel = new LeaseFormViewModel
             {
+                UnitId = unitId,
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease)
             };
             return Page();
@@ -49,7 +50,7 @@ namespace BuildingRecordsApp.Pages.Leases
             _context.Leases.Add(lease);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Leases/Index");
+            return RedirectToPage("/Units/Details", new { id = ViewModel.UnitId });
         }
     }
 }

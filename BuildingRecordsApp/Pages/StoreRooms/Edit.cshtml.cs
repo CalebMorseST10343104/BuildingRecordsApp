@@ -42,6 +42,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
 
             ViewModel = _mapper.Map<StoreRoomFormViewModel>(storeRoom);
             ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
 
             return Page();
         }
@@ -54,6 +55,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             if (!ModelState.IsValid)
             {
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
 
@@ -62,6 +64,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
                 var storeRoom = await _context.StoreRooms.SingleOrDefaultAsync(s => s.StoreRoomId == ViewModel.StoreRoomId.GetValueOrDefault());
                 if (storeRoom is null)
                     return NotFound();
+                storeRoom.PropertyId = ViewModel.PropertyId;
                 storeRoom.StoreRoomNumber = ViewModel.StoreRoomNumber?.Trim() ?? string.Empty;
                 await _allocationService.AllocateStoreRoomAsync(storeRoom.StoreRoomId, ViewModel.UnitId);
             }
@@ -69,6 +72,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             {
                 ModelState.AddModelError("ViewModel.UnitId", exception.Message);
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
 

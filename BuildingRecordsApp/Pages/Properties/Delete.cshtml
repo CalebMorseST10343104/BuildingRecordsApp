@@ -1,0 +1,21 @@
+@page
+@model BuildingRecordsApp.Pages.Properties.DeleteModel
+@{
+    ViewData["Title"] = "Delete Property";
+}
+<h1>Delete @Model.Property.Name?</h1>
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+@if (Model.HasDependencies)
+{
+    <div class="alert alert-warning">This property contains buildings or shared infrastructure. Remove or reassign those records before deleting it.</div>
+    <a asp-page="./Details" asp-route-id="@Model.Property.PropertyId" class="btn btn-primary">Return to property</a>
+}
+else
+{
+    <p>This action cannot be undone.</p>
+    <form method="post">
+        <input asp-for="Property.PropertyId" type="hidden" />
+        <button type="submit" class="btn btn-danger">Delete property</button>
+        <a asp-page="./Details" asp-route-id="@Model.Property.PropertyId" class="btn btn-link">Cancel</a>
+    </form>
+}

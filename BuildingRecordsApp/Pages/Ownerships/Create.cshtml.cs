@@ -26,10 +26,11 @@ namespace BuildingRecordsApp.Pages.Ownerships
         [BindProperty]
         public OwnershipFormViewModel ViewModel { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? unitId)
         {
             ViewModel = new OwnershipFormViewModel
             {
+                UnitId = unitId,
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership),
                 CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync()
             };
@@ -62,7 +63,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 return Page();
             }
 
-            return RedirectToPage("/Ownerships/Index");
+            return RedirectToPage("/Units/Details", new { id = ViewModel.UnitId });
         }
     }
 }

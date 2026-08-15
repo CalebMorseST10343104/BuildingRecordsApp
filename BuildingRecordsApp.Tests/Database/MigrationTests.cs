@@ -2,11 +2,36 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
+using BuildingRecordsApp.Data;
 
 namespace BuildingRecordsApp.Tests.Database;
 
 public class MigrationTests
 {
+    [Fact]
+    public async Task Fresh_database_initialization_is_idempotent()
+    {
+        var path = Path.GetTempFileName();
+        try
+        {
+            var options = new DbContextOptionsBuilder<BuildingContext>()
+                .UseSqlite($"Data Source={path};Foreign Keys=True").Options;
+            await using var context = new BuildingContext(options);
+
+            DbInitializer.Initialize(context);
+            DbInitializer.Initialize(context);
+
+            Assert.Equal(1, await context.Properties.CountAsync(p => p.Name == "Chelsea"));
+            Assert.Equal(3, await context.Buildings.CountAsync());
+            Assert.Equal(4, await context.Units.CountAsync());
+            Assert.Equal(4, await context.TagRemoteRecords.CountAsync());
+        }
+        finally
+        {
+            File.Delete(path);
+        }
+    }
+
     [Fact]
     public async Task Latest_migration_preserves_valid_rows_and_removes_parentless_rows()
     {

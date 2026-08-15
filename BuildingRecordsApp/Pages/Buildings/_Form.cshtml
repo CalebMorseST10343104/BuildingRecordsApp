@@ -1,6 +1,12 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.BuildingFormViewModel
 
-<input asp-for="PropertyId" type="hidden" />
+<div class="mb-3">
+    <label asp-for="PropertyId" class="form-label">Property</label>
+    <select asp-for="PropertyId" asp-items="Model.PropertySelectList" class="form-select">
+        <option value="">Select property</option>
+    </select>
+    <span asp-validation-for="PropertyId" class="text-danger"></span>
+</div>
 <div>
     <label asp-for="Name"></label>
     <input asp-for="Name" />

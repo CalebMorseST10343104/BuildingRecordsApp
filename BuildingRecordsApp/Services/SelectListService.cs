@@ -29,7 +29,6 @@ namespace BuildingRecordsApp.Services
             {
                 [UsageContext.ForTagRemoteRecord] = () => _context.TagRemoteRecords.Select(tr => tr.UnitId).ToListAsync(),
                 [UsageContext.ForLease] = () => _context.Leases.Select(l => l.UnitId).ToListAsync(),
-                [UsageContext.ForOccupancy] = () => _context.Occupancies.Select(o => o.UnitId).ToListAsync(),
                 [UsageContext.ForOwnership] = () => _context.Ownerships.Select(o => o.UnitId).ToListAsync()
             };
 
@@ -40,11 +39,11 @@ namespace BuildingRecordsApp.Services
             }
 
             var units = await query
-                .Include(u => u.Building)
+                .Include(u => u.Building).ThenInclude(b => b!.Property)
                 .Select(u => new
                 {
                     u.UnitId,
-                    Display = $"[{u.Building!.Name}] {u.UnitNumber}"
+                    Display = $"[{u.Building!.Property.Name} / {u.Building.Name}] {u.UnitNumber}"
                 })
                 .ToListAsync();
 
@@ -65,6 +64,15 @@ namespace BuildingRecordsApp.Services
             });
 
             return new SelectList(buildings, "BuildingId", "Name");
+        }
+
+        public async Task<SelectList> GetPropertySelectListAsync()
+        {
+            var properties = await _context.Properties
+                .OrderBy(p => p.Name)
+                .Select(p => new { p.PropertyId, p.Name })
+                .ToListAsync();
+            return new SelectList(properties, "PropertyId", "Name");
         }
 
         public async Task<SelectList> GetParkingBaySelectListAsync()

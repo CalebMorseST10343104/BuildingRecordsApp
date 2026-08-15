@@ -1,0 +1,12 @@
+@page
+@model BuildingRecordsApp.Pages.Properties.CreateModel
+@{
+    ViewData["Title"] = "Add Property";
+}
+<h1>Add property</h1>
+<form method="post" class="mt-4">
+    <partial name="_Form" model="Model.ViewModel" />
+    <button type="submit" class="btn btn-primary">Create property</button>
+    <a asp-page="./Index" class="btn btn-link">Cancel</a>
+</form>
+<partial name="_ValidationScriptsPartial" />
