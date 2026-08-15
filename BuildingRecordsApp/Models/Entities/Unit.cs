@@ -41,7 +41,7 @@ namespace BuildingRecordsApp.Models.Entities
 
 
         //Foreign keys
-        public int? BuildingId { get; set; }
+        public int BuildingId { get; set; }
         public int? PrimaryContactPersonId { get; set; }
         public int? OwnershipId { get; set; }
         public int? AgentId { get; set; }

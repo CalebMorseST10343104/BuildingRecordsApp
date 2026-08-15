@@ -19,6 +19,6 @@ namespace BuildingRecordsApp.Models.Entities
         public string VehicleColor { get; set; } = string.Empty;
 
         public Unit? Unit { get; set; } // Navigation property to Unit
-        public int? UnitId { get; set; } // Foreign key to Unit
+        public int UnitId { get; set; } // Foreign key to Unit
     }
 }

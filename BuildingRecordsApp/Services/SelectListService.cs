@@ -25,9 +25,9 @@ namespace BuildingRecordsApp.Services
         {
             IQueryable<Unit> query = _context.Units;
 
-            var contextUnitSelectors = new Dictionary<UsageContext, Func<Task<List<int?>>>>
+            var contextUnitSelectors = new Dictionary<UsageContext, Func<Task<List<int>>>>
             {
-                [UsageContext.ForTagRemoteRecord] = () => _context.TagRemoteRecords.Select(tr => (int?)tr.UnitId).ToListAsync(),
+                [UsageContext.ForTagRemoteRecord] = () => _context.TagRemoteRecords.Select(tr => tr.UnitId).ToListAsync(),
                 [UsageContext.ForLease] = () => _context.Leases.Select(l => l.UnitId).ToListAsync(),
                 [UsageContext.ForOccupancy] = () => _context.Occupancies.Select(o => o.UnitId).ToListAsync(),
                 [UsageContext.ForOwnership] = () => _context.Ownerships.Select(o => o.UnitId).ToListAsync()

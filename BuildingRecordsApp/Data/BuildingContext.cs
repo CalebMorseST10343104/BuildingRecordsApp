@@ -30,6 +30,11 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
         modelBuilder.Entity<ParkingBay>().HasIndex(p => new { p.PropertyId, p.ParkingBayNumber }).IsUnique();
         modelBuilder.Entity<StoreRoom>().HasIndex(s => new { s.PropertyId, s.StoreRoomNumber }).IsUnique();
         modelBuilder.Entity<Vehicle>().HasIndex(v => v.VehicleRegistration).IsUnique();
+        modelBuilder.Entity<TagRemoteRecord>().ToTable(t => t.HasCheckConstraint(
+            "CK_TagRemoteRecord_NonnegativeCounts",
+            "(TagsOwner IS NULL OR TagsOwner >= 0) AND (RemotesOwner IS NULL OR RemotesOwner >= 0) AND " +
+            "(TagsOccupant IS NULL OR TagsOccupant >= 0) AND (RemotesOccupant IS NULL OR RemotesOccupant >= 0) AND " +
+            "(TagsAgent IS NULL OR TagsAgent >= 0) AND (RemotesAgent IS NULL OR RemotesAgent >= 0)"));
 
         modelBuilder.Entity<Building>()
             .HasOne(b => b.Property).WithMany(p => p.Buildings)

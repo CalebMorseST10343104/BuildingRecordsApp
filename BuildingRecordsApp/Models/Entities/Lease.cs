@@ -29,6 +29,6 @@ namespace BuildingRecordsApp.Models.Entities
 
         public Unit? Unit { get; set; } // Navigation property
 
-        public int? UnitId { get; set; } // Foreign key to Unit
+        public int UnitId { get; set; } // Foreign key to Unit
     }
 }

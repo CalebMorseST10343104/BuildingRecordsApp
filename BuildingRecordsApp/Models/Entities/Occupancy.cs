@@ -12,7 +12,7 @@ namespace BuildingRecordsApp.Models.Entities
         public Unit? Unit { get; set; } // Navigation property for the unit
         public Person? Occupant { get; set; } // Navigation property for occupants
 
-        public int? UnitId { get; set; } // Foreign key for Unit
-        public int? OccupantId { get; set; } // Foreign key for Person
+        public int UnitId { get; set; } // Foreign key for Unit
+        public int OccupantId { get; set; } // Foreign key for Person
     }
 }
