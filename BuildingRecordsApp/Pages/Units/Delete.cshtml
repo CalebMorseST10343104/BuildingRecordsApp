@@ -9,11 +9,11 @@
 <div>
     <h4>Unit</h4>
     <div>
-        <partial name="_Info" model="Model.ViewModel" />
+        <component type="typeof(BuildingRecordsApp.Components.InfoDisplay<BuildingRecordsApp.Models.ItemViewModels.UnitItemViewEntry>)" render-mode="Static" param-Model="Model.ViewModel" />
     </div>
     <br />
     <form method="post">
-        <input type="hidden" asp-for="GetFirstId()" />
+        <input type="hidden" name="id" value="@Model.GetFirstId()" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </form>

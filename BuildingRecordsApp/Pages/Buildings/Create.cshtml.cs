@@ -22,14 +22,16 @@ namespace BuildingRecordsApp.Pages.Buildings
         [BindProperty]
         public BuildingFormViewModel ViewModel { get; set; } = new();
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            ViewModel = new BuildingFormViewModel();
+            ViewModel = new BuildingFormViewModel { PropertyId = await _context.Properties.Select(p => p.PropertyId).FirstAsync() };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!await _context.Properties.AnyAsync(p => p.PropertyId == ViewModel.PropertyId))
+                ModelState.AddModelError("ViewModel.PropertyId", "Property is required.");
             if (!ModelState.IsValid)
                 return Page();
 

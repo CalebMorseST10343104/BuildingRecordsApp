@@ -49,18 +49,8 @@ namespace BuildingRecordsApp.Pages.TagRemoteRecords
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.TagRemoteRecords == null)
-                return NotFound();
-
-            var tagRemoteRecord = await _context.TagRemoteRecords.FindAsync(id);
-
-            if (tagRemoteRecord != null)
-            {
-                _context.TagRemoteRecords.Remove(tagRemoteRecord);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+            ModelState.AddModelError(string.Empty, "Access-device counts belong to the unit and cannot be deleted separately.");
+            return await OnGetAsync(id);
         }
 
         public int GetFirstId()

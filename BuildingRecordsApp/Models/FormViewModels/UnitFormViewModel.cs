@@ -16,16 +16,16 @@ public class UnitFormViewModel
     public int? Bedrooms { get; set; }
 
     [Display(Name = "Has DB Inverter?")]
-    public bool? DbInverter { get; set; }
+    public bool DbInverter { get; set; }
 
     [Display(Name = "Has Housekeeping?")]
-    public bool? Housekeeping { get; set; }
+    public bool Housekeeping { get; set; }
 
     [Display(Name = "Is Pet Friendly?")]
-    public bool? PetFriendly { get; set; }
+    public bool PetFriendly { get; set; }
 
     [Display(Name = "Allows Subletting?")]
-    public bool? SublettingAllowed { get; set; }
+    public bool SublettingAllowed { get; set; }
 
     [Display(Name = "AC Unit Count")]
     public int? AirconditioningUnits { get; set; }

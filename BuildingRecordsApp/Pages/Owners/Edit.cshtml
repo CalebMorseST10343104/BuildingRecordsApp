@@ -1,12 +1,13 @@
 ﻿@page
 @model BuildingRecordsApp.Pages.Owners.EditModel
 @{
-    ViewData["Title"] = "Edit Owner";
+    ViewData["Title"] = "Edit OwnershipContact";
 }
 
-<h1>Edit Owner</h1>
+<h1>Edit OwnershipContact</h1>
 
 <form method="post">
+    <input type="hidden" name="OwnershipContactId" value="@Model.ViewModel.OwnershipContactId" />
     
     @await Html.PartialAsync("_Form", Model.ViewModel)
 

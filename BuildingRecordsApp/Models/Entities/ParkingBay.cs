@@ -12,6 +12,8 @@ namespace BuildingRecordsApp.Models.Entities
         public bool IsNearEntrance { get; set; } = false;
 
 
+        public int PropertyId { get; set; }
+        public Property Property { get; set; } = null!;
         public int? UnitID { get; set; } // Foreign key
         public Unit? Unit { get; set; } // Navigation property
 

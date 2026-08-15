@@ -1,6 +1,5 @@
-using System;
 using BuildingRecordsApp.Models.Entities;
-using Microsoft.VisualBasic;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Data;
 
@@ -8,8 +7,7 @@ public static class DbInitializer
 {
     public static void Initialize(BuildingContext context)
     {
-        // Check if the database exists
-        context.Database.EnsureCreated();
+        context.Database.Migrate();
 
         // Check if there are any records in the database
         if (context.Buildings.Any())
@@ -31,13 +29,17 @@ public static class DbInitializer
         context.SaveChanges();
 
         #endregion
+        var property = new Property { Name = "Chelsea", Address = "Shared property" };
+        context.Properties.Add(property);
+        context.SaveChanges();
+
         #region SeedBuildings
 
         var buildings = new[]
         {
-            new Building { Name = "Building A", Address = "123 Main St", NumberOfUnits = 10, NumberOfFloors = 3 },
-            new Building { Name = "Building B", Address = "456 Elm St", NumberOfUnits = 20, NumberOfFloors = 5 },
-            new Building { Name = "Building C", Address = "789 Oak St", NumberOfUnits = 15, NumberOfFloors = 4 },
+            new Building { Name = "Building A", Address = "123 Main St", NumberOfUnits = 10, NumberOfFloors = 3, Property = property },
+            new Building { Name = "Building B", Address = "456 Elm St", NumberOfUnits = 20, NumberOfFloors = 5, Property = property },
+            new Building { Name = "Building C", Address = "789 Oak St", NumberOfUnits = 15, NumberOfFloors = 4, Property = property },
         };
         context.Buildings.AddRange(buildings);
         context.SaveChanges();
@@ -58,12 +60,16 @@ public static class DbInitializer
         #endregion
         #region SeedOwnerships
 
+        var organization = new Organization { Name = "Company A", Address = "456 Elm St", RegistrationReference = "987654321" };
+        context.CompanyTrusts.Add(organization);
+        context.SaveChanges();
+
         var ownerships = new[]
         {
             new Ownership { Unit = units[0], OwnershipType = "Natural" },
             new Ownership { Unit = units[1], OwnershipType = "Natural" },
-            new Ownership { Unit = units[2], OwnershipType = "Juristic" },
-            new Ownership { Unit = units[3], OwnershipType = "Juristic" }
+            new Ownership { Unit = units[2], OwnershipType = "Juristic", Organization = organization },
+            new Ownership { Unit = units[3], OwnershipType = "Juristic", Organization = organization }
         };
         context.Ownerships.AddRange(ownerships);
         context.SaveChanges();
@@ -73,11 +79,11 @@ public static class DbInitializer
 
         var owners = new[]
         {
-            new Owner { Person = people[0], Ownership = ownerships[0] },
-            new Owner { Person = people[1], Ownership = ownerships[1] },
-            new Owner { Person = people[2], Ownership = ownerships[2] },
-            new Owner { Person = people[3], Ownership = ownerships[3] },
-            new Owner { Person = people[4], Ownership = ownerships[0] }
+            new OwnershipContact { Person = people[0], Ownership = ownerships[0] },
+            new OwnershipContact { Person = people[1], Ownership = ownerships[1] },
+            new OwnershipContact { Person = people[2], Ownership = ownerships[2] },
+            new OwnershipContact { Person = people[3], Ownership = ownerships[3] },
+            new OwnershipContact { Person = people[4], Ownership = ownerships[0] }
         };
         context.Owners.AddRange(owners);
         context.SaveChanges();
@@ -98,9 +104,9 @@ public static class DbInitializer
         
         var agents = new[]
         {
-            new Agent { FirstName = "Alice", LastName = "Smith", AgentCompany = agentCompanies[0], Email = "foo@example.net", PhoneNumber = "1234567890" },
-            new Agent { FirstName = "Bob", LastName = "Johnson", AgentCompany = agentCompanies[1], Email = "bar@example.net", PhoneNumber = "0987654321" },
-            new Agent { FirstName = "Charlie", LastName = "Brown", AgentCompany = agentCompanies[0], Email = "fiz@example.net", PhoneNumber = "1122334455" }
+            new Agent { Person = people[2], AgentCompany = agentCompanies[0] },
+            new Agent { Person = people[3], AgentCompany = agentCompanies[1] },
+            new Agent { Person = people[4], AgentCompany = agentCompanies[0] }
         };
         context.Agents.AddRange(agents);
         context.SaveChanges();
@@ -108,22 +114,17 @@ public static class DbInitializer
         #endregion
         #region SeedCompanyTrusts
         
-        var companyTrusts = new[]
-        {
-            new CompanyTrust { Name = "Company A", Address = "456 Elm St", RegistrationNumber = "987654321", Ownerships = [ownerships[2], ownerships[3]]}
-        };
-        context.CompanyTrusts.AddRange(companyTrusts);
-        context.SaveChanges();
+        // Organizations are seeded before juristic ownerships.
 
         #endregion
         #region SeedLeases
         
         var leases = new[]
         {
-            new Lease { LeaseHolderName = "John Doe", StartDate = DateTime.Now, EndDate = DateTime.Now.AddYears(1), PersonsOccupying = 2, SignedRules = true, AllowedPets = false, EmergencyContactNumber = "1234567890", Unit = units[0] },
-            new Lease { LeaseHolderName = "Jane Smith", StartDate = DateTime.Now, EndDate = DateTime.Now.AddYears(1), PersonsOccupying = 3, SignedRules = false, AllowedPets = true, EmergencyContactNumber = "0987654321", Unit = units[1] },
-            new Lease { LeaseHolderName = "Alice Johnson", StartDate = DateTime.Now, EndDate = DateTime.Now.AddYears(1), PersonsOccupying = 1, SignedRules = true, AllowedPets = false, EmergencyContactNumber = "1122334455", Unit = units[2] },
-            new Lease { LeaseHolderName = "Bob Brown", StartDate = DateTime.Now, EndDate = DateTime.Now.AddYears(1), PersonsOccupying = 2, SignedRules = true, AllowedPets = true, EmergencyContactNumber = "5566778899", Unit = units[3] }
+            new Lease { LeaseHolderName = "John Doe", StartDate = DateTime.Now, EndDate = DateTime.Now.AddYears(1), DeclaredOccupantCount = 2, SignedRules = true, PetsPresent = false, EmergencyContactNumber = "1234567890", Unit = units[0] },
+            new Lease { LeaseHolderName = "Jane Smith", StartDate = DateTime.Now, EndDate = DateTime.Now.AddYears(1), DeclaredOccupantCount = 3, SignedRules = false, PetsPresent = true, EmergencyContactNumber = "0987654321", Unit = units[1] },
+            new Lease { LeaseHolderName = "Alice Johnson", StartDate = DateTime.Now, EndDate = DateTime.Now.AddYears(1), DeclaredOccupantCount = 1, SignedRules = true, PetsPresent = false, EmergencyContactNumber = "1122334455", Unit = units[2] },
+            new Lease { LeaseHolderName = "Bob Brown", StartDate = DateTime.Now, EndDate = DateTime.Now.AddYears(1), DeclaredOccupantCount = 2, SignedRules = true, PetsPresent = true, EmergencyContactNumber = "5566778899", Unit = units[3] }
         };
         context.Leases.AddRange(leases);
         context.SaveChanges();
@@ -133,10 +134,10 @@ public static class DbInitializer
 
         var occupancies = new[]
         {
-            new Occupancy { OccupationType = "Owner", Unit = units[0], Occupant = people[0] },
+            new Occupancy { OccupationType = "OwnershipContact", Unit = units[0], Occupant = people[0] },
             new Occupancy { OccupationType = "Tenant", Unit = units[1], Occupant = people[1] },
             new Occupancy { OccupationType = "Tenant", Unit = units[2], Occupant = people[2] },
-            new Occupancy { OccupationType = "Owner", Unit = units[3], Occupant = people[3] }
+            new Occupancy { OccupationType = "OwnershipContact", Unit = units[3], Occupant = people[3] }
         };
         context.Occupancies.AddRange(occupancies);
         context.SaveChanges();
@@ -146,10 +147,10 @@ public static class DbInitializer
         
         var parkingBays = new[]
         {
-            new ParkingBay { ParkingBayNumber = "P1", Unit = units[0], IsNearEntrance = true },
-            new ParkingBay { ParkingBayNumber = "P2", Unit = units[1] },
-            new ParkingBay { ParkingBayNumber = "P3", Unit = units[2] },
-            new ParkingBay { ParkingBayNumber = "P4", Unit = units[3] }
+            new ParkingBay { ParkingBayNumber = "P1", Unit = units[0], IsNearEntrance = true, Property = property },
+            new ParkingBay { ParkingBayNumber = "P2", Unit = units[1], Property = property },
+            new ParkingBay { ParkingBayNumber = "P3", Unit = units[2], Property = property },
+            new ParkingBay { ParkingBayNumber = "P4", Unit = units[3], Property = property }
         };
         context.ParkingBays.AddRange(parkingBays);
         context.SaveChanges();
@@ -159,10 +160,10 @@ public static class DbInitializer
         
         var storeRooms = new[]
         {
-            new StoreRoom { StoreRoomNumber = "SR1", Unit = units[0] },
-            new StoreRoom { StoreRoomNumber = "SR2", Unit = units[1] },
-            new StoreRoom { StoreRoomNumber = "SR3", Unit = units[2] },
-            new StoreRoom { StoreRoomNumber = "SR4", Unit = units[3] }
+            new StoreRoom { StoreRoomNumber = "SR1", Unit = units[0], Property = property },
+            new StoreRoom { StoreRoomNumber = "SR2", Unit = units[1], Property = property },
+            new StoreRoom { StoreRoomNumber = "SR3", Unit = units[2], Property = property },
+            new StoreRoom { StoreRoomNumber = "SR4", Unit = units[3], Property = property }
         };
         context.StoreRooms.AddRange(storeRooms);
         context.SaveChanges();
@@ -173,7 +174,9 @@ public static class DbInitializer
         var tagRemoteRecords = new[]
         {
             new TagRemoteRecord { TagsOwner = 1, RemotesOwner = 2, TagsOccupant = 3, RemotesOccupant = 4, TagsAgent = 5, RemotesAgent = 6, Unit = units[0] },
-            new TagRemoteRecord { TagsOwner = 7, RemotesOwner = 8, TagsOccupant = 9, RemotesOccupant = 10, TagsAgent = 11, RemotesAgent = 12, Unit = units[1] }
+            new TagRemoteRecord { TagsOwner = 7, RemotesOwner = 8, TagsOccupant = 9, RemotesOccupant = 10, TagsAgent = 11, RemotesAgent = 12, Unit = units[1] },
+            new TagRemoteRecord { Unit = units[2] },
+            new TagRemoteRecord { Unit = units[3] }
         };
         context.TagRemoteRecords.AddRange(tagRemoteRecords);
         context.SaveChanges();

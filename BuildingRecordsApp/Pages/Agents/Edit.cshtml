@@ -7,6 +7,7 @@
 <h1>Edit Agent</h1>
 
 <form method="post" class="needs-validation" novalidate>
+    <input type="hidden" name="AgentId" value="@Model.ViewModel.AgentId" />
     
     @await Html.PartialAsync("_Form", Model.ViewModel)
 

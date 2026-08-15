@@ -27,7 +27,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
 
             var companyTrust = await _context.CompanyTrusts
                 .AsNoTracking()
-                .FirstOrDefaultAsync(ct => ct.CompanyTrustId == id);
+                .FirstOrDefaultAsync(ct => ct.OrganizationId == id);
 
             if (companyTrust == null)
                 return NotFound();
@@ -39,13 +39,13 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
 
         public async Task<IActionResult> OnPostAsync()
         {   
-            if (ViewModel.CompanyTrustId == null)
+            if (ViewModel.OrganizationId == null)
                 ModelState.AddModelError("ViewModel", "Company Trust details are required.");
             
             if (!ModelState.IsValid)
                 return Page();
 
-            var companyTrust = _mapper.Map<CompanyTrust>(ViewModel);
+            var companyTrust = _mapper.Map<Organization>(ViewModel);
             _context.Attach(companyTrust).State = EntityState.Modified;
 
             try
@@ -54,7 +54,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CompanyTrustExists(companyTrust.CompanyTrustId))
+                if (!CompanyTrustExists(companyTrust.OrganizationId))
                     return NotFound();
 
                 throw;
@@ -65,7 +65,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
 
         private bool CompanyTrustExists(int id)
         {
-            return _context.CompanyTrusts.Any(e => e.CompanyTrustId == id);
+            return _context.CompanyTrusts.Any(e => e.OrganizationId == id);
         }
     }
 }

@@ -7,13 +7,13 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 public class OwnerItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
-    public int? OwnerId { get; set; }
+    public int? OwnershipContactId { get; set; }
 
-    [Display(Name = "Owner First Name")]
+    [Display(Name = "OwnershipContact First Name")]
     [DisplayMode("Extended")]
     public string? FirstName { get; set; }
 
-    [Display(Name = "Owner Last Name")]
+    [Display(Name = "OwnershipContact Last Name")]
     [DisplayMode("Extended")]
     public string? LastName { get; set; }
 
@@ -27,12 +27,12 @@ public class OwnerItemViewEntry : ItemViewEntry
 
     public override int GetId()
     {
-        return OwnerId ?? 0;
+        return OwnershipContactId ?? 0;
     }
 
     public override string GetTitleHeader()
     {
-        return "Owner Details";
+        return "OwnershipContact Details";
     }
 
     public override bool IsTitleHeaderFieldName(object item)

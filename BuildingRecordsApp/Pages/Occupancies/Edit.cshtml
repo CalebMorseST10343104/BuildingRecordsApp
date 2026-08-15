@@ -7,6 +7,7 @@
 <h1>Edit Occupancy</h1>
 
 <form method="post">
+    <input type="hidden" name="OccupancyId" value="@Model.ViewModel.OccupancyId" />
     
     @await Html.PartialAsync("_Form", Model.ViewModel)
 

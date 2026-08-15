@@ -18,6 +18,9 @@ namespace BuildingRecordsApp.Models.Entities
         [Display(Name = "Number of Floors")]
         public int NumberOfFloors { get; set; }
 
+        public int PropertyId { get; set; }
+        public Property Property { get; set; } = null!;
+
         //Navigation properties
         public ICollection<Unit> Units { get; set; } = [];
     }

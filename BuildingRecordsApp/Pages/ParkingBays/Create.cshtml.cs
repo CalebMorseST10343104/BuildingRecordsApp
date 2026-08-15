@@ -28,6 +28,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         {
             ViewModel = new ParkingBayFormViewModel
             {
+                PropertyId = await _context.Properties.Select(p => p.PropertyId).FirstAsync(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
             return Page();
@@ -35,8 +36,12 @@ namespace BuildingRecordsApp.Pages.ParkingBays
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.UnitID == null)
-                ModelState.AddModelError("ViewModel.UnitID", "Unit is required.");
+            if (ViewModel.UnitID is int unitId)
+            {
+                var unitPropertyId = await _context.Units.Where(u => u.UnitId == unitId).Select(u => u.Building!.PropertyId).SingleOrDefaultAsync();
+                if (unitPropertyId != ViewModel.PropertyId)
+                    ModelState.AddModelError("ViewModel.UnitID", "The unit must be in the same property as the parking bay.");
+            }
 
             if (!ModelState.IsValid)
             {

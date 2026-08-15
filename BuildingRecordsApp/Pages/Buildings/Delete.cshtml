@@ -8,10 +8,10 @@
 
 <div>
     <div>
-        <partial name="_Info" model="Model.ViewModel" />
+        <component type="typeof(BuildingRecordsApp.Components.InfoDisplay<BuildingRecordsApp.Models.ItemViewModels.BuildingItemViewEntry>)" render-mode="Static" param-Model="Model.ViewModel" />
     </div>
     <form method="post">
-        <input type="hidden" asp-for="GetFirstId()" />
+        <input type="hidden" name="id" value="@Model.GetFirstId()" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
 

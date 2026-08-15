@@ -33,7 +33,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
                 .Include(c => c.Ownerships)
                 .ThenInclude(o => o.Unit)
                 .ThenInclude(u => u!.Building)
-                .FirstOrDefaultAsync(m => m.CompanyTrustId == id);
+                .FirstOrDefaultAsync(m => m.OrganizationId == id);
 
             if (companyTrust == null)
                 return NotFound();
@@ -41,7 +41,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             ViewModel = new DisplayViewModel<CompanyTrustItemViewEntry>
             {
                 Entries = [_mapper.Map<CompanyTrustItemViewEntry>(companyTrust)],
-                IdsToDisplay = [companyTrust.CompanyTrustId],
+                IdsToDisplay = [companyTrust.OrganizationId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
@@ -69,7 +69,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
         {
             if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
             {
-                return ViewModel.Entries[0].CompanyTrustId ?? 0;
+                return ViewModel.Entries[0].OrganizationId ?? 0;
             }
             return 0;
         }

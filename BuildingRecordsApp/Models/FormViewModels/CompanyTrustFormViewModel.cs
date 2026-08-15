@@ -6,7 +6,7 @@ namespace BuildingRecordsApp.Models.FormViewModels;
 
 public class CompanyTrustFormViewModel
 {
-    public int? CompanyTrustId { get; set; }
+    public int? OrganizationId { get; set; }
 
     [Display(Name = "Company/Trust Name")]
     public string? Name { get; set; }

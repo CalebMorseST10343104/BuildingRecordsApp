@@ -30,20 +30,20 @@ namespace BuildingRecordsApp.Pages.Owners
             if (id == null)
                 return NotFound();
 
-            var Owner = await _context.Owners
+            var OwnershipContact = await _context.Owners
                 .Include(o => o.Person)
                 .Include(o => o.Ownership)
                 .ThenInclude(os => os!.Unit)
                 .ThenInclude(u => u!.Building)
-                .FirstOrDefaultAsync(m => m.OwnerId == id);
+                .FirstOrDefaultAsync(m => m.OwnershipContactId == id);
 
-            if (Owner == null)
+            if (OwnershipContact == null)
                 return NotFound();
 
             ViewModel = new DisplayViewModel<OwnerItemViewEntry>
             {
-                Entries = [_mapper.Map<OwnerItemViewEntry>(Owner)],
-                IdsToDisplay = [Owner.OwnerId],
+                Entries = [_mapper.Map<OwnerItemViewEntry>(OwnershipContact)],
+                IdsToDisplay = [OwnershipContact.OwnershipContactId],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.List
             };
@@ -56,11 +56,11 @@ namespace BuildingRecordsApp.Pages.Owners
             if (id == null || _context.Owners == null)
                 return NotFound();
 
-            var Owner = await _context.Owners.FindAsync(id);
+            var OwnershipContact = await _context.Owners.FindAsync(id);
 
-            if (Owner != null)
+            if (OwnershipContact != null)
             {
-                _context.Owners.Remove(Owner);
+                _context.Owners.Remove(OwnershipContact);
                 await _context.SaveChangesAsync();
             }
 
@@ -71,7 +71,7 @@ namespace BuildingRecordsApp.Pages.Owners
         {
             if (ViewModel?.Entries != null && ViewModel.Entries.Count > 0)
             {
-                return ViewModel.Entries[0].OwnerId ?? 0;
+                return ViewModel.Entries[0].OwnershipContactId ?? 0;
             }
             return 0;
         }

@@ -7,6 +7,7 @@
 <h1>Edit Store Room</h1>
 
 <form method="post">
+    <input type="hidden" name="StoreRoomId" value="@Model.ViewModel.StoreRoomId" />
     
     @await Html.PartialAsync("_Form", Model.ViewModel)
 

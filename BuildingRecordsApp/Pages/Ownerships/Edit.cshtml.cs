@@ -31,7 +31,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
 
             var ownership = await _context.Ownerships
                 .Include(o => o.Unit)
-                .Include(o => o.CompanyTrust)
+                .Include(o => o.Organization)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(o => o.OwnershipId == id);
 

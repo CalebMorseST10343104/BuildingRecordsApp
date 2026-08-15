@@ -10,8 +10,8 @@ public class OwnerMappingProfile : Profile
 {
     public OwnerMappingProfile()
     {
-        CreateMap<Owner, OwnerFormViewModel>().ReverseMap();
-        CreateMap<Owner, OwnerItemViewEntry>()
+        CreateMap<OwnershipContact, OwnerFormViewModel>().ReverseMap();
+        CreateMap<OwnershipContact, OwnerItemViewEntry>()
             .ForMember(
                 dest => dest.FirstName,
                 opt => opt.MapFrom(src => src.Person != null ? src.Person.FirstName : null))

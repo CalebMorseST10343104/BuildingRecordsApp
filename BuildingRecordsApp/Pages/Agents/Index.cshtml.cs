@@ -23,6 +23,8 @@ namespace BuildingRecordsApp.Pages.Agents
         public async Task OnGetAsync()
         {
             List<AgentItemViewEntry> agentItems = await _context.Agents
+                .Include(a => a.Person)
+                .Include(a => a.AgentCompany)
                 .AsNoTracking()
                 .Select(a => _mapper.Map<AgentItemViewEntry>(a))
                 .ToListAsync();

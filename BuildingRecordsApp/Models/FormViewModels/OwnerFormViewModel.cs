@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models.FormViewModels;
 
 public class OwnerFormViewModel
 {
-    public int? OwnerId { get; set; }
+    public int? OwnershipContactId { get; set; }
 
     public int? PersonId { get; set; } // Foreign key for Person
     public int? OwnershipId { get; set; } // Foreign key for Ownership

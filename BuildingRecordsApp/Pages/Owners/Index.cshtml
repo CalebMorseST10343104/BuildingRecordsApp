@@ -3,14 +3,14 @@
 @{
     ViewData["Title"] = "Owners";
 }
-<h1>Owner Index</h1>
+<h1>OwnershipContact Index</h1>
 <p>
-    <a asp-page="./Create" class="btn btn-primary">Create New Owner</a>
+    <a asp-page="./Create" class="btn btn-primary">Create New OwnershipContact</a>
 </p>
 
 <div>
     @{
-        var BasePath = "BuildingRecordsApp/Pages/Owners";
+        var BasePath = "/Owners";
         var CompType = typeof(BuildingRecordsApp.Components.InfoDisplay<BuildingRecordsApp.Models.ItemViewModels.OwnerItemViewEntry>);
         <component type="CompType"
             render-mode="Static"

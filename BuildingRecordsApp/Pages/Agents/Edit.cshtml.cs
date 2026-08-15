@@ -40,6 +40,7 @@ namespace BuildingRecordsApp.Pages.Agents
 
             ViewModel = _mapper.Map<AgentFormViewModel>(agent);
             ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
+            ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
 
             return Page();
         }
@@ -51,10 +52,13 @@ namespace BuildingRecordsApp.Pages.Agents
 
             if (ViewModel.AgentCompanyId == null)
                 ModelState.AddModelError("ViewModel.AgentCompanyId", "Please select an agent company.");
+            if (ViewModel.PersonId == null)
+                ModelState.AddModelError("ViewModel.PersonId", "Please select a person.");
 
             if (!ModelState.IsValid)
             {
                 ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
                 return Page();
             }
             

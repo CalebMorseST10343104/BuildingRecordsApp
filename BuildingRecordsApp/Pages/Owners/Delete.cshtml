@@ -1,17 +1,17 @@
 ﻿@page
 @model BuildingRecordsApp.Pages.Owners.DeleteModel
 @{
-    ViewData["Title"] = "Delete Owner";
+    ViewData["Title"] = "Delete OwnershipContact";
 }
-<h1>Delete Owner</h1>
+<h1>Delete OwnershipContact</h1>
 <p>Are you sure you want to delete this owner?</p>
 
 <div>
     <div>
-        <partial name="_Info" model="Model.ViewModel" />
+        <component type="typeof(BuildingRecordsApp.Components.InfoDisplay<BuildingRecordsApp.Models.ItemViewModels.OwnerItemViewEntry>)" render-mode="Static" param-Model="Model.ViewModel" />
     </div>
     <form method="post">
-        <input type="hidden" asp-for="GetFirstId()" />
+        <input type="hidden" name="id" value="@Model.GetFirstId()" />
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
     </form>

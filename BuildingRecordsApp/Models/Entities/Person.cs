@@ -26,7 +26,8 @@ namespace BuildingRecordsApp.Models.Entities
 
         // Navigation properties
         public ICollection<Occupancy> Occupancies { get; set; } = [];
-        public ICollection<Owner> Owners { get; set; } = [];
+        public ICollection<OwnershipContact> OwnershipContacts { get; set; } = [];
         public ICollection<Unit> PrimaryContactUnits { get; set; } = [];
+        public Agent? AgentProfile { get; set; }
     }
 }

@@ -17,11 +17,11 @@ public class TagRemoteRecordItemViewEntry : ItemViewEntry
     [DisplayMode("Extended")]
     public int? UnitNumber { get; set; }
 
-    [Display(Name = "Tags Owner")]
+    [Display(Name = "Tags OwnershipContact")]
     [DisplayMode("Detailed")]
     public int? TagsOwner { get; set; }
 
-    [Display(Name = "Remotes Owner")]
+    [Display(Name = "Remotes OwnershipContact")]
     [DisplayMode("Detailed")]
     public int? RemotesOwner { get; set; }
 

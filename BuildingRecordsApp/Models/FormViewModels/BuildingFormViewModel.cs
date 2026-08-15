@@ -7,6 +7,7 @@ namespace BuildingRecordsApp.Models.FormViewModels;
 public class BuildingFormViewModel
 {
     public int? BuildingId { get; set; }
+    public int PropertyId { get; set; }
 
     [Display(Name = "Building Name")]
     public string? Name { get; set; }

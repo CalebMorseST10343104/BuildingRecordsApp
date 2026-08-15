@@ -48,6 +48,8 @@ namespace BuildingRecordsApp.Pages.Units
 
             _context.Units.Add(unit);
             await _context.SaveChangesAsync();
+            _context.TagRemoteRecords.Add(new TagRemoteRecord { UnitId = unit.UnitId });
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("/Units/Index");
         }

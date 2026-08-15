@@ -14,7 +14,7 @@ public class OwnershipFormViewModel
     public string? OwnershipType { get; set; } // e.g., "Natural", "Juristic"
 
     public int? UnitId { get; set; } // Foreign key
-    public int? CompanyTrustId { get; set; } // Foreign key for CompanyTrust
+    public int? OrganizationId { get; set; } // Foreign key for Organization
 
     public SelectList UnitSelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
 

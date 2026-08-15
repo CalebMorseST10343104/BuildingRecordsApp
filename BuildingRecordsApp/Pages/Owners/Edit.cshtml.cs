@@ -32,7 +32,7 @@ namespace BuildingRecordsApp.Pages.Owners
                 .Include(o => o.Person)
                 .Include(o => o.Ownership)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(o => o.OwnerId == id);
+                .FirstOrDefaultAsync(o => o.OwnershipContactId == id);
 
             if (owner == null)
                 return NotFound();
@@ -46,8 +46,8 @@ namespace BuildingRecordsApp.Pages.Owners
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ViewModel.OwnerId == null)
-                ModelState.AddModelError("ViewModel", "Owner details are required.");
+            if (ViewModel.OwnershipContactId == null)
+                ModelState.AddModelError("ViewModel", "OwnershipContact details are required.");
                 
             if (ViewModel.PersonId == null)
                 ModelState.AddModelError("ViewModel.PersonId", "Person is required.");
@@ -58,7 +58,7 @@ namespace BuildingRecordsApp.Pages.Owners
             if (!ModelState.IsValid)
                 return Page();
 
-            var owner = _mapper.Map<Owner>(ViewModel);
+            var owner = _mapper.Map<OwnershipContact>(ViewModel);
             _context.Attach(owner).State = EntityState.Modified;
 
             try
@@ -67,7 +67,7 @@ namespace BuildingRecordsApp.Pages.Owners
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OwnerExists(owner.OwnerId))
+                if (!OwnerExists(owner.OwnershipContactId))
                     return NotFound();
 
                 throw;
@@ -78,7 +78,7 @@ namespace BuildingRecordsApp.Pages.Owners
 
         private bool OwnerExists(int id)
         {
-            return _context.Owners.Any(e => e.OwnerId == id);
+            return _context.Owners.Any(e => e.OwnershipContactId == id);
         }
     }
 }

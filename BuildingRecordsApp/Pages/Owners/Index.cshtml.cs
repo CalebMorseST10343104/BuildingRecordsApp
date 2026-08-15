@@ -35,7 +35,7 @@ namespace BuildingRecordsApp.Pages.Owners
             ViewModel = new DisplayViewModel<OwnerItemViewEntry>
             {
                 Entries = ownerItems,
-                IdsToDisplay = [.. ownerItems.Select(o => o.OwnerId ?? 0)],
+                IdsToDisplay = [.. ownerItems.Select(o => o.OwnershipContactId ?? 0)],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.Table,
                 ShowActions = true

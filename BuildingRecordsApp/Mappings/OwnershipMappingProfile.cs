@@ -20,6 +20,6 @@ public class OwnershipMappingProfile : Profile
                 opt => opt.MapFrom(src => src.Unit != null ? src.Unit.UnitNumber : null))
             .ForMember(
                 dest => dest.CompanyName,
-                opt => opt.MapFrom(src => src.CompanyTrust != null ? src.CompanyTrust.Name : null));
+                opt => opt.MapFrom(src => src.Organization != null ? src.Organization.Name : null));
     }
 }

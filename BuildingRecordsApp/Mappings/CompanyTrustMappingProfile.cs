@@ -10,7 +10,7 @@ public class CompanyTrustMappingProfile : Profile
 {
     public CompanyTrustMappingProfile()
     {
-        CreateMap<CompanyTrust, CompanyTrustFormViewModel>().ReverseMap();
-        CreateMap<CompanyTrust, CompanyTrustItemViewEntry>();
+        CreateMap<Organization, CompanyTrustFormViewModel>().ReverseMap();
+        CreateMap<Organization, CompanyTrustItemViewEntry>();
     }
 }

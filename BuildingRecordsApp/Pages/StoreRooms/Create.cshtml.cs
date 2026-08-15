@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.StoreRooms
 {
@@ -27,6 +28,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         {
             ViewModel = new StoreRoomFormViewModel
             {
+                PropertyId = await _context.Properties.Select(p => p.PropertyId).FirstAsync(),
                 UnitSelectList = await _selectListService.GetUnitSelectListAsync()
             };
             return Page();
@@ -35,9 +37,11 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         public async Task<IActionResult> OnPostAsync()
         {
  
-            if (ViewModel.UnitId == null)
+            if (ViewModel.UnitId is int unitId)
             {
-                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
+                var unitPropertyId = await _context.Units.Where(u => u.UnitId == unitId).Select(u => u.Building!.PropertyId).SingleOrDefaultAsync();
+                if (unitPropertyId != ViewModel.PropertyId)
+                    ModelState.AddModelError("ViewModel.UnitId", "The unit must be in the same property as the storeroom.");
             }
             if (!ModelState.IsValid)
             {

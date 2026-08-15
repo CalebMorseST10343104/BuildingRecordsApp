@@ -10,10 +10,10 @@ namespace BuildingRecordsApp.Models.Entities
         public string OwnershipType { get; set; } = string.Empty; // e.g., "Natural", "Juristic"
 
         public int? UnitId { get; set; } // Foreign key
-        public int? CompanyTrustId { get; set; } // Foreign key for CompanyTrust
+        public int? OrganizationId { get; set; }
 
         public Unit? Unit { get; set; } // Navigation property
-        public CompanyTrust? CompanyTrust { get; set; } // Navigation property for CompanyTrust
-        public ICollection<Owner> Owners { get; set; } = []; // Navigation property for owners
+        public Organization? Organization { get; set; }
+        public ICollection<OwnershipContact> OwnershipContacts { get; set; } = [];
     }
 }

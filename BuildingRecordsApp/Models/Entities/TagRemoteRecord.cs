@@ -6,26 +6,32 @@ namespace BuildingRecordsApp.Models.Entities
     {
         public int TagRemoteRecordId { get; set; }
 
-        [Display(Name = "Tags Owner")]
-        public int TagsOwner { get; set; }
+        [Display(Name = "Tags OwnershipContact")]
+        [Range(0, int.MaxValue)]
+        public int? TagsOwner { get; set; }
 
-        [Display(Name = "Remotes Owner")]
-        public int RemotesOwner { get; set; }
+        [Display(Name = "Remotes OwnershipContact")]
+        [Range(0, int.MaxValue)]
+        public int? RemotesOwner { get; set; }
 
         [Display(Name = "Tags Occupant")]
-        public int TagsOccupant { get; set; }
+        [Range(0, int.MaxValue)]
+        public int? TagsOccupant { get; set; }
 
         [Display(Name = "Remotes Occupant")]
-        public int RemotesOccupant { get; set; }
+        [Range(0, int.MaxValue)]
+        public int? RemotesOccupant { get; set; }
 
         [Display(Name = "Tags Agent")]
-        public int TagsAgent { get; set; }
+        [Range(0, int.MaxValue)]
+        public int? TagsAgent { get; set; }
 
         [Display(Name = "Remotes Agent")]
-        public int RemotesAgent { get; set; }
+        [Range(0, int.MaxValue)]
+        public int? RemotesAgent { get; set; }
 
         public Unit? Unit { get; set; } // Navigation property
 
-        public int? UnitId { get; set; } // Foreign key
+        public int UnitId { get; set; }
     }
 }

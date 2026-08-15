@@ -8,7 +8,7 @@ namespace BuildingRecordsApp.Models.ItemViewModels;
 public class CompanyTrustItemViewEntry : ItemViewEntry
 {
     [DisplayMode("Full")]
-    public int? CompanyTrustId { get; set; }
+    public int? OrganizationId { get; set; }
 
     [Display(Name = "Company/Trust Name")]
     [DisplayMode("Basic")]
@@ -24,7 +24,7 @@ public class CompanyTrustItemViewEntry : ItemViewEntry
 
     public override int GetId()
     {
-        return CompanyTrustId ?? 0;
+        return OrganizationId ?? 0;
     }
 
     public override string GetTitleHeader()

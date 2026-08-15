@@ -48,7 +48,7 @@ namespace BuildingRecordsApp.Pages.Owners
                 return Page();
             }
 
-            var owner = _mapper.Map<Owner>(ViewModel);
+            var owner = _mapper.Map<OwnershipContact>(ViewModel);
 
             _context.Owners.Add(owner);
             await _context.SaveChangesAsync();

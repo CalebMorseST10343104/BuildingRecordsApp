@@ -6,6 +6,7 @@
 <h1>Edit Ownership</h1>
 
 <form method="post">
+    <input type="hidden" name="OwnershipId" value="@Model.ViewModel.OwnershipId" />
     
     @await Html.PartialAsync("_Form", Model.ViewModel)
 

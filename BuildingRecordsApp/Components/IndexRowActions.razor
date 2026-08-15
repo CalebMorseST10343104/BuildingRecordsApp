@@ -1,9 +1,6 @@
-﻿@using Microsoft.AspNetCore.Mvc.RazorPages
-
-<div class="btn-group" role="group">
-    <a class="btn btn-sm btn-primary" href="@($"{BasePath}/Details/{Id}")">Details</a>
-    <a class="btn btn-sm btn-secondary" href="@($"{BasePath}/Edit/{Id}")">Edit</a>
-    <a class="btn btn-sm btn-danger" href="@($"{BasePath}/Delete/{Id}")">Delete</a>
+<div class="btn-group" role="group" aria-label="Actions">
+    <a class="btn btn-sm btn-primary" href="@($"{BasePath}/Edit?id={Id}")">Edit</a>
+    <a class="btn btn-sm btn-danger" href="@($"{BasePath}/Delete?id={Id}")">Delete</a>
 </div>
 
 @code {

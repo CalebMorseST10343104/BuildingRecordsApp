@@ -36,13 +36,18 @@
                                 }
                                 @if (Model.ShowActions)
                                 {
-                                    <component type="typeof(BuildingRecordsApp.Components.IndexRowActions)" 
-                                        render-mode="Static"
-                                        param-Id="entry.GetId()" 
-                                        param-BasePath="Model.Entries.FirstOrDefault()?.GetBasePath() ?? string.Empty" />
+                                    <td>
+                                        @{
+                                            var compType = typeof(BuildingRecordsApp.Components.IndexRowActions);
+                                            <DynamicComponent Type="compType" Parameters="@(new Dictionary<string, object?>
+                                            {
+                                                ["Id"] = entry.GetId(),
+                                                ["BasePath"] = BasePath
+                                            })" />
+                                        }
+                                    </td>
                                 }
                             </tr>
-                            }
                         }
                     </tbody>
                 </table>

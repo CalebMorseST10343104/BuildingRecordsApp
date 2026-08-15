@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildingRecordsApp.Migrations
 {
     [DbContext(typeof(BuildingContext))]
-    partial class BuildingContextModelSnapshot : ModelSnapshot
+    [Migration("20260814155926_UseSurrogateKeysForOwnerAndOccupancy")]
+    partial class UseSurrogateKeysForOwnerAndOccupancy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -22,18 +25,28 @@ namespace BuildingRecordsApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AgentCompanyId")
+                    b.Property<int?>("AgentCompanyId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("AgentId");
 
                     b.HasIndex("AgentCompanyId");
-
-                    b.HasIndex("PersonId")
-                        .IsUnique();
 
                     b.ToTable("Agents");
                 });
@@ -81,15 +94,32 @@ namespace BuildingRecordsApp.Migrations
                     b.Property<int>("NumberOfUnits")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PropertyId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("BuildingId");
 
-                    b.HasIndex("PropertyId", "Name")
-                        .IsUnique();
-
                     b.ToTable("Buildings");
+                });
+
+            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.CompanyTrust", b =>
+                {
+                    b.Property<int>("CompanyTrustId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RegistrationNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CompanyTrustId");
+
+                    b.ToTable("CompanyTrusts");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Lease", b =>
@@ -98,7 +128,7 @@ namespace BuildingRecordsApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DeclaredOccupantCount")
+                    b.Property<bool>("AllowedPets")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("EmergencyContactNumber")
@@ -112,7 +142,7 @@ namespace BuildingRecordsApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("PetsPresent")
+                    b.Property<int>("PersonsOccupying")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("SignedRules")
@@ -158,31 +188,26 @@ namespace BuildingRecordsApp.Migrations
                     b.ToTable("Occupancies");
                 });
 
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Organization", b =>
+            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Owner", b =>
                 {
-                    b.Property<int>("OrganizationId")
+                    b.Property<int>("OwnerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("OwnershipId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.HasKey("OwnerId");
 
-                    b.Property<string>("OrganizationType")
-                        .HasColumnType("TEXT");
+                    b.HasIndex("PersonId");
 
-                    b.Property<string>("RegistrationReference")
-                        .HasColumnType("TEXT");
+                    b.HasIndex("OwnershipId", "PersonId")
+                        .IsUnique();
 
-                    b.HasKey("OrganizationId");
-
-                    b.ToTable("CompanyTrusts");
+                    b.ToTable("Owners");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Ownership", b =>
@@ -191,7 +216,7 @@ namespace BuildingRecordsApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("OrganizationId")
+                    b.Property<int?>("CompanyTrustId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("OwnershipType")
@@ -203,37 +228,12 @@ namespace BuildingRecordsApp.Migrations
 
                     b.HasKey("OwnershipId");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("CompanyTrustId");
 
                     b.HasIndex("UnitId")
                         .IsUnique();
 
-                    b.ToTable("Ownerships", t =>
-                        {
-                            t.HasCheckConstraint("CK_Ownership_TypeOrganization", "(OwnershipType = 'Natural' AND OrganizationId IS NULL) OR (OwnershipType = 'Juristic' AND OrganizationId IS NOT NULL)");
-                        });
-                });
-
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.OwnershipContact", b =>
-                {
-                    b.Property<int>("OwnershipContactId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("OwnershipId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PersonId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("OwnershipContactId");
-
-                    b.HasIndex("PersonId");
-
-                    b.HasIndex("OwnershipId", "PersonId")
-                        .IsUnique();
-
-                    b.ToTable("Owners");
+                    b.ToTable("Ownerships");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.ParkingBay", b =>
@@ -249,18 +249,12 @@ namespace BuildingRecordsApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PropertyId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("UnitID")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ParkingBayId");
 
                     b.HasIndex("UnitID");
-
-                    b.HasIndex("PropertyId", "ParkingBayNumber")
-                        .IsUnique();
 
                     b.ToTable("ParkingBays");
                 });
@@ -300,35 +294,10 @@ namespace BuildingRecordsApp.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Property", b =>
-                {
-                    b.Property<int>("PropertyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("PropertyId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Properties");
-                });
-
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.StoreRoom", b =>
                 {
                     b.Property<int>("StoreRoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PropertyId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("StoreRoomNumber")
@@ -342,9 +311,6 @@ namespace BuildingRecordsApp.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.HasIndex("PropertyId", "StoreRoomNumber")
-                        .IsUnique();
-
                     b.ToTable("StoreRooms");
                 });
 
@@ -354,25 +320,25 @@ namespace BuildingRecordsApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("RemotesAgent")
+                    b.Property<int>("RemotesAgent")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("RemotesOccupant")
+                    b.Property<int>("RemotesOccupant")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("RemotesOwner")
+                    b.Property<int>("RemotesOwner")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("TagsAgent")
+                    b.Property<int>("TagsAgent")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("TagsOccupant")
+                    b.Property<int>("TagsOccupant")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("TagsOwner")
+                    b.Property<int>("TagsOwner")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UnitId")
+                    b.Property<int?>("UnitId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("TagRemoteRecordId");
@@ -433,10 +399,9 @@ namespace BuildingRecordsApp.Migrations
 
                     b.HasIndex("AgentId");
 
-                    b.HasIndex("PrimaryContactPersonId");
+                    b.HasIndex("BuildingId");
 
-                    b.HasIndex("BuildingId", "UnitNumber")
-                        .IsUnique();
+                    b.HasIndex("PrimaryContactPersonId");
 
                     b.ToTable("Units");
                 });
@@ -470,9 +435,6 @@ namespace BuildingRecordsApp.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.HasIndex("VehicleRegistration")
-                        .IsUnique();
-
                     b.ToTable("Vehicles");
                 });
 
@@ -481,29 +443,9 @@ namespace BuildingRecordsApp.Migrations
                     b.HasOne("BuildingRecordsApp.Models.Entities.AgentCompany", "AgentCompany")
                         .WithMany("Agents")
                         .HasForeignKey("AgentCompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BuildingRecordsApp.Models.Entities.Person", "Person")
-                        .WithOne("AgentProfile")
-                        .HasForeignKey("BuildingRecordsApp.Models.Entities.Agent", "PersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("AgentCompany");
-
-                    b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Building", b =>
-                {
-                    b.HasOne("BuildingRecordsApp.Models.Entities.Property", "Property")
-                        .WithMany("Buildings")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Property");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Lease", b =>
@@ -533,11 +475,28 @@ namespace BuildingRecordsApp.Migrations
                     b.Navigation("Unit");
                 });
 
+            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Owner", b =>
+                {
+                    b.HasOne("BuildingRecordsApp.Models.Entities.Ownership", "Ownership")
+                        .WithMany("Owners")
+                        .HasForeignKey("OwnershipId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BuildingRecordsApp.Models.Entities.Person", "Person")
+                        .WithMany("Owners")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Ownership");
+
+                    b.Navigation("Person");
+                });
+
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Ownership", b =>
                 {
-                    b.HasOne("BuildingRecordsApp.Models.Entities.Organization", "Organization")
+                    b.HasOne("BuildingRecordsApp.Models.Entities.CompanyTrust", "CompanyTrust")
                         .WithMany("Ownerships")
-                        .HasForeignKey("OrganizationId")
+                        .HasForeignKey("CompanyTrustId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("BuildingRecordsApp.Models.Entities.Unit", "Unit")
@@ -545,62 +504,27 @@ namespace BuildingRecordsApp.Migrations
                         .HasForeignKey("BuildingRecordsApp.Models.Entities.Ownership", "UnitId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Organization");
+                    b.Navigation("CompanyTrust");
 
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.OwnershipContact", b =>
-                {
-                    b.HasOne("BuildingRecordsApp.Models.Entities.Ownership", "Ownership")
-                        .WithMany("OwnershipContacts")
-                        .HasForeignKey("OwnershipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BuildingRecordsApp.Models.Entities.Person", "Person")
-                        .WithMany("OwnershipContacts")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ownership");
-
-                    b.Navigation("Person");
-                });
-
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.ParkingBay", b =>
                 {
-                    b.HasOne("BuildingRecordsApp.Models.Entities.Property", "Property")
-                        .WithMany("ParkingBays")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("BuildingRecordsApp.Models.Entities.Unit", "Unit")
                         .WithMany("ParkingBays")
                         .HasForeignKey("UnitID")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Property");
 
                     b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.StoreRoom", b =>
                 {
-                    b.HasOne("BuildingRecordsApp.Models.Entities.Property", "Property")
-                        .WithMany("StoreRooms")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("BuildingRecordsApp.Models.Entities.Unit", "Unit")
                         .WithMany("StoreRooms")
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Property");
 
                     b.Navigation("Unit");
                 });
@@ -610,8 +534,7 @@ namespace BuildingRecordsApp.Migrations
                     b.HasOne("BuildingRecordsApp.Models.Entities.Unit", "Unit")
                         .WithOne("TagRemoteRecord")
                         .HasForeignKey("BuildingRecordsApp.Models.Entities.TagRemoteRecord", "UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Unit");
                 });
@@ -665,34 +588,23 @@ namespace BuildingRecordsApp.Migrations
                     b.Navigation("Units");
                 });
 
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Organization", b =>
+            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.CompanyTrust", b =>
                 {
                     b.Navigation("Ownerships");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Ownership", b =>
                 {
-                    b.Navigation("OwnershipContacts");
+                    b.Navigation("Owners");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Person", b =>
                 {
-                    b.Navigation("AgentProfile");
-
                     b.Navigation("Occupancies");
 
-                    b.Navigation("OwnershipContacts");
+                    b.Navigation("Owners");
 
                     b.Navigation("PrimaryContactUnits");
-                });
-
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Property", b =>
-                {
-                    b.Navigation("Buildings");
-
-                    b.Navigation("ParkingBays");
-
-                    b.Navigation("StoreRooms");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Unit", b =>

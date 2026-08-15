@@ -7,7 +7,7 @@ namespace BuildingRecordsApp.Models.Entities
         public int OccupancyId { get; set; }
 
         [Display(Name = "Occupation Type")]
-        public string OccupationType { get; set; } = string.Empty; // e.g., "Owner", "Short-Term Rental", "Long-Term Rental"
+        public string OccupationType { get; set; } = string.Empty; // e.g., "OwnershipContact", "Short-Term Rental", "Long-Term Rental"
 
         public Unit? Unit { get; set; } // Navigation property for the unit
         public Person? Occupant { get; set; } // Navigation property for occupants

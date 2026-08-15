@@ -18,6 +18,7 @@ public class DisplayModeAttribute : Attribute
         Mode = mode.ToLower() switch
         {
             "basic" => DisplayMode.Basic,
+            "extended" => DisplayMode.Extended,
             "detailed" => DisplayMode.Detailed,
             "full" => DisplayMode.Full,
             _ => throw new ArgumentException($"Invalid display mode: {mode}"),

@@ -31,7 +31,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             ViewModel = new DisplayViewModel<CompanyTrustItemViewEntry>
             {
                 Entries = companyTrustItems,
-                IdsToDisplay = [.. companyTrustItems.Select(ct => ct.CompanyTrustId ?? 0)],
+                IdsToDisplay = [.. companyTrustItems.Select(ct => ct.OrganizationId ?? 0)],
                 DisplayMode = Enums.DisplayMode.Detailed,
                 DisplayLayout = Enums.DisplayLayout.Table,
                 ShowActions = true

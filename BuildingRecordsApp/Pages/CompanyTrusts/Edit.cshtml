@@ -7,8 +7,8 @@
 <h1>Edit Company/Trust</h1>
 
 @* 
-CompanyTrust has the following properties:
-int CompanyTrustId
+Organization has the following properties:
+int OrganizationId
 string Name
 string Address
 string RegistrationNumber
@@ -16,6 +16,7 @@ ICollection<Ownership> Ownerships
  *@
 
 <form method="post">
+    <input type="hidden" name="OrganizationId" value="@Model.ViewModel.OrganizationId" />
     
     @await Html.PartialAsync("_Form", Model.ViewModel)
 

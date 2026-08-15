@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Services;
-using Microsoft.Data.Sqlite;
-using Microsoft.VisualBasic;
 using BuildingRecordsApp.Data;
 
 
@@ -18,16 +16,7 @@ internal class Program
         builder.Services.AddDbContext<BuildingContext>(options =>
         {
             var connectionString = builder.Configuration.GetConnectionString("BuildingContext");
-
-            var connection = new SqliteConnection(connectionString);
-            connection.Open();
-
-            //Enable foreign keys explicitly
-            var command = connection.CreateCommand();
-            command.CommandText = "PRAGMA foreign_keys = ON;";
-            command.ExecuteNonQuery();
-
-            options.UseSqlite(connection);
+            options.UseSqlite(connectionString);
         });
         
         builder.Services.AddScoped<ISelectListService, SelectListService>();

@@ -24,7 +24,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
         public async Task OnGetAsync()
         {
             List<OwnershipItemViewEntry> ownershipItems = await _context.Ownerships
-                .Include(o => o.CompanyTrust)
+                .Include(o => o.Organization)
                 .Include(o => o.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()

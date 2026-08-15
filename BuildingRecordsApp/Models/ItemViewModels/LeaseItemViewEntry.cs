@@ -32,7 +32,7 @@ public class LeaseItemViewEntry : ItemViewEntry
 
     [Display(Name = "Number of Occupants")]
     [DisplayMode("Detailed")]
-    public int? PersonsOccupying { get; set; }
+    public int? DeclaredOccupantCount { get; set; }
 
     [Display(Name = "Signed Conduct Rules?")]
     [DisplayMode("Full")]
@@ -40,7 +40,7 @@ public class LeaseItemViewEntry : ItemViewEntry
 
     [Display(Name = "Allowed Pets?")]
     [DisplayMode("Full")]
-    public bool? AllowedPets { get; set; }
+    public bool? PetsPresent { get; set; }
 
     [Display(Name = "Emergency Contact Number")]
     [DisplayMode("Full")]

@@ -27,7 +27,7 @@ namespace BuildingRecordsApp.Services
 
             var contextUnitSelectors = new Dictionary<UsageContext, Func<Task<List<int?>>>>
             {
-                [UsageContext.ForTagRemoteRecord] = () => _context.TagRemoteRecords.Select(tr => tr.UnitId).ToListAsync(),
+                [UsageContext.ForTagRemoteRecord] = () => _context.TagRemoteRecords.Select(tr => (int?)tr.UnitId).ToListAsync(),
                 [UsageContext.ForLease] = () => _context.Leases.Select(l => l.UnitId).ToListAsync(),
                 [UsageContext.ForOccupancy] = () => _context.Occupancies.Select(o => o.UnitId).ToListAsync(),
                 [UsageContext.ForOwnership] = () => _context.Ownerships.Select(o => o.UnitId).ToListAsync()
@@ -101,7 +101,7 @@ namespace BuildingRecordsApp.Services
                 .Select(a => new
                 {
                     a.AgentId,
-                    Display = $"{a.AgentCompany!.CompanyName} - {a.FirstName} {a.LastName}"
+                    Display = $"{a.AgentCompany.CompanyName} - {a.Person.FirstName} {a.Person.LastName}"
                 })
                 .ToListAsync();
 
@@ -138,7 +138,7 @@ namespace BuildingRecordsApp.Services
         public async Task<SelectList> GetCompanyTrustSelectListAsync()
         {
             var companyTrusts = await _context.CompanyTrusts.ToListAsync();
-            return new SelectList(companyTrusts, "CompanyTrustId", "Name");
+            return new SelectList(companyTrusts, "OrganizationId", "Name");
         }
     }
 }

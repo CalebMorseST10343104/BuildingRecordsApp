@@ -31,7 +31,7 @@ namespace BuildingRecordsApp.Pages.CompanyTrusts
             if (!ModelState.IsValid)
                 return Page();
 
-            var companyTrust = _mapper.Map<CompanyTrust>(ViewModel);
+            var companyTrust = _mapper.Map<Organization>(ViewModel);
 
             _context.CompanyTrusts.Add(companyTrust);
             await _context.SaveChangesAsync();

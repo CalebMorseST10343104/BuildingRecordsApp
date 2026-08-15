@@ -29,7 +29,8 @@ namespace BuildingRecordsApp.Pages.Agents
         {
             ViewModel = new AgentFormViewModel
             {
-                AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync()
+                AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync(),
+                PersonSelectList = await _selectListService.GetPersonSelectListAsync()
             };
             return Page();
         }
@@ -40,10 +41,13 @@ namespace BuildingRecordsApp.Pages.Agents
             {
                 ModelState.AddModelError("ViewModel.AgentCompanyId", "Agent Company is required.");
             }
+            if (ViewModel.PersonId == null)
+                ModelState.AddModelError("ViewModel.PersonId", "Person is required.");
 
             if (!ModelState.IsValid)
             {
                 ViewModel.AgentCompanySelectList = await _selectListService.GetAgentCompanySelectListAsync();
+                ViewModel.PersonSelectList = await _selectListService.GetPersonSelectListAsync();
                 return Page();
             }
 

@@ -19,13 +19,13 @@ public class LeaseFormViewModel
     public DateTime? EndDate { get; set; }
 
     [Display(Name = "Number of Occupants")]
-    public int? PersonsOccupying { get; set; }
+    public int? DeclaredOccupantCount { get; set; }
 
     [Display(Name = "Signed Conduct Rules?")]
-    public bool? SignedRules { get; set; }
+    public bool SignedRules { get; set; }
 
     [Display(Name = "Allowed Pets?")]
-    public bool? AllowedPets { get; set; }
+    public bool PetsPresent { get; set; }
 
     [Display(Name = "Emergency Contact Number")]
     public string? EmergencyContactNumber { get; set; }

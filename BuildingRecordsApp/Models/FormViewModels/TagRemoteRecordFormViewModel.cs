@@ -9,10 +9,10 @@ public class TagRemoteRecordFormViewModel
 {
     public int? TagRemoteRecordId { get; set; }
 
-    [Display(Name = "Tags Owner")]
+    [Display(Name = "Tags OwnershipContact")]
     public int? TagsOwner { get; set; }
 
-    [Display(Name = "Remotes Owner")]
+    [Display(Name = "Remotes OwnershipContact")]
     public int? RemotesOwner { get; set; }
 
     [Display(Name = "Tags Occupant")]
