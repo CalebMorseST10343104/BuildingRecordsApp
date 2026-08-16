@@ -50,7 +50,7 @@ internal sealed class BuildingRecordsWebApplicationFactory : WebApplicationFacto
         var host = base.CreateHost(builder);
         using var scope = host.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BuildingContext>();
-        var migrationProperty = context.Properties.SingleOrDefault(p => p.Name == "Chelsea");
+        var migrationProperty = context.Properties.SingleOrDefault(p => p.Name == "My Property");
         if (migrationProperty is not null && string.IsNullOrWhiteSpace(migrationProperty.Address))
         {
             migrationProperty.Address = "Integration-test baseline";

@@ -2,9 +2,15 @@
 
 This project uses [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`.
 
+## 1.1.0 — 2026-08-16
+
+- Generalized the product identity from Chelsea Building Register to Building Manager.
+- Replaced Chelsea-specific defaults and documentation with neutral examples.
+- Added automatic migration of the original Mac application data directory during an upgrade.
+
 ## 1.0.0 — 2026-08-16
 
-Initial single-user release of Chelsea Building Register.
+Initial single-user release of the building register application.
 
 - Normalized property, building, unit, person, ownership, occupancy, letting, vehicle, parking, storeroom, lease, and access-device records.
 - Added unit-centred register workflows and standardized validation and friendly error handling.

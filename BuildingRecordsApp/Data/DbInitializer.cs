@@ -33,10 +33,10 @@ public static class DbInitializer
         context.SaveChanges();
 
         #endregion
-        var property = context.Properties.SingleOrDefault(p => p.Name == "Chelsea");
+        var property = context.Properties.SingleOrDefault(p => p.Name == "Example Property");
         if (property is null)
         {
-            property = new Property { Name = "Chelsea", Address = "Shared property" };
+            property = new Property { Name = "Example Property", Address = "Shared property" };
             context.Properties.Add(property);
             context.SaveChanges();
         }

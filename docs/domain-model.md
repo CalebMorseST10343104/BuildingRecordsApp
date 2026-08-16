@@ -36,7 +36,7 @@ The diagram describes intended cardinality. Some requirements on the `Unit` side
 
 ## Property, building, and unit
 
-A **Property** is the top-level managed place or scheme. Chelsea is one property.
+A **Property** is the top-level managed place, complex, or scheme.
 
 A **Building** is a named physical building within a property. A building belongs to exactly one property. Unit numbers are scoped to buildings because two buildings may use the same unit number.
 
@@ -92,7 +92,7 @@ The lease-holder name remains free text. This is intentional: a name on a lease 
 
 **Parking Bays** and **Storerooms** physically belong to a property’s shared infrastructure. They may be unallocated or assigned to at most one unit.
 
-They belong to the property rather than directly to a building because Chelsea’s buildings share underground infrastructure. An allocation must remain within the same property.
+They belong to the property rather than directly to a building because buildings within a property may share underground or other common infrastructure. An allocation must remain within the same property.
 
 The model records the current operational allocation. It does not presently distinguish common property, exclusive-use areas, or separately registered legal sections.
 

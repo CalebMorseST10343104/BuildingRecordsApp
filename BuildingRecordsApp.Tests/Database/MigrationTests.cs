@@ -21,7 +21,7 @@ public class MigrationTests
             DbInitializer.Initialize(context);
             DbInitializer.Initialize(context);
 
-            Assert.Equal(1, await context.Properties.CountAsync(p => p.Name == "Chelsea"));
+            Assert.Equal(1, await context.Properties.CountAsync(p => p.Name == "Example Property"));
             Assert.Equal(3, await context.Buildings.CountAsync());
             Assert.Equal(4, await context.Units.CountAsync());
             Assert.Equal(4, await context.AccessDeviceCounts.CountAsync());
@@ -44,7 +44,7 @@ public class MigrationTests
 
             DbInitializer.Initialize(context, seedSampleData: false);
 
-            Assert.Equal(["Chelsea"], await context.Properties.Select(p => p.Name).ToListAsync());
+            Assert.Equal(["My Property"], await context.Properties.Select(p => p.Name).ToListAsync());
             Assert.Empty(await context.Persons.ToListAsync());
             Assert.Empty(await context.Buildings.ToListAsync());
             Assert.Empty(await context.Units.ToListAsync());

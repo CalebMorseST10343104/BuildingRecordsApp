@@ -21,10 +21,10 @@ IFS=. read -r VERSION_MAJOR VERSION_MINOR VERSION_PATCH <<EOF
 $APP_VERSION
 EOF
 BUILD_VERSION=$((VERSION_MAJOR * 1000000 + VERSION_MINOR * 1000 + VERSION_PATCH + 1))
-ZIP_PATH="$ARTIFACTS_DIR/Chelsea-Building-Register-v$APP_VERSION-macOS-Intel.zip"
+ZIP_PATH="$ARTIFACTS_DIR/Building-Manager-v$APP_VERSION-macOS-Intel.zip"
 CHECKSUM_PATH="$ZIP_PATH.sha256"
 STAGING_DIR=$(mktemp -d)
-APP_BUNDLE="$STAGING_DIR/Chelsea Building Register.app"
+APP_BUNDLE="$STAGING_DIR/Building Manager.app"
 PUBLISH_DIR="$STAGING_DIR/publish"
 GENERATED_PLIST="$STAGING_DIR/Info.plist"
 
@@ -49,9 +49,9 @@ sed -e "s/__MARKETING_VERSION__/$APP_VERSION/g" -e "s/__BUILD_VERSION__/$BUILD_V
     "$SCRIPT_DIR/Info.plist" > "$GENERATED_PLIST"
 plutil -lint "$GENERATED_PLIST" >/dev/null
 cp "$GENERATED_PLIST" "$APP_BUNDLE/Contents/Info.plist"
-cp "$SCRIPT_DIR/ChelseaBuildingRegister" "$APP_BUNDLE/Contents/MacOS/ChelseaBuildingRegister"
+cp "$SCRIPT_DIR/BuildingManager" "$APP_BUNDLE/Contents/MacOS/BuildingManager"
 cp -R "$PUBLISH_DIR/." "$APP_BUNDLE/Contents/Resources/app/"
-chmod 755 "$APP_BUNDLE/Contents/MacOS/ChelseaBuildingRegister"
+chmod 755 "$APP_BUNDLE/Contents/MacOS/BuildingManager"
 chmod 755 "$APP_BUNDLE/Contents/Resources/app/BuildingRecordsApp"
 
 xattr -cr "$APP_BUNDLE"
@@ -61,4 +61,4 @@ rm -f "$ZIP_PATH"
 ditto -c -k --sequesterRsrc --keepParent "$APP_BUNDLE" "$ZIP_PATH"
 shasum -a 256 "$ZIP_PATH" > "$CHECKSUM_PATH"
 
-printf 'Created Chelsea Building Register %s:\n%s\n%s\n' "$APP_VERSION" "$ZIP_PATH" "$CHECKSUM_PATH"
+printf 'Created Building Manager %s:\n%s\n%s\n' "$APP_VERSION" "$ZIP_PATH" "$CHECKSUM_PATH"

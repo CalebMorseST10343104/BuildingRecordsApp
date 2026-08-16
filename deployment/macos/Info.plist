@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleDevelopmentRegion</key><string>en</string>
-    <key>CFBundleDisplayName</key><string>Chelsea Building Register</string>
-    <key>CFBundleExecutable</key><string>ChelseaBuildingRegister</string>
-    <key>CFBundleIdentifier</key><string>za.co.chelsea.building-register</string>
+    <key>CFBundleDisplayName</key><string>Building Manager</string>
+    <key>CFBundleExecutable</key><string>BuildingManager</string>
+    <key>CFBundleIdentifier</key><string>za.co.buildingmanager.desktop</string>
     <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
-    <key>CFBundleName</key><string>Chelsea Building Register</string>
+    <key>CFBundleName</key><string>Building Manager</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>__MARKETING_VERSION__</string>
     <key>CFBundleVersion</key><string>__BUILD_VERSION__</string>

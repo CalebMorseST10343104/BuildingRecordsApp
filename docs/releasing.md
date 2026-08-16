@@ -64,7 +64,7 @@ The script performs the complete repeatable packaging workflow:
 
    ```bash
    git commit -m "Prepare release 1.0.1"
-   git tag -a v1.0.1 -m "Chelsea Building Register 1.0.1"
+   git tag -a v1.0.1 -m "Building Manager 1.0.1"
    ```
 
 8. Build the package:
@@ -76,7 +76,7 @@ The script performs the complete repeatable packaging workflow:
 9. Verify the printed checksum whenever the ZIP is copied:
 
    ```bash
-   shasum -a 256 -c artifacts/macos-intel/Chelsea-Building-Register-v1.0.1-macOS-Intel.zip.sha256
+   shasum -a 256 -c artifacts/macos-intel/Building-Manager-v1.0.1-macOS-Intel.zip.sha256
    ```
 
 10. Install the ZIP on a test Mac, confirm it opens, check the records, create a backup, and test **Close application**.
@@ -98,4 +98,4 @@ The live database is outside the app bundle, so replacing the application does n
 3. Replace the old app in `/Applications` with the newly extracted app.
 4. Open the new app and confirm the register records are present.
 
-Never delete `~/Library/Application Support/Chelsea Building Register/` during an upgrade.
+Never delete `~/Library/Application Support/Building Manager/` during an upgrade. For an upgrade from version 1.0.0, also retain the former `Chelsea Building Register` directory until the new version has launched successfully and the records have been checked.

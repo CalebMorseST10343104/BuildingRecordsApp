@@ -33,7 +33,7 @@ public sealed class DatabaseBackupServiceTests : IAsyncLifetime
             .Options;
         await using var context = new BuildingContext(options);
         await context.Database.EnsureCreatedAsync();
-        context.Properties.Add(new Property { Name = "Chelsea", Address = "Test" });
+        context.Properties.Add(new Property { Name = "Example Property", Address = "Test" });
         await context.SaveChangesAsync();
 
         var service = CreateService(context, retainedCount: 5);

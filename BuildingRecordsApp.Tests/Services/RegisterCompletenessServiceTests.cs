@@ -27,7 +27,7 @@ public class RegisterCompletenessServiceTests
         Assert.All(unitIssues, issue => Assert.Equal(CompletenessSeverity.Urgent, issue.Severity));
         Assert.All(unitIssues, issue =>
         {
-            Assert.Equal("Chelsea", issue.PropertyName);
+            Assert.Equal("Example Property", issue.PropertyName);
             Assert.Equal("A", issue.BuildingName);
             Assert.Equal("101", issue.UnitNumber);
             Assert.Contains($"{unit.UnitId}", issue.ActionUrl);
@@ -153,7 +153,7 @@ public class RegisterCompletenessServiceTests
     public async Task Physical_contact_and_ownership_legacy_gaps_are_all_reported()
     {
         await using var db = await SqliteTestDatabase.CreateAsync();
-        var property = new Property { Name = "Chelsea" };
+        var property = new Property { Name = "Example Property" };
         var building = new Building { Property = property, Name = "A" };
         var unnamed = new Person { PhoneNumber = "0215550100" };
         var unit = EntityFactory.Unit(building, "101");

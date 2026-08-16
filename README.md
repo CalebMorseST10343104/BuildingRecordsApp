@@ -1,8 +1,8 @@
-# Building Records App
+# Building Manager
 
-Building Records App is a .NET Razor Pages application for maintaining the current operational register of a sectional-title property. It replaces a wide, repetitive spreadsheet with structured records for units, people, ownership, occupation, letting agents, leases, vehicles, parking, storerooms, and access-device counts.
+Building Manager is a .NET Razor Pages application for maintaining the current operational register of one or more sectional-title properties. It replaces wide, repetitive spreadsheets with structured records for units, people, ownership, occupation, letting agents, leases, vehicles, parking, storerooms, and access-device counts.
 
-The initial deployment target is Chelsea, a property containing two buildings with some shared infrastructure. The model supports more than one property, but the current user interface is still oriented around the initial Chelsea property.
+The model supports multiple properties, multiple buildings within a property, and infrastructure shared by buildings in the same property.
 
 ## Project status
 
@@ -15,7 +15,7 @@ The project is being revived and incrementally modernized. The domain model and 
 - [Data dictionary](docs/data-dictionary.md) — the meaning of entities and fields.
 - [Data validity and operational completeness](docs/data-quality-rules.md) — what blocks saving, what requires follow-up, and what is genuinely optional.
 - [Development guide](docs/development.md) — setup, migrations, tests, and repository conventions.
-- [Intel macOS deployment](docs/macos-deployment.md) — packaging, installation, upgrades, and recovery for the initial single-user deployment.
+- [Intel macOS deployment](docs/macos-deployment.md) — packaging, installation, upgrades, and recovery for a single-user deployment.
 - [Releasing and packaging](docs/releasing.md) — semantic versioning and the repeatable self-service release workflow.
 
 ## Solution structure

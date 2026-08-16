@@ -1,6 +1,6 @@
 # Intel macOS deployment
 
-This deployment is intended for the single-user Chelsea installation on an Intel MacBook. It runs the ASP.NET Core application locally and does not expose it to the local network or internet.
+This deployment is intended for a single user on an Intel MacBook. It runs the ASP.NET Core application locally and does not expose it to the local network or internet.
 
 ## Build the package
 
@@ -13,8 +13,8 @@ On a Mac with the .NET 9 SDK, from the repository's `buildingapp` directory:
 The script reads the semantic version from `VERSION`, runs the full test suite, and produces two files such as:
 
 ```text
-artifacts/macos-intel/Chelsea-Building-Register-v1.0.0-macOS-Intel.zip
-artifacts/macos-intel/Chelsea-Building-Register-v1.0.0-macOS-Intel.zip.sha256
+artifacts/macos-intel/Building-Manager-v1.1.0-macOS-Intel.zip
+artifacts/macos-intel/Building-Manager-v1.1.0-macOS-Intel.zip.sha256
 ```
 
 The signed `.app` is staged outside synced project folders before it is archived, preventing Finder or file-provider metadata from invalidating the bundle. See [Releasing and packaging](releasing.md) for the complete versioning, tagging, and release workflow.
@@ -24,7 +24,7 @@ The application is self-contained for `osx-x64`; the destination Mac does not ne
 ## Install
 
 1. Copy the ZIP file to the Intel MacBook and extract it.
-2. Drag **Chelsea Building Register.app** into **Applications**.
+2. Drag **Building Manager.app** into **Applications**.
 3. On first launch, Control-click the app, choose **Open**, and confirm the macOS prompt. Depending on the macOS version, approval may instead appear under **System Settings → Privacy & Security**.
 4. Optionally drag the app from Applications to the Dock.
 
@@ -39,7 +39,7 @@ Use **Close application** in the navigation bar before shutting down or installi
 Program files and live data are deliberately separate. Replacing the `.app` does not replace the register.
 
 ```text
-~/Library/Application Support/Chelsea Building Register/
+~/Library/Application Support/Building Manager/
 ├── buildingrecords.db
 ├── Backups/
 ├── Logs/
@@ -50,7 +50,9 @@ Program files and live data are deliberately separate. Replacing the `.app` does
 
 This directory contains personal information and should be protected by the Mac login password and FileVault. Database backups downloaded through the browser also contain the complete register.
 
-Production creates a migrated register containing only the Chelsea property container on first launch. It does not insert demonstration people, buildings, units, or operational records. Full sample seeding is enabled only by development configuration.
+Production creates a migrated register containing only a neutral **My Property** container on first launch. It does not insert demonstration people, buildings, units, or operational records. Full sample seeding is enabled only by development configuration.
+
+When upgrading from version 1.0.0, the launcher automatically moves data from the former `Chelsea Building Register` application-support directory to the new `Building Manager` directory. If both directories already exist, it leaves both untouched and uses the new directory.
 
 ## Upgrade
 

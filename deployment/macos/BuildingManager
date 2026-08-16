@@ -4,10 +4,15 @@ set -eu
 APP_CONTENTS=$(cd "$(dirname "$0")/.." && pwd)
 APP_EXECUTABLE="$APP_CONTENTS/Resources/app/BuildingRecordsApp"
 REGISTER_URL="http://127.0.0.1:5180"
-REGISTER_DATA="$HOME/Library/Application Support/Chelsea Building Register"
+REGISTER_DATA="$HOME/Library/Application Support/Building Manager"
+LEGACY_REGISTER_DATA="$HOME/Library/Application Support/Chelsea Building Register"
 REGISTER_LOGS="$REGISTER_DATA/Logs"
 REGISTER_LOCK="$REGISTER_DATA/run.lock"
 REGISTER_LOG="$REGISTER_LOGS/application.log"
+
+if [ ! -e "$REGISTER_DATA" ] && [ -d "$LEGACY_REGISTER_DATA" ]; then
+    mv "$LEGACY_REGISTER_DATA" "$REGISTER_DATA"
+fi
 
 mkdir -p "$REGISTER_DATA" "$REGISTER_LOGS"
 chmod 700 "$REGISTER_DATA" "$REGISTER_LOGS"
@@ -59,7 +64,7 @@ printf '%s\n' "$APP_PID" > "$REGISTER_LOCK/pid"
 ATTEMPT=0
 while [ "$ATTEMPT" -lt 240 ]; do
     if ! kill -0 "$APP_PID" 2>/dev/null; then
-        osascript -e 'display alert "Chelsea Building Register could not start" message "Please contact Caleb. Technical details are in the application log." as critical' >/dev/null 2>&1 || true
+        osascript -e 'display alert "Building Manager could not start" message "Please contact your application administrator. Technical details are in the application log." as critical' >/dev/null 2>&1 || true
         exit 1
     fi
     if curl --silent --fail --max-time 1 "$REGISTER_URL" >/dev/null 2>&1; then
@@ -71,5 +76,5 @@ while [ "$ATTEMPT" -lt 240 ]; do
     ATTEMPT=$((ATTEMPT + 1))
 done
 
-osascript -e 'display alert "Chelsea Building Register took too long to start" message "Please contact Caleb. Technical details are in the application log." as critical' >/dev/null 2>&1 || true
+osascript -e 'display alert "Building Manager took too long to start" message "Please contact your application administrator. Technical details are in the application log." as critical' >/dev/null 2>&1 || true
 exit 1

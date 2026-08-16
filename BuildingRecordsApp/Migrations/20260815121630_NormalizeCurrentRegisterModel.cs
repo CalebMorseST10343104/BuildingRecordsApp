@@ -204,7 +204,7 @@ namespace BuildingRecordsApp.Migrations
                 });
 
             migrationBuilder.Sql(
-                "INSERT INTO Properties (PropertyId, Name, Address) VALUES (1, 'Chelsea', ''); " +
+                "INSERT INTO Properties (PropertyId, Name, Address) VALUES (1, 'My Property', ''); " +
                 "UPDATE Buildings SET PropertyId = 1; " +
                 "UPDATE ParkingBays SET PropertyId = 1; " +
                 "UPDATE StoreRooms SET PropertyId = 1;");
