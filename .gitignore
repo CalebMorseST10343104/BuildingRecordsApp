@@ -61,3 +61,6 @@ nunit-*.xml
 
 # macOS metadata
 .DS_Store
+
+# Personal packaging command note
+deployment/macos/cmd.txt
