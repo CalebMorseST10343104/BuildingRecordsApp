@@ -9,7 +9,7 @@ public class VehicleFormViewModel
 {
     public int? VehicleId { get; set; }
 
-    [Display(Name = "Vehicle Registration")]
+    [Required, Display(Name = "Vehicle Registration")]
     public string? VehicleRegistration { get; set; }
 
     [Display(Name = "Vehicle Model")]

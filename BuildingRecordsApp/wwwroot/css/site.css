@@ -21,6 +21,76 @@ body {
   margin-bottom: 60px;
 }
 
+.follow-up-home-link {
+  padding: 0.5rem 0.75rem;
+}
+
+.follow-up-issue {
+  border-left: 0.3rem solid var(--bs-warning);
+}
+
+.follow-up-issue.follow-up-urgent {
+  border-left-color: var(--bs-danger);
+}
+
+.crud-form {
+  max-width: 48rem;
+}
+
+.crud-form > .btn + .btn,
+.crud-form > .btn + a,
+.crud-form > a + .btn {
+  margin-left: 0.35rem;
+}
+
+.validation-summary-valid {
+  display: none;
+}
+
+.column-filter-row input {
+  min-width: 7rem;
+}
+
+.filtered-index {
+  padding-right: 12rem;
+}
+
+.filtered-index tr[data-record-row] {
+  position: relative;
+}
+
+.index-actions-heading,
+.column-filter-row > .index-actions-cell {
+  display: none;
+}
+
+tr[data-record-row] > .index-actions-cell {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 12rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0 !important;
+}
+
+.index-actions-cell .btn-group {
+  gap: 0.35rem;
+}
+
+.index-actions-cell .btn {
+  border-radius: var(--bs-border-radius) !important;
+}
+
+.index-filter-narrow {
+  max-width: 28rem;
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;

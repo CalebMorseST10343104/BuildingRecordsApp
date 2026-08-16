@@ -1,34 +1,35 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.PersonFormViewModel
 
-<div>
-    <label asp-for="FirstName"></label>
-    <input asp-for="FirstName" />
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="PersonId" type="hidden" />
+
+<div class="mb-3">
+    <label asp-for="FirstName" class="form-label"></label>
+    <input asp-for="FirstName" class="form-control" />
     <span asp-validation-for="FirstName" class="text-danger"></span>
 </div>
-
-<div>
-    <label asp-for="LastName"></label>
-    <input asp-for="LastName" />
+<div class="mb-3">
+    <label asp-for="LastName" class="form-label"></label>
+    <input asp-for="LastName" class="form-control" />
     <span asp-validation-for="LastName" class="text-danger"></span>
 </div>
-
-<div>
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
+<div class="mb-3">
+    <label asp-for="Email" class="form-label"></label>
+    <input asp-for="Email" class="form-control" />
     <span asp-validation-for="Email" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="PostalAddress"></label>
-    <input asp-for="PostalAddress" />
+<div class="mb-3">
+    <label asp-for="PhoneNumber" class="form-label"></label>
+    <input asp-for="PhoneNumber" class="form-control" />
+    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="PostalAddress" class="form-label"></label>
+    <textarea asp-for="PostalAddress" class="form-control" rows="2"></textarea>
     <span asp-validation-for="PostalAddress" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="IdNumber"></label>
-    <input asp-for="IdNumber" />
+<div class="mb-3">
+    <label asp-for="IdNumber" class="form-label"></label>
+    <input asp-for="IdNumber" class="form-control" />
     <span asp-validation-for="IdNumber" class="text-danger"></span>
-</div>
-<div>
-    <label asp-for="PhoneNumber"></label>
-    <input asp-for="PhoneNumber" />
-    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
 </div>

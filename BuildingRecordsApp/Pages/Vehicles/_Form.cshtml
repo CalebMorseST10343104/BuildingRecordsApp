@@ -1,33 +1,36 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.VehicleFormViewModel
 
-<div>
-    <label asp-for="VehicleRegistration"></label>
-    <input asp-for="VehicleRegistration" />
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="VehicleId" type="hidden" />
+
+<div class="mb-3">
+    <label asp-for="VehicleRegistration" class="form-label"></label>
+    <input asp-for="VehicleRegistration" class="form-control" />
     <span asp-validation-for="VehicleRegistration" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="VehicleModel"></label>
-    <input asp-for="VehicleModel" />
+<div class="mb-3">
+    <label asp-for="VehicleModel" class="form-label"></label>
+    <input asp-for="VehicleModel" class="form-control" />
     <span asp-validation-for="VehicleModel" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="VehicleMake"></label>
-    <input asp-for="VehicleMake" />
+<div class="mb-3">
+    <label asp-for="VehicleMake" class="form-label"></label>
+    <input asp-for="VehicleMake" class="form-control" />
     <span asp-validation-for="VehicleMake" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="VehicleColor"></label>
-    <input asp-for="VehicleColor" />
+<div class="mb-3">
+    <label asp-for="VehicleColor" class="form-label"></label>
+    <input asp-for="VehicleColor" class="form-control" />
     <span asp-validation-for="VehicleColor" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="UnitId"></label>
-    <select asp-for="UnitId" asp-items="@Model.UnitSelectList">
-        <option value="">Select Unit</option>
+<div class="mb-3">
+    <label asp-for="UnitId" class="form-label">Unit</label>
+    <select asp-for="UnitId" asp-items="Model.UnitSelectList" class="form-select">
+        <option value="">Select unit</option>
     </select>
     <span asp-validation-for="UnitId" class="text-danger"></span>
 </div>

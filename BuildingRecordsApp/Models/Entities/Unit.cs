@@ -33,7 +33,7 @@ namespace BuildingRecordsApp.Models.Entities
         public Ownership? Ownership { get; set; }
         public Agent? Agent { get; set; }
         public Lease? Lease { get; set; }
-        public TagRemoteRecord? TagRemoteRecord { get; set; }
+        public AccessDeviceCount? AccessDeviceCount { get; set; }
         public ICollection<Occupancy> Occupants { get; set; } = [];
         public ICollection<ParkingBay> ParkingBays { get; set; } = [];
         public ICollection<StoreRoom> StoreRooms { get; set; } = [];
@@ -46,7 +46,7 @@ namespace BuildingRecordsApp.Models.Entities
         public int? OwnershipId { get; set; }
         public int? AgentId { get; set; }
         public int? LeaseId { get; set; }
-        public int? TagRemoteRecordId { get; set; }
+        public int? AccessDeviceCountId { get; set; }
 
     }
 }

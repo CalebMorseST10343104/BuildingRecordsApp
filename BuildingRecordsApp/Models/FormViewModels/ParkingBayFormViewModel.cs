@@ -11,7 +11,7 @@ public class ParkingBayFormViewModel
     public int PropertyId { get; set; }
     public SelectList PropertySelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
 
-    [Display(Name = "Parking Bay Number")]
+    [Required, Display(Name = "Parking Bay Number")]
     public string? ParkingBayNumber { get; set; }
 
     [Display(Name = "Is Near Entrance")]

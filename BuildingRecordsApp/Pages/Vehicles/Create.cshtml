@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create Vehicle";
 }
 
-<h1>Create New Vehicle</h1>
+<h1>Add vehicle</h1>
 
 @* 
 int VehicleId
@@ -16,12 +16,12 @@ Unit Unit // Navigation property to Unit
 int UnitId // Foreign key to Unit
  *@
 
-<form method="post">
+<form method="post" class="crud-form mt-4">
 
-    @await Html.PartialAsync("_Form", Model.ViewModel)
+    <partial name="_Form" for="ViewModel" />
 
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    <button type="submit" class="btn btn-primary">Save new record</button>
+    <a asp-page="./Index" class="btn btn-outline-secondary">Cancel</a>
 </form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

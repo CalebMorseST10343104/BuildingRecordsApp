@@ -3,14 +3,14 @@
 @{
     ViewData["Title"] = "Create Lease";
 }
-<h1>Create Lease</h1>
+<h1>Add lease summary</h1>
 
-<form method="post">
+<form method="post" class="crud-form mt-4">
 
-    @await Html.PartialAsync("_Form", Model.ViewModel)
+    <partial name="_Form" for="ViewModel" />
 
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    <button type="submit" class="btn btn-primary">Save new record</button>
+    <a asp-page="./Index" class="btn btn-outline-secondary">Cancel</a>
 </form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

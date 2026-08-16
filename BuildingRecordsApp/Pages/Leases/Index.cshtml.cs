@@ -25,6 +25,7 @@ namespace BuildingRecordsApp.Pages.Leases
             List<LeaseItemViewEntry> leaseItems = await _context.Leases
                 .Include(l => l.Unit)
                 .ThenInclude(u => u!.Building)
+                .ThenInclude(b => b!.Property)
                 .AsNoTracking()
                 .Select(l => _mapper.Map<LeaseItemViewEntry>(l))
                 .ToListAsync();

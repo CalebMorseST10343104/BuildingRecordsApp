@@ -21,7 +21,7 @@ public sealed class OwnershipService(BuildingContext context) : IOwnershipServic
             throw new BusinessRuleException("Natural ownership cannot have an organization.");
         if (ownershipType == "Juristic" && organizationId is null)
             throw new BusinessRuleException("Juristic ownership requires an organization.");
-        if (organizationId is int id && !await context.CompanyTrusts.AnyAsync(o => o.OrganizationId == id, cancellationToken))
+        if (organizationId is int id && !await context.Organizations.AnyAsync(o => o.OrganizationId == id, cancellationToken))
             throw new BusinessRuleException("Organization not found.");
 
         var ownership = await context.Ownerships.SingleOrDefaultAsync(o => o.UnitId == unitId, cancellationToken);
@@ -43,22 +43,22 @@ public sealed class OwnershipService(BuildingContext context) : IOwnershipServic
             throw new BusinessRuleException("Ownership not found.");
         if (!await context.Persons.AnyAsync(p => p.PersonId == personId, cancellationToken))
             throw new BusinessRuleException("Person not found.");
-        if (await context.Owners.AnyAsync(o => o.OwnershipId == ownershipId && o.PersonId == personId, cancellationToken))
+        if (await context.OwnershipContacts.AnyAsync(o => o.OwnershipId == ownershipId && o.PersonId == personId, cancellationToken))
             return;
 
-        context.Owners.Add(new OwnershipContact { OwnershipId = ownershipId, PersonId = personId });
+        context.OwnershipContacts.Add(new OwnershipContact { OwnershipId = ownershipId, PersonId = personId });
         await context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task RemoveContactAsync(int ownershipId, int personId, CancellationToken cancellationToken = default)
     {
-        var contact = await context.Owners.SingleOrDefaultAsync(
+        var contact = await context.OwnershipContacts.SingleOrDefaultAsync(
             o => o.OwnershipId == ownershipId && o.PersonId == personId,
             cancellationToken);
         if (contact is null)
             return;
 
-        context.Owners.Remove(contact);
+        context.OwnershipContacts.Remove(contact);
         await context.SaveChangesAsync(cancellationToken);
     }
 }

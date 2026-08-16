@@ -1,0 +1,75 @@
+#!/bin/bash
+set -eu
+
+APP_CONTENTS=$(cd "$(dirname "$0")/.." && pwd)
+APP_EXECUTABLE="$APP_CONTENTS/Resources/app/BuildingRecordsApp"
+REGISTER_URL="http://127.0.0.1:5180"
+REGISTER_DATA="$HOME/Library/Application Support/Chelsea Building Register"
+REGISTER_LOGS="$REGISTER_DATA/Logs"
+REGISTER_LOCK="$REGISTER_DATA/run.lock"
+REGISTER_LOG="$REGISTER_LOGS/application.log"
+
+mkdir -p "$REGISTER_DATA" "$REGISTER_LOGS"
+chmod 700 "$REGISTER_DATA" "$REGISTER_LOGS"
+
+release_lock() {
+    rm -f "$REGISTER_LOCK/pid"
+    rmdir "$REGISTER_LOCK" 2>/dev/null || true
+}
+
+if [ -d "$REGISTER_LOCK" ]; then
+    EXISTING_PID=$(sed -n '1p' "$REGISTER_LOCK/pid" 2>/dev/null || true)
+    if [ -n "$EXISTING_PID" ] && kill -0 "$EXISTING_PID" 2>/dev/null; then
+        open "$REGISTER_URL"
+        exit 0
+    fi
+    release_lock
+fi
+
+if ! mkdir "$REGISTER_LOCK" 2>/dev/null; then
+    open "$REGISTER_URL"
+    exit 0
+fi
+
+if [ -f "$REGISTER_LOG" ] && [ $(stat -f%z "$REGISTER_LOG") -gt 5242880 ]; then
+    mv -f "$REGISTER_LOG" "$REGISTER_LOG.previous"
+fi
+
+APP_PID=""
+cleanup() {
+    if [ -n "$APP_PID" ] && kill -0 "$APP_PID" 2>/dev/null; then
+        kill "$APP_PID" 2>/dev/null || true
+        wait "$APP_PID" 2>/dev/null || true
+    fi
+    release_lock
+}
+trap cleanup EXIT INT TERM
+
+export ASPNETCORE_ENVIRONMENT=Production
+export ASPNETCORE_URLS="$REGISTER_URL"
+export ConnectionStrings__BuildingContext="Data Source=$REGISTER_DATA/buildingrecords.db;Foreign Keys=True"
+export DatabaseBackups__Directory="$REGISTER_DATA/Backups"
+export DesktopDeployment__UseHttpsRedirection=false
+export DesktopDeployment__AllowBrowserShutdown=true
+
+"$APP_EXECUTABLE" --contentRoot "$APP_CONTENTS/Resources/app" >>"$REGISTER_LOG" 2>&1 &
+APP_PID=$!
+printf '%s\n' "$APP_PID" > "$REGISTER_LOCK/pid"
+
+ATTEMPT=0
+while [ "$ATTEMPT" -lt 240 ]; do
+    if ! kill -0 "$APP_PID" 2>/dev/null; then
+        osascript -e 'display alert "Chelsea Building Register could not start" message "Please contact Caleb. Technical details are in the application log." as critical' >/dev/null 2>&1 || true
+        exit 1
+    fi
+    if curl --silent --fail --max-time 1 "$REGISTER_URL" >/dev/null 2>&1; then
+        open "$REGISTER_URL"
+        wait "$APP_PID"
+        exit $?
+    fi
+    sleep 0.5
+    ATTEMPT=$((ATTEMPT + 1))
+done
+
+osascript -e 'display alert "Chelsea Building Register took too long to start" message "Please contact Caleb. Technical details are in the application log." as critical' >/dev/null 2>&1 || true
+exit 1

@@ -4,16 +4,25 @@
     ViewData["Title"] = "Create Unit";
 }
 
-<h1>Create New Unit</h1>
+<h1>Add unit</h1>
 
-<form method="post">
+<form method="post" class="crud-form mt-4">
 
-    @await Html.PartialAsync("_Form", Model.ViewModel)
+    <partial name="_Form" for="ViewModel" />
 
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    <button type="submit" class="btn btn-primary">Save new record</button>
+    <a asp-page="./Index" class="btn btn-outline-secondary">Cancel</a>
 
 </form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.querySelector('[data-dependent-source="property"]')?.addEventListener('change', async event => {
+            const target = document.querySelector('[data-dependent-target="building"]');
+            target.innerHTML = '<option value="">Select building</option>';
+            if (!event.target.value) return;
+            const response = await fetch(`${location.pathname}?handler=Buildings&propertyId=${encodeURIComponent(event.target.value)}`);
+            for (const item of await response.json()) target.add(new Option(item.text, item.value));
+        });
+    </script>
 }

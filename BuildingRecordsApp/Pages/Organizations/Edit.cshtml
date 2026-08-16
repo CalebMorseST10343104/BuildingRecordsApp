@@ -1,0 +1,27 @@
+﻿@page
+@model BuildingRecordsApp.Pages.Organizations.EditModel
+@{
+    ViewData["Title"] = "Edit Company/Trust";
+}
+
+<h1>Edit company or trust</h1>
+
+@*
+Organization has the following properties:
+int OrganizationId
+string Name
+string Address
+string RegistrationNumber
+ICollection<Ownership> Ownerships
+ *@
+
+<form method="post" class="crud-form mt-4">
+
+    <partial name="_Form" for="ViewModel" />
+
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <a asp-page="./Index" class="btn btn-outline-secondary">Cancel</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

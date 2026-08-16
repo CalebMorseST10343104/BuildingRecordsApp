@@ -1,6 +1,6 @@
 # Data dictionary
 
-This dictionary describes the current domain entities. `Required` refers to the intended/current model after all migrations are applied.
+This dictionary describes the current domain entities. `Required` refers to the intended/current storage model after all migrations are applied; it does not necessarily mean that missing information should block a partial record from being captured. The user-facing distinction between save-required, operationally important, and optional data is defined in [data-quality-rules.md](data-quality-rules.md).
 
 ## Property
 
@@ -37,7 +37,7 @@ This dictionary describes the current domain entities. `Required` refers to the 
 | `PrimaryContactPersonId` | No | Preferred person to contact about the unit. |
 | `AgentId` | No | Current letting agent. |
 
-The entity still contains inverse/helper identifier properties such as `OwnershipId`, `LeaseId`, and `TagRemoteRecordId`. The authoritative relationships are the dependent records’ `UnitId` foreign keys; these helper properties should not be relied upon and are candidates for later cleanup.
+The entity still contains inverse/helper identifier properties such as `OwnershipId`, `LeaseId`, and `AccessDeviceCountId`. The authoritative relationships are the dependent records’ `UnitId` foreign keys; these helper properties should not be relied upon and are candidates for later cleanup.
 
 ## Person
 
@@ -79,7 +79,7 @@ Business requirements allow incomplete person information, so the current non-nu
 | `OwnershipId` | Yes | Ownership being represented. |
 | `PersonId` | Yes | Person to contact in relation to that ownership. |
 
-The database table and some routes retain the historical name `Owners` for migration and URL compatibility. The domain meaning is ownership contact.
+The current table, pages, routes, and code use `OwnershipContact`. Legacy `/Owners` addresses remain available as route aliases for old bookmarks.
 
 ## Organization
 
@@ -92,7 +92,7 @@ The database table and some routes retain the historical name `Owners` for migra
 | `Country` | No | Country or jurisdiction associated with registration. |
 | `Address` | No | Organization address. |
 
-The database table and some routes retain the historical name `CompanyTrusts`; the domain entity is `Organization`.
+The current table, pages, routes, and code use `Organization`. Legacy `/CompanyTrusts` addresses remain available as route aliases for old bookmarks.
 
 ## AgentCompany
 
@@ -157,18 +157,18 @@ Names, phone numbers, and email addresses come from the linked person record.
 | `VehicleMake` | Yes | Manufacturer/make description. |
 | `VehicleColor` | Yes | Colour description. |
 
-## TagRemoteRecord (Access Counts)
+## AccessDeviceCount (Access Counts)
 
 | Field | Required | Meaning |
 |---|---:|---|
-| `TagRemoteRecordId` | Yes | Internal generated identifier. |
+| `AccessDeviceCountId` | Yes | Internal generated identifier. |
 | `UnitId` | Yes | Unit whose distribution counts are recorded; unique. |
-| `TagsOwner` | No | Gate tags held by ownership contacts. |
-| `RemotesOwner` | No | Garage remotes held by ownership contacts. |
-| `TagsOccupant` | No | Gate tags held by occupants. |
-| `RemotesOccupant` | No | Garage remotes held by occupants. |
-| `TagsAgent` | No | Gate tags held by the letting agent or agency. |
-| `RemotesAgent` | No | Garage remotes held by the letting agent or agency. |
+| `OwnershipContactTagCount` | No | Gate tags held by ownership contacts. |
+| `OwnershipContactRemoteCount` | No | Garage remotes held by ownership contacts. |
+| `OccupantTagCount` | No | Gate tags held by occupants. |
+| `OccupantRemoteCount` | No | Garage remotes held by occupants. |
+| `AgentTagCount` | No | Gate tags held by the letting agent or agency. |
+| `AgentRemoteCount` | No | Garage remotes held by the letting agent or agency. |
 
 For every count field:
 

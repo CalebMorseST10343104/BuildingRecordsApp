@@ -1,0 +1,22 @@
+@page
+@model BuildingRecordsApp.Pages.System.IndexModel
+@{
+    ViewData["Title"] = "Close application";
+}
+
+<h1>Close Chelsea Building Register</h1>
+
+@if (Request.Method == "POST")
+{
+    <div class="alert alert-success">
+        The register is closing. You may close this browser tab.
+    </div>
+}
+else
+{
+    <p>This stops the register on this Mac. Your information is already saved.</p>
+    <form method="post" asp-page-handler="Shutdown">
+        <button type="submit" class="btn btn-danger">Close application</button>
+        <a asp-page="/Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+}

@@ -5,9 +5,12 @@ namespace BuildingRecordsApp.Data;
 
 public static class DbInitializer
 {
-    public static void Initialize(BuildingContext context)
+    public static void Initialize(BuildingContext context, bool seedSampleData = true)
     {
         context.Database.Migrate();
+
+        if (!seedSampleData)
+            return;
 
         // Check if there are any records in the database
         if (context.Buildings.Any() || context.Persons.Any())
@@ -66,7 +69,7 @@ public static class DbInitializer
         #region SeedOwnerships
 
         var organization = new Organization { Name = "Company A", Address = "456 Elm St", RegistrationReference = "987654321" };
-        context.CompanyTrusts.Add(organization);
+        context.Organizations.Add(organization);
         context.SaveChanges();
 
         var ownerships = new[]
@@ -90,7 +93,7 @@ public static class DbInitializer
             new OwnershipContact { Person = people[3], Ownership = ownerships[3] },
             new OwnershipContact { Person = people[4], Ownership = ownerships[0] }
         };
-        context.Owners.AddRange(owners);
+        context.OwnershipContacts.AddRange(owners);
         context.SaveChanges();
 
         #endregion
@@ -117,7 +120,7 @@ public static class DbInitializer
         context.SaveChanges();
 
         #endregion
-        #region SeedCompanyTrusts
+        #region SeedOrganizations
         
         // Organizations are seeded before juristic ownerships.
 
@@ -174,16 +177,16 @@ public static class DbInitializer
         context.SaveChanges();
 
         #endregion
-        #region SeedTagRemoteRecords
+        #region SeedAccessDeviceCounts
         
         var tagRemoteRecords = new[]
         {
-            new TagRemoteRecord { TagsOwner = 1, RemotesOwner = 2, TagsOccupant = 3, RemotesOccupant = 4, TagsAgent = 5, RemotesAgent = 6, Unit = units[0] },
-            new TagRemoteRecord { TagsOwner = 7, RemotesOwner = 8, TagsOccupant = 9, RemotesOccupant = 10, TagsAgent = 11, RemotesAgent = 12, Unit = units[1] },
-            new TagRemoteRecord { Unit = units[2] },
-            new TagRemoteRecord { Unit = units[3] }
+            new AccessDeviceCount { OwnershipContactTagCount = 1, OwnershipContactRemoteCount = 2, OccupantTagCount = 3, OccupantRemoteCount = 4, AgentTagCount = 5, AgentRemoteCount = 6, Unit = units[0] },
+            new AccessDeviceCount { OwnershipContactTagCount = 7, OwnershipContactRemoteCount = 8, OccupantTagCount = 9, OccupantRemoteCount = 10, AgentTagCount = 11, AgentRemoteCount = 12, Unit = units[1] },
+            new AccessDeviceCount { Unit = units[2] },
+            new AccessDeviceCount { Unit = units[3] }
         };
-        context.TagRemoteRecords.AddRange(tagRemoteRecords);
+        context.AccessDeviceCounts.AddRange(tagRemoteRecords);
         context.SaveChanges();
 
         #endregion

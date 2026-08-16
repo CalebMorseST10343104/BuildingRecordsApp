@@ -18,7 +18,7 @@ public class CreateModel(BuildingContext context) : PageModel
         if (!ModelState.IsValid)
             return Page();
 
-        var property = new Property { Name = ViewModel.Name, Address = ViewModel.Address.Trim() };
+        var property = new Property { Name = ViewModel.Name, Address = ViewModel.Address?.Trim() ?? string.Empty };
         context.Properties.Add(property);
         await context.SaveChangesAsync();
         return RedirectToPage("./Details", new { id = property.PropertyId });

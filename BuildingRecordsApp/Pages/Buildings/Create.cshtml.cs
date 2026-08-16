@@ -34,6 +34,9 @@ namespace BuildingRecordsApp.Pages.Buildings
         {
             if (!await _context.Properties.AnyAsync(p => p.PropertyId == ViewModel.PropertyId))
                 ModelState.AddModelError("ViewModel.PropertyId", "Property is required.");
+            var name = ViewModel.Name?.Trim();
+            if (await _context.Buildings.AnyAsync(b => b.PropertyId == ViewModel.PropertyId && b.Name == name))
+                ModelState.AddModelError("ViewModel.Name", "That building name is already in use in this property.");
             if (!ModelState.IsValid)
             {
                 ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
@@ -41,6 +44,7 @@ namespace BuildingRecordsApp.Pages.Buildings
             }
 
             var building = _mapper.Map<Building>(ViewModel);
+            building.Name = name ?? string.Empty;
 
             _context.Buildings.Add(building);
             await _context.SaveChangesAsync();

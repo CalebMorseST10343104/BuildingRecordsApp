@@ -28,7 +28,7 @@ public class EditModel(BuildingContext context) : PageModel
         var property = await context.Properties.SingleOrDefaultAsync(p => p.PropertyId == ViewModel.PropertyId);
         if (property is null) return NotFound();
         property.Name = ViewModel.Name;
-        property.Address = ViewModel.Address.Trim();
+        property.Address = ViewModel.Address?.Trim() ?? string.Empty;
         await context.SaveChangesAsync();
         return RedirectToPage("./Details", new { id = property.PropertyId });
     }

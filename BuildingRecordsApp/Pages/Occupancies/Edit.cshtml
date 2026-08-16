@@ -6,13 +6,12 @@
 
 <h1>Edit Occupancy</h1>
 
-<form method="post">
-    <input type="hidden" name="OccupancyId" value="@Model.ViewModel.OccupancyId" />
+<form method="post" class="crud-form mt-4">
     
-    @await Html.PartialAsync("_Form", Model.ViewModel)
+    <partial name="_Form" for="ViewModel" />
 
-    <input type="submit" value="Edit" class="btn btn-primary" />
-    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <a asp-page="./Index" class="btn btn-outline-secondary">Cancel</a>
 </form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

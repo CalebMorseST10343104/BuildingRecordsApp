@@ -41,7 +41,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
                 return NotFound();
 
             ViewModel = _mapper.Map<StoreRoomFormViewModel>(storeRoom);
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(ViewModel.PropertyId);
             ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
 
             return Page();
@@ -52,9 +52,13 @@ namespace BuildingRecordsApp.Pages.StoreRooms
             if (ViewModel.StoreRoomId == null)
                 ModelState.AddModelError("ViewModel", "Store Room details are required.");
 
+            var roomNumber = ViewModel.StoreRoomNumber?.Trim();
+            if (await _context.StoreRooms.AnyAsync(s => s.StoreRoomId != ViewModel.StoreRoomId && s.PropertyId == ViewModel.PropertyId && s.StoreRoomNumber == roomNumber))
+                ModelState.AddModelError("ViewModel.StoreRoomNumber", "That storeroom number is already in use in this property.");
+
             if (!ModelState.IsValid)
             {
-                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(ViewModel.PropertyId);
             ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
@@ -65,19 +69,25 @@ namespace BuildingRecordsApp.Pages.StoreRooms
                 if (storeRoom is null)
                     return NotFound();
                 storeRoom.PropertyId = ViewModel.PropertyId;
-                storeRoom.StoreRoomNumber = ViewModel.StoreRoomNumber?.Trim() ?? string.Empty;
+                storeRoom.StoreRoomNumber = roomNumber ?? string.Empty;
                 await _allocationService.AllocateStoreRoomAsync(storeRoom.StoreRoomId, ViewModel.UnitId);
             }
             catch (BusinessRuleException exception)
             {
                 ModelState.AddModelError("ViewModel.UnitId", exception.Message);
-                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(ViewModel.PropertyId);
             ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
 
             return RedirectToPage("/StoreRooms/Index");
         }
+
+        public async Task<JsonResult> OnGetUnitsAsync(int propertyId) => new(await _context.Units
+            .Where(u => u.Building!.PropertyId == propertyId)
+            .OrderBy(u => u.Building!.Name).ThenBy(u => u.UnitNumber)
+            .Select(u => new { value = u.UnitId, text = $"[{u.Building!.Name}] {u.UnitNumber}" })
+            .ToListAsync());
 
         private bool StoreRoomExists(int id)
         {

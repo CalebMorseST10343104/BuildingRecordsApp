@@ -2,6 +2,8 @@
 
 This is the authoritative catalogue of currently agreed register behavior.
 
+Field-level save requirements and operational incompleteness are specified in [data-quality-rules.md](data-quality-rules.md).
+
 ## Enforcement labels
 
 | Label | Meaning |
@@ -125,4 +127,5 @@ These are useful candidates for subsequent implementation and tests:
 1. Decide how and when a newly created unit receives its initially incomplete ownership record; access-count creation is already transactional.
 2. Prevent independent access-count deletion outside the current Razor Page handler.
 3. Make genuinely optional person fields nullable consistently in the database, forms, and imports.
-4. Add friendly validation messages for uniqueness violations rather than exposing database errors.
+4. Apply the documented data-quality rules consistently across every CRUD form and translate database failures into friendly validation messages.
+5. Add the calculated incomplete-record dashboard defined by the data-quality specification.

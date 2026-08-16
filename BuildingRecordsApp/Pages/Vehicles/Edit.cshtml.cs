@@ -45,10 +45,14 @@ namespace BuildingRecordsApp.Pages.Vehicles
         public async Task<IActionResult> OnPostAsync()
         {
             if (ViewModel.VehicleId == null)
-                ModelState.AddModelError("Vehicle", "Vehicle details are required.");
+                ModelState.AddModelError("ViewModel", "Vehicle details are required.");
                 
             if (ViewModel.UnitId == null)
-                ModelState.AddModelError("Vehicle.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
+
+            var registration = ViewModel.VehicleRegistration?.Trim();
+            if (await _context.Vehicles.AnyAsync(v => v.VehicleId != ViewModel.VehicleId && v.VehicleRegistration == registration))
+                ModelState.AddModelError("ViewModel.VehicleRegistration", "That vehicle registration is already recorded.");
 
             if (!ModelState.IsValid)
             {
@@ -57,6 +61,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
             }
 
             var vehicle = _mapper.Map<Vehicle>(ViewModel);
+            vehicle.VehicleRegistration = registration ?? string.Empty;
             _context.Attach(vehicle).State = EntityState.Modified;
 
             try

@@ -13,7 +13,10 @@ The project is being revived and incrementally modernized. The domain model and 
 - [Domain model](docs/domain-model.md) — the real-world concepts and how they relate.
 - [Business rules](docs/business-rules.md) — required behavior and its current enforcement status.
 - [Data dictionary](docs/data-dictionary.md) — the meaning of entities and fields.
+- [Data validity and operational completeness](docs/data-quality-rules.md) — what blocks saving, what requires follow-up, and what is genuinely optional.
 - [Development guide](docs/development.md) — setup, migrations, tests, and repository conventions.
+- [Intel macOS deployment](docs/macos-deployment.md) — packaging, installation, upgrades, and recovery for the initial single-user deployment.
+- [Releasing and packaging](docs/releasing.md) — semantic versioning and the repeatable self-service release workflow.
 
 ## Solution structure
 
@@ -45,7 +48,11 @@ Run the automated tests with:
 dotnet test buildingapp.sln
 ```
 
-The application applies pending Entity Framework migrations at startup. Back up any meaningful database before running a newer version of the application.
+The application applies pending Entity Framework migrations at startup. When an existing database needs migration, the application first creates an integrity-checked SQLite backup. Manual backups can also be created and downloaded from the **Backups** page.
+
+The current register can be downloaded as a multi-sheet Excel workbook from the **Export** page. Select a property and optionally one or more of its buildings; leaving every building unticked exports the complete property.
+
+The default database is `BuildingRecordsApp/buildingrecords.db`, resolved relative to the application content directory rather than the shell's working directory. Both the database connection and backup directory can be overridden through configuration.
 
 ## Scope
 

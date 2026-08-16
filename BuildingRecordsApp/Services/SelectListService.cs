@@ -21,13 +21,27 @@ namespace BuildingRecordsApp.Services
             return await GetUnitSelectListAsync(UsageContext.All);
         }
 
+        public async Task<SelectList> GetUnitSelectListAsync(int propertyId)
+        {
+            var units = await _context.Units
+                .Where(u => u.Building!.PropertyId == propertyId)
+                .OrderBy(u => u.Building!.Name).ThenBy(u => u.UnitNumber)
+                .Select(u => new
+                {
+                    u.UnitId,
+                    Display = $"[{u.Building!.Name}] {u.UnitNumber}"
+                })
+                .ToListAsync();
+            return new SelectList(units, "UnitId", "Display");
+        }
+
         public async Task<SelectList> GetUnitSelectListAsync(UsageContext usageContext)
         {
             IQueryable<Unit> query = _context.Units;
 
             var contextUnitSelectors = new Dictionary<UsageContext, Func<Task<List<int>>>>
             {
-                [UsageContext.ForTagRemoteRecord] = () => _context.TagRemoteRecords.Select(tr => tr.UnitId).ToListAsync(),
+                [UsageContext.ForAccessDeviceCount] = () => _context.AccessDeviceCounts.Select(tr => tr.UnitId).ToListAsync(),
                 [UsageContext.ForLease] = () => _context.Leases.Select(l => l.UnitId).ToListAsync(),
                 [UsageContext.ForOwnership] = () => _context.Ownerships.Select(o => o.UnitId).ToListAsync()
             };
@@ -63,6 +77,15 @@ namespace BuildingRecordsApp.Services
                 Name = "-- Select Building --"
             });
 
+            return new SelectList(buildings, "BuildingId", "Name");
+        }
+
+        public async Task<SelectList> GetBuildingSelectListAsync(int propertyId)
+        {
+            var buildings = await _context.Buildings
+                .Where(b => b.PropertyId == propertyId)
+                .OrderBy(b => b.Name)
+                .ToListAsync();
             return new SelectList(buildings, "BuildingId", "Name");
         }
 
@@ -132,20 +155,20 @@ namespace BuildingRecordsApp.Services
         public async Task<SelectList> GetOwnershipSelectListAsync()
         {
             var ownerships = await _context.Ownerships
-                .Include(o => o.Unit)
+                .Include(o => o.Unit)!.ThenInclude(u => u!.Building)!.ThenInclude(b => b!.Property)
                 .Select(o => new
                 {
                     o.OwnershipId,
-                    Display = $"{o.Unit!.Building!.Name} - {o.Unit.UnitNumber}"
+                    Display = $"[{o.Unit!.Building!.Property.Name} / {o.Unit.Building.Name}] Unit {o.Unit.UnitNumber}"
                 })
                 .ToListAsync();
 
             return new SelectList(ownerships, "OwnershipId", "Display");
         }
 
-        public async Task<SelectList> GetCompanyTrustSelectListAsync()
+        public async Task<SelectList> GetOrganizationSelectListAsync()
         {
-            var companyTrusts = await _context.CompanyTrusts.ToListAsync();
+            var companyTrusts = await _context.Organizations.ToListAsync();
             return new SelectList(companyTrusts, "OrganizationId", "Name");
         }
     }

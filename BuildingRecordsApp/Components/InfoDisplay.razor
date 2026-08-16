@@ -12,31 +12,47 @@
     {
         case Enums.DisplayLayout.Table:
             {
-                var headers = Model.Entries.FirstOrDefault()?.GetHeaders(Model.DisplayMode) ?? new List<string> { "No Data Available" };
-                <table class="table table-striped table-bordered">
+                var firstEntry = Model.Entries.FirstOrDefault();
+                var headers = firstEntry?.GetHeaders(Model.DisplayMode) ?? new List<string> { "Records" };
+                <div class="table-responsive filtered-index" data-filtered-index>
+                <table class="table table-striped table-bordered align-middle mb-0">
                     <thead>
                         <tr>
                             @foreach (var header in headers)
                             {
-                                <th>@header</th>
+                                <th>@(firstEntry?.GetDisplayName(header) ?? header)</th>
                             }
                             @if (Model.ShowActions)
                             {
-                                <th>Actions</th>
+                                <th class="index-actions-heading"><span class="visually-hidden">Actions</span></th>
                             }
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var entry in Model.Entries)
+                        @if (firstEntry is not null)
                         {
-                            <tr>
-                                @foreach (var value in entry.GetValues(Model.DisplayMode))
+                            <tr class="table-light column-filter-row">
+                                @for (var columnIndex = 0; columnIndex < headers.Count; columnIndex++)
                                 {
-                                    <td>@value.Value</td>
+                                    var label = firstEntry.GetDisplayName(headers[columnIndex]);
+                                    <td><input type="search" class="form-control form-control-sm" placeholder="Filter" aria-label="Filter by @label" data-column-filter="@columnIndex" /></td>
                                 }
                                 @if (Model.ShowActions)
                                 {
-                                    <td>
+                                    <td class="index-actions-cell"></td>
+                                }
+                            </tr>
+                        }
+                        @foreach (var entry in Model.Entries)
+                        {
+                            <tr data-record-row="@entry.GetId()">
+                                @foreach (var value in entry.GetValues(Model.DisplayMode))
+                                {
+                                    <td data-filter-value="@(value.Value?.ToString()?.ToLowerInvariant())">@FormatValue(value.Value)</td>
+                                }
+                                @if (Model.ShowActions)
+                                {
+                                    <td class="index-actions-cell" data-record-actions="@entry.GetId()">
                                         @{
                                             var compType = typeof(BuildingRecordsApp.Components.IndexRowActions);
                                             <DynamicComponent Type="compType" Parameters="@(new Dictionary<string, object?>
@@ -50,24 +66,34 @@
                                 }
                             </tr>
                         }
+                        @if (firstEntry is null)
+                        {
+                            <tr>
+                                <td colspan="@(headers.Count + (Model.ShowActions ? 1 : 0))" class="text-center text-muted py-4">No records have been added yet.</td>
+                            </tr>
+                        }
+                        <tr data-no-filter-results hidden>
+                            <td colspan="@(headers.Count + (Model.ShowActions ? 1 : 0))" class="text-center text-muted py-4">No records match these filters.</td>
+                        </tr>
                     </tbody>
                 </table>
+                </div>
             }
             break;
         case Enums.DisplayLayout.List:
             {
                 foreach (var entry in Model.Entries)
                 {
-                    var headerText = entry.GetTitleHeader;
+                    var headerText = entry.GetTitleHeader();
                     <div class="mb-4 border rounded p-3">
                         <h4>@headerText</h4>
                         <dl>
                             @foreach (var value in entry.GetValues(Model.DisplayMode))
                             {
-                                @if (entry.IsTitleHeaderFieldName(value.Key))
+                                @if (!entry.IsTitleHeaderFieldName(value.Key))
                                 {
-                                    <dt>@value.Key</dt>
-                                    <dd>@value.Value</dd>
+                                    <dt>@entry.GetDisplayName(value.Key)</dt>
+                                    <dd>@FormatValue(value.Value)</dd>
                                 }
                             }
                         </dl>
@@ -83,4 +109,11 @@
     [Parameter] public DisplayViewModel<TItem>? Model { get; set; }
     [Parameter] public string BasePath { get; set; } = string.Empty;
     [Parameter] public string? DetailsPath { get; set; }
+
+    private static object? FormatValue(object? value) => value switch
+    {
+        bool flag => flag ? "Yes" : "No",
+        DateTime date => date.ToString("d MMM yyyy"),
+        _ => value
+    };
 }

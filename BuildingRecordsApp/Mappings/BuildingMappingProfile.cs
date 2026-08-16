@@ -11,6 +11,7 @@ public class BuildingMappingProfile : Profile
     public BuildingMappingProfile()
     {
         CreateMap<Building, BuildingFormViewModel>().ReverseMap();
-        CreateMap<Building, BuildingItemViewEntry>();
+        CreateMap<Building, BuildingItemViewEntry>()
+            .ForMember(dest => dest.PropertyName, opt => opt.MapFrom(src => src.Property != null ? src.Property.Name : null));
     }
 }

@@ -8,7 +8,7 @@ public class AgentCompanyFormViewModel
 {
     public int? AgentCompanyId { get; set; }
 
-    [Display(Name = "Company Name")]
+    [Required, Display(Name = "Company Name")]
     public string? CompanyName { get; set; }
 
     [Display(Name = "Address")]

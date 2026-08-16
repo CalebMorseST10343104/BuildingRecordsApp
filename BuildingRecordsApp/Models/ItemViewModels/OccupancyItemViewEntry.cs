@@ -9,6 +9,10 @@ public class OccupancyItemViewEntry : ItemViewEntry
     [DisplayMode("Full")]
     public int? OccupancyId { get; set; }
 
+    [Display(Name = "Property")]
+    [DisplayMode("Extended")]
+    public string? PropertyName { get; set; }
+
     [Display(Name = "Occupant First Name")]
     [DisplayMode("Extended")]
     public string? OccupantFirstName { get; set; }

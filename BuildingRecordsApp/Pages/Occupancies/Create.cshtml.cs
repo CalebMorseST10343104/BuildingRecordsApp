@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.Occupancies
 {
@@ -41,6 +42,9 @@ namespace BuildingRecordsApp.Pages.Occupancies
             {
                 ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
             }
+            if (ViewModel.UnitId is int unitId && ViewModel.OccupantId is int personId &&
+                await _context.Occupancies.AnyAsync(o => o.UnitId == unitId && o.OccupantId == personId))
+                ModelState.AddModelError("ViewModel.OccupantId", "This person is already recorded as an occupant of the unit.");
 
             if (!ModelState.IsValid)
             {

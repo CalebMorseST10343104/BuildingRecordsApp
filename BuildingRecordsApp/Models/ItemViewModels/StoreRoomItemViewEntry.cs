@@ -9,7 +9,11 @@ public class StoreRoomItemViewEntry : ItemViewEntry
     [DisplayMode("Full")]
     public int? StoreRoomId { get; set; }
 
-    [Display(Name = "Store Room Number")]
+    [Display(Name = "Property")]
+    [DisplayMode("Extended")]
+    public string? PropertyName { get; set; }
+
+    [Display(Name = "Storeroom Number")]
     [DisplayMode("Basic")]
     public string? StoreRoomNumber { get; set; }
 
@@ -19,7 +23,7 @@ public class StoreRoomItemViewEntry : ItemViewEntry
 
     [Display(Name = "Unit Number")]
     [DisplayMode("Extended")]
-    public int? UnitNumber { get; set; }
+    public string? UnitNumber { get; set; }
 
     public override int GetId()
     {

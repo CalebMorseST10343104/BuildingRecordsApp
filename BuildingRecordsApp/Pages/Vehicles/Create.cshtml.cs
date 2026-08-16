@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.Vehicles
 {
@@ -38,6 +39,9 @@ namespace BuildingRecordsApp.Pages.Vehicles
             {
                 ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
             }
+            var registration = ViewModel.VehicleRegistration?.Trim();
+            if (await _context.Vehicles.AnyAsync(v => v.VehicleRegistration == registration))
+                ModelState.AddModelError("ViewModel.VehicleRegistration", "That vehicle registration is already recorded.");
             if (!ModelState.IsValid)
             {
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
@@ -45,6 +49,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
             }
 
             var vehicle = _mapper.Map<Vehicle>(ViewModel);
+            vehicle.VehicleRegistration = registration ?? string.Empty;
 
             _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();

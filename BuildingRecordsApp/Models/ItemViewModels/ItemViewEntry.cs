@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using BuildingRecordsApp.Attributes;
 using BuildingRecordsApp.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace BuildingRecordsApp.Models.ItemViewModels;
 
@@ -44,6 +45,13 @@ public abstract class ItemViewEntry : IItemViewEntry
             }
         }
         return values;
+    }
+
+    public string GetDisplayName(string propertyName)
+    {
+        var property = GetType().GetProperty(propertyName);
+        return property?.GetCustomAttribute<DisplayAttribute>()?.GetName()
+            ?? System.Text.RegularExpressions.Regex.Replace(propertyName, "([a-z0-9])([A-Z])", "$1 $2");
     }
 
     public abstract string GetTitleHeader();

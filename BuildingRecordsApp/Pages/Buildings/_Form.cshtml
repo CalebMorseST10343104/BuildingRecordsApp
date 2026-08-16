@@ -1,5 +1,8 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.BuildingFormViewModel
 
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="BuildingId" type="hidden" />
+
 <div class="mb-3">
     <label asp-for="PropertyId" class="form-label">Property</label>
     <select asp-for="PropertyId" asp-items="Model.PropertySelectList" class="form-select">
@@ -7,26 +10,26 @@
     </select>
     <span asp-validation-for="PropertyId" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="Name"></label>
-    <input asp-for="Name" />
+<div class="mb-3">
+    <label asp-for="Name" class="form-label"></label>
+    <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="Address"></label>
-    <input asp-for="Address" />
+<div class="mb-3">
+    <label asp-for="Address" class="form-label"></label>
+    <textarea asp-for="Address" class="form-control" rows="2"></textarea>
     <span asp-validation-for="Address" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="NumberOfUnits"></label>
-    <input asp-for="NumberOfUnits" />
+<div class="mb-3">
+    <label asp-for="NumberOfUnits" class="form-label"></label>
+    <input asp-for="NumberOfUnits" class="form-control" />
     <span asp-validation-for="NumberOfUnits" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="NumberOfFloors"></label>
-    <input asp-for="NumberOfFloors" />
+<div class="mb-3">
+    <label asp-for="NumberOfFloors" class="form-label"></label>
+    <input asp-for="NumberOfFloors" class="form-control" />
     <span asp-validation-for="NumberOfFloors" class="text-danger"></span>
 </div>

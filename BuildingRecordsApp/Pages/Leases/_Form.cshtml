@@ -1,44 +1,56 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.LeaseFormViewModel
 
-<div class="form-group">
-    <label asp-for="UnitId"></label>
-    <select asp-for="UnitId" class="form-control" asp-items="@Model.UnitSelectList">
-        <option value="">Select Unit</option>
-    </select>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="LeaseId" type="hidden" />
+
+<div class="mb-3">
+    <label asp-for="UnitId" class="form-label">Unit</label>
+    @if (Model.LeaseId.HasValue)
+    {
+        <input asp-for="UnitId" type="hidden" />
+        <select asp-for="UnitId" class="form-select" asp-items="Model.UnitSelectList" disabled></select>
+        <div class="form-text">A lease summary cannot be moved to another unit.</div>
+    }
+    else
+    {
+        <select asp-for="UnitId" class="form-select" asp-items="Model.UnitSelectList">
+            <option value="">Select unit</option>
+        </select>
+    }
     <span asp-validation-for="UnitId" class="text-danger"></span>
 </div>
-<div class="form-group">
-    <label asp-for="LeaseHolderName"></label>
+<div class="mb-3">
+    <label asp-for="LeaseHolderName" class="form-label"></label>
     <input asp-for="LeaseHolderName" class="form-control" />
     <span asp-validation-for="LeaseHolderName" class="text-danger"></span>
 </div>
-<div class="form-group">
-    <label asp-for="StartDate"></label>
+<div class="mb-3">
+    <label asp-for="StartDate" class="form-label"></label>
     <input asp-for="StartDate" class="form-control" />
     <span asp-validation-for="StartDate" class="text-danger"></span>
 </div>
-<div class="form-group">
-    <label asp-for="EndDate"></label>
+<div class="mb-3">
+    <label asp-for="EndDate" class="form-label"></label>
     <input asp-for="EndDate" class="form-control" />
     <span asp-validation-for="EndDate" class="text-danger"></span>
 </div>
-<div class="form-group">
-    <label asp-for="DeclaredOccupantCount"></label>
+<div class="mb-3">
+    <label asp-for="DeclaredOccupantCount" class="form-label"></label>
     <input asp-for="DeclaredOccupantCount" class="form-control" />
     <span asp-validation-for="DeclaredOccupantCount" class="text-danger"></span>
 </div>
-<div class="form-group form-check">
+<div class="form-check mb-3">
     <input asp-for="SignedRules" class="form-check-input" type="checkbox" />
     <label asp-for="SignedRules" class="form-check-label"></label>
     <span asp-validation-for="SignedRules" class="text-danger"></span>
 </div>
-<div class="form-group form-check">
+<div class="form-check mb-3">
     <input asp-for="PetsPresent" class="form-check-input" type="checkbox" />
     <label asp-for="PetsPresent" class="form-check-label"></label>
     <span asp-validation-for="PetsPresent" class="text-danger"></span>
 </div>
-<div class="form-group">
-    <label asp-for="EmergencyContactNumber"></label>
+<div class="mb-3">
+    <label asp-for="EmergencyContactNumber" class="form-label"></label>
     <input asp-for="EmergencyContactNumber" class="form-control" />
     <span asp-validation-for="EmergencyContactNumber" class="text-danger"></span>
 </div>

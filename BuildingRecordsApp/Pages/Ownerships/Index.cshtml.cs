@@ -27,6 +27,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 .Include(o => o.Organization)
                 .Include(o => o.Unit)
                 .ThenInclude(u => u!.Building)
+                .ThenInclude(b => b!.Property)
                 .AsNoTracking()
                 .Select(o => _mapper.Map<OwnershipItemViewEntry>(o))
                 .ToListAsync();

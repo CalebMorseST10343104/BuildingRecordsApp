@@ -53,8 +53,8 @@ public class OwnershipServiceTests
 
         await service.AddContactAsync(ownership.OwnershipId, person.PersonId);
         await service.AddContactAsync(ownership.OwnershipId, person.PersonId);
-        Assert.Equal(1, await db.Context.Owners.CountAsync());
+        Assert.Equal(1, await db.Context.OwnershipContacts.CountAsync());
         await service.RemoveContactAsync(ownership.OwnershipId, person.PersonId);
-        Assert.Empty(await db.Context.Owners.ToListAsync());
+        Assert.Empty(await db.Context.OwnershipContacts.ToListAsync());
     }
 }

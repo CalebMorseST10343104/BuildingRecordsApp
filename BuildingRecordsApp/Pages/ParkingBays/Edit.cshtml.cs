@@ -41,7 +41,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
                 return NotFound();
 
             ViewModel = _mapper.Map<ParkingBayFormViewModel>(parkingBay);
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(ViewModel.PropertyId);
             ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 
             return Page();
@@ -52,9 +52,13 @@ namespace BuildingRecordsApp.Pages.ParkingBays
             if (ViewModel.ParkingBayId == null)
                 ModelState.AddModelError("ViewModel", "Parking Bay details are required.");
 
+            var bayNumber = ViewModel.ParkingBayNumber?.Trim();
+            if (await _context.ParkingBays.AnyAsync(p => p.ParkingBayId != ViewModel.ParkingBayId && p.PropertyId == ViewModel.PropertyId && p.ParkingBayNumber == bayNumber))
+                ModelState.AddModelError("ViewModel.ParkingBayNumber", "That parking bay number is already in use in this property.");
+
             if (!ModelState.IsValid)
             {
-                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(ViewModel.PropertyId);
             ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
@@ -65,20 +69,26 @@ namespace BuildingRecordsApp.Pages.ParkingBays
                 if (parkingBay is null)
                     return NotFound();
                 parkingBay.PropertyId = ViewModel.PropertyId;
-                parkingBay.ParkingBayNumber = ViewModel.ParkingBayNumber?.Trim() ?? string.Empty;
+                parkingBay.ParkingBayNumber = bayNumber ?? string.Empty;
                 parkingBay.IsNearEntrance = ViewModel.IsNearEntrance;
                 await _allocationService.AllocateParkingBayAsync(parkingBay.ParkingBayId, ViewModel.UnitID);
             }
             catch (BusinessRuleException exception)
             {
                 ModelState.AddModelError("ViewModel.UnitID", exception.Message);
-                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(ViewModel.PropertyId);
             ViewModel.PropertySelectList = await _selectListService.GetPropertySelectListAsync();
                 return Page();
             }
 
             return RedirectToPage("/ParkingBays/Index");
         }
+
+        public async Task<JsonResult> OnGetUnitsAsync(int propertyId) => new(await _context.Units
+            .Where(u => u.Building!.PropertyId == propertyId)
+            .OrderBy(u => u.Building!.Name).ThenBy(u => u.UnitNumber)
+            .Select(u => new { value = u.UnitId, text = $"[{u.Building!.Name}] {u.UnitNumber}" })
+            .ToListAsync());
         
         private bool ParkingBayExists(int id)
         {

@@ -52,6 +52,11 @@ namespace BuildingRecordsApp.Pages.Units
             if (ViewModel.BuildingId == null)
                 ModelState.AddModelError("ViewModel.BuildingId", "Building is required.");
 
+            var unitNumber = ViewModel.UnitNumber?.Trim();
+            if (ViewModel.BuildingId is int buildingId && await _context.Units.AnyAsync(
+                u => u.UnitId != ViewModel.UnitId && u.BuildingId == buildingId && u.UnitNumber == unitNumber))
+                ModelState.AddModelError("ViewModel.UnitNumber", "That unit number is already in use in this building.");
+
             if (!ModelState.IsValid)
             {
                 ViewModel.BuildingSelectList = await _selectListService.GetBuildingSelectListAsync();
@@ -61,6 +66,7 @@ namespace BuildingRecordsApp.Pages.Units
             }
 
             var unit = _mapper.Map<Unit>(ViewModel);
+            unit.UnitNumber = unitNumber ?? string.Empty;
             _context.Attach(unit).State = EntityState.Modified;
 
             try

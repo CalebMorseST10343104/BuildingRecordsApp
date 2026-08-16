@@ -7,16 +7,16 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
     public DbSet<Building> Buildings { get; set; }
     public DbSet<Person> Persons { get; set; }
     public DbSet<Ownership> Ownerships { get; set; }
-    public DbSet<OwnershipContact> Owners { get; set; }
+    public DbSet<OwnershipContact> OwnershipContacts { get; set; }
     public DbSet<Agent> Agents { get; set; }
     public DbSet<AgentCompany> AgentCompanies { get; set; }
-    public DbSet<Organization> CompanyTrusts { get; set; }
+    public DbSet<Organization> Organizations { get; set; }
     public DbSet<Property> Properties { get; set; }
     public DbSet<Lease> Leases { get; set; }
     public DbSet<Occupancy> Occupancies { get; set; }
     public DbSet<ParkingBay> ParkingBays { get; set; }
     public DbSet<StoreRoom> StoreRooms { get; set; }
-    public DbSet<TagRemoteRecord> TagRemoteRecords { get; set; }
+    public DbSet<AccessDeviceCount> AccessDeviceCounts { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,11 +30,11 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
         modelBuilder.Entity<ParkingBay>().HasIndex(p => new { p.PropertyId, p.ParkingBayNumber }).IsUnique();
         modelBuilder.Entity<StoreRoom>().HasIndex(s => new { s.PropertyId, s.StoreRoomNumber }).IsUnique();
         modelBuilder.Entity<Vehicle>().HasIndex(v => v.VehicleRegistration).IsUnique();
-        modelBuilder.Entity<TagRemoteRecord>().ToTable(t => t.HasCheckConstraint(
-            "CK_TagRemoteRecord_NonnegativeCounts",
-            "(TagsOwner IS NULL OR TagsOwner >= 0) AND (RemotesOwner IS NULL OR RemotesOwner >= 0) AND " +
-            "(TagsOccupant IS NULL OR TagsOccupant >= 0) AND (RemotesOccupant IS NULL OR RemotesOccupant >= 0) AND " +
-            "(TagsAgent IS NULL OR TagsAgent >= 0) AND (RemotesAgent IS NULL OR RemotesAgent >= 0)"));
+        modelBuilder.Entity<AccessDeviceCount>().ToTable(t => t.HasCheckConstraint(
+            "CK_AccessDeviceCount_NonnegativeCounts",
+            "(OwnershipContactTagCount IS NULL OR OwnershipContactTagCount >= 0) AND (OwnershipContactRemoteCount IS NULL OR OwnershipContactRemoteCount >= 0) AND " +
+            "(OccupantTagCount IS NULL OR OccupantTagCount >= 0) AND (OccupantRemoteCount IS NULL OR OccupantRemoteCount >= 0) AND " +
+            "(AgentTagCount IS NULL OR AgentTagCount >= 0) AND (AgentRemoteCount IS NULL OR AgentRemoteCount >= 0)"));
 
         modelBuilder.Entity<Building>()
             .HasOne(b => b.Property).WithMany(p => p.Buildings)
@@ -49,9 +49,9 @@ public class BuildingContext(DbContextOptions<BuildingContext> options) : DbCont
         #region Unit 1-to-1 Relationships
 
         modelBuilder.Entity<Unit>()
-            .HasOne(u => u.TagRemoteRecord)
+            .HasOne(u => u.AccessDeviceCount)
             .WithOne(tr => tr.Unit)
-            .HasForeignKey<TagRemoteRecord>(tr => tr.UnitId)
+            .HasForeignKey<AccessDeviceCount>(tr => tr.UnitId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Unit>()

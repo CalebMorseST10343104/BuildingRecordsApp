@@ -12,6 +12,7 @@ public class VehicleMappingProfile : Profile
     {
         CreateMap<Vehicle, VehicleFormViewModel>().ReverseMap();
         CreateMap<Vehicle, VehicleItemViewEntry>()
+            .ForMember(dest => dest.PropertyName, opt => opt.MapFrom(src => src.Unit != null && src.Unit.Building != null && src.Unit.Building.Property != null ? src.Unit.Building.Property.Name : null))
             .ForMember(
                 dest => dest.BuildingName,
                 opt => opt.MapFrom(src => src.Unit != null && src.Unit.Building != null ? src.Unit.Building.Name : null))

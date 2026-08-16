@@ -24,6 +24,7 @@ namespace BuildingRecordsApp.Pages.ParkingBays
         public async Task OnGetAsync()
         {
             List<ParkingBayItemViewEntry> parkingBayItems = await _context.ParkingBays
+                .Include(p => p.Property)
                 .Include(p => p.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()

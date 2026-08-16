@@ -10,6 +10,10 @@ public class BuildingItemViewEntry : ItemViewEntry
     [DisplayMode("Full")]
     public int? BuildingId { get; set; }
 
+    [Display(Name = "Property")]
+    [DisplayMode("Basic")]
+    public string? PropertyName { get; set; }
+
     [Display(Name = "Building Name")]
     [DisplayMode("Basic")]
     public string? Name { get; set; }

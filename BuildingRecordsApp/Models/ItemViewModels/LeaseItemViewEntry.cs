@@ -10,6 +10,10 @@ public class LeaseItemViewEntry : ItemViewEntry
     [DisplayMode("Full")]
     public int? LeaseId { get; set; }
 
+    [Display(Name = "Property")]
+    [DisplayMode("Extended")]
+    public string? PropertyName { get; set; }
+
     [Display(Name = "Building Name")]
     [DisplayMode("Extended")]
     public string? BuildingName { get; set; }

@@ -65,7 +65,7 @@
                 @foreach (var contact in unit.Ownership.OwnershipContacts.OrderBy(c => c.Person.LastName))
                 { <li>@contact.Person.FirstName @contact.Person.LastName</li> }
                 </ul>
-                <a asp-page="/Owners/Create" asp-route-ownershipId="@unit.Ownership.OwnershipId" class="btn btn-sm btn-outline-primary">Add contact</a>
+                <a asp-page="/OwnershipContacts/Create" asp-route-ownershipId="@unit.Ownership.OwnershipId" class="btn btn-sm btn-outline-primary">Add contact</a>
             }
             </div>
         </section>
@@ -121,16 +121,16 @@
 
     <div class="col-lg-6">
         <section class="card h-100">
-            <div class="card-header d-flex justify-content-between"><strong>Access-device counts</strong>@if (unit.TagRemoteRecord is not null) { <a asp-page="/TagRemoteRecords/Edit" asp-route-id="@unit.TagRemoteRecord.TagRemoteRecordId">Edit</a> }</div>
+            <div class="card-header d-flex justify-content-between"><strong>Access-device counts</strong>@if (unit.AccessDeviceCount is not null) { <a asp-page="/AccessDeviceCounts/Edit" asp-route-id="@unit.AccessDeviceCount.AccessDeviceCountId">Edit</a> }</div>
             <div class="card-body">
-            @if (unit.TagRemoteRecord is null) { <div class="alert alert-danger mb-0">Access-count record is missing.</div> }
+            @if (unit.AccessDeviceCount is null) { <div class="alert alert-danger mb-0">Access-count record is missing.</div> }
             else
             {
                 string Count(int? value) => value?.ToString() ?? "Unknown";
                 <div class="table-responsive"><table class="table table-sm mb-0"><thead><tr><th>Held by</th><th>Tags</th><th>Remotes</th></tr></thead><tbody>
-                    <tr><td>Ownership</td><td>@Count(unit.TagRemoteRecord.TagsOwner)</td><td>@Count(unit.TagRemoteRecord.RemotesOwner)</td></tr>
-                    <tr><td>Occupants</td><td>@Count(unit.TagRemoteRecord.TagsOccupant)</td><td>@Count(unit.TagRemoteRecord.RemotesOccupant)</td></tr>
-                    <tr><td>Agent</td><td>@Count(unit.TagRemoteRecord.TagsAgent)</td><td>@Count(unit.TagRemoteRecord.RemotesAgent)</td></tr>
+                    <tr><td>Ownership</td><td>@Count(unit.AccessDeviceCount.OwnershipContactTagCount)</td><td>@Count(unit.AccessDeviceCount.OwnershipContactRemoteCount)</td></tr>
+                    <tr><td>Occupants</td><td>@Count(unit.AccessDeviceCount.OccupantTagCount)</td><td>@Count(unit.AccessDeviceCount.OccupantRemoteCount)</td></tr>
+                    <tr><td>Agent</td><td>@Count(unit.AccessDeviceCount.AgentTagCount)</td><td>@Count(unit.AccessDeviceCount.AgentRemoteCount)</td></tr>
                 </tbody></table></div>
             }
             </div>

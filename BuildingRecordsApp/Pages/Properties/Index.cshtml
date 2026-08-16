@@ -12,10 +12,18 @@
     <a asp-page="./Create" class="btn btn-primary">Add property</a>
 </div>
 
+@if (Model.Properties.Count > 0)
+{
+    <div class="mb-4 index-filter-narrow">
+        <label for="property-filter" class="form-label">Filter properties</label>
+        <input id="property-filter" type="search" class="form-control" placeholder="Name or address" data-card-filter="[data-property-card]" />
+    </div>
+}
+
 <div class="row row-cols-1 row-cols-lg-2 g-4">
 @foreach (var property in Model.Properties)
 {
-    <div class="col">
+    <div class="col" data-property-card data-filter-value="@($"{property.Name} {property.Address}".ToLowerInvariant())">
         <div class="card h-100 shadow-sm">
             <div class="card-body">
                 <h2 class="h4 card-title">@property.Name</h2>
@@ -35,6 +43,8 @@
     </div>
 }
 </div>
+
+<div class="alert alert-info" data-card-filter-empty hidden>No properties match that filter.</div>
 
 @if (Model.Properties.Count == 0)
 {

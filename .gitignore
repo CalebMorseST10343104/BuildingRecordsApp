@@ -27,6 +27,7 @@ bld/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+outputs/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
@@ -40,6 +41,11 @@ ScaffoldingReadMe.txt
 ~$*
 *~
 CodeCoverage/
+
+# Local register data and generated database backups
+BuildingRecordsApp/Backups/
+BuildingRecordsApp/*.db-shm
+BuildingRecordsApp/*.db-wal
 
 # MSBuild Binary and Structured Log
 *.binlog

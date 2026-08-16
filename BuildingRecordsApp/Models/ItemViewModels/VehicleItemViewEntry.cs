@@ -9,6 +9,10 @@ public class VehicleItemViewEntry : ItemViewEntry
     [DisplayMode("Full")]
     public int? VehicleId { get; set; }
 
+    [Display(Name = "Property")]
+    [DisplayMode("Extended")]
+    public string? PropertyName { get; set; }
+
     [Display(Name = "Vehicle Registration")]
     [DisplayMode("Basic")]
     public string? VehicleRegistration { get; set; }
@@ -31,7 +35,7 @@ public class VehicleItemViewEntry : ItemViewEntry
 
     [Display(Name = "Unit Number")]
     [DisplayMode("Extended")]
-    public int? UnitNumber { get; set; }
+    public string? UnitNumber { get; set; }
 
     public override int GetId()
     {

@@ -35,12 +35,12 @@ public class BusinessRuleConstraintTests
     {
         await using var db = await SqliteTestDatabase.CreateAsync();
         var building = EntityFactory.Building(EntityFactory.Property());
-        db.Context.TagRemoteRecords.AddRange(
-            new() { Unit = EntityFactory.Unit(building, "1"), TagsOwner = null },
-            new() { Unit = EntityFactory.Unit(building, "2"), TagsOwner = 0 });
+        db.Context.AccessDeviceCounts.AddRange(
+            new() { Unit = EntityFactory.Unit(building, "1"), OwnershipContactTagCount = null },
+            new() { Unit = EntityFactory.Unit(building, "2"), OwnershipContactTagCount = 0 });
         await db.Context.SaveChangesAsync();
 
-        db.Context.TagRemoteRecords.Add(new() { Unit = EntityFactory.Unit(building, "3"), TagsOwner = -1 });
+        db.Context.AccessDeviceCounts.Add(new() { Unit = EntityFactory.Unit(building, "3"), OwnershipContactTagCount = -1 });
         await Assert.ThrowsAsync<DbUpdateException>(() => db.Context.SaveChangesAsync());
     }
 
@@ -52,7 +52,7 @@ public class BusinessRuleConstraintTests
         var person = EntityFactory.Person("Occupant");
         unit.Lease = new();
         unit.Ownership = new() { OwnershipType = "Natural" };
-        unit.TagRemoteRecord = new();
+        unit.AccessDeviceCount = new();
         unit.Occupants.Add(new() { Occupant = person });
         unit.Vehicles.Add(new() { VehicleRegistration = "TEST1" });
         db.Context.Add(unit);
@@ -63,7 +63,7 @@ public class BusinessRuleConstraintTests
 
         Assert.Empty(await db.Context.Leases.ToListAsync());
         Assert.Empty(await db.Context.Ownerships.ToListAsync());
-        Assert.Empty(await db.Context.TagRemoteRecords.ToListAsync());
+        Assert.Empty(await db.Context.AccessDeviceCounts.ToListAsync());
         Assert.Empty(await db.Context.Occupancies.ToListAsync());
         Assert.Empty(await db.Context.Vehicles.ToListAsync());
     }

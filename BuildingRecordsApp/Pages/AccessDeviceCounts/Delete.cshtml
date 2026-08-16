@@ -1,0 +1,11 @@
+﻿@page
+@model BuildingRecordsApp.Pages.AccessDeviceCounts.DeleteModel
+@{
+    ViewData["Title"] = "Tag and remote counts cannot be deleted";
+    var firstEntry = Model.ViewModel.Entries.First();
+}
+<h1>This count record belongs to its unit</h1>
+<p class="lead">Tag and remote counts cannot be deleted separately. Unknown counts can be left blank and confirmed counts can be set to zero.</p>
+<p><strong>@firstEntry.BuildingName · Unit @firstEntry.UnitNumber</strong></p>
+<a asp-page="./Edit" asp-route-id="@firstEntry.AccessDeviceCountId" class="btn btn-primary">Edit counts</a>
+<a asp-page="/Units/Details" asp-route-id="@firstEntry.UnitId" class="btn btn-outline-secondary">Return to unit</a>

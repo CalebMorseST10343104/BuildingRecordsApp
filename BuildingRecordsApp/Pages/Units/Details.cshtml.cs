@@ -25,7 +25,7 @@ public class DetailsModel(BuildingContext context) : PageModel
             .Include(u => u.Vehicles)
             .Include(u => u.ParkingBays)
             .Include(u => u.StoreRooms)
-            .Include(u => u.TagRemoteRecord)
+            .Include(u => u.AccessDeviceCount)
             .SingleOrDefaultAsync(u => u.UnitId == id);
         if (unit is null) return NotFound();
         Unit = unit;

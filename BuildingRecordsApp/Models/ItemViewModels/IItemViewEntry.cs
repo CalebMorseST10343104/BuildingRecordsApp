@@ -9,6 +9,8 @@ public interface IItemViewEntry
 
     public Dictionary<string, object?> GetValues(DisplayMode displayMode);
 
+    string GetDisplayName(string propertyName);
+
     string GetTitleHeader();
 
     bool IsTitleHeaderFieldName(object item);

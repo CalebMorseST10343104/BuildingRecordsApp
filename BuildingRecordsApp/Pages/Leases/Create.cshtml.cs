@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildingRecordsApp.Models.Entities;
 using BuildingRecordsApp.Models.FormViewModels;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingRecordsApp.Pages.Leases
 {
@@ -36,8 +37,10 @@ namespace BuildingRecordsApp.Pages.Leases
         {
             if (ViewModel.UnitId == null)
             {
-                ModelState.AddModelError("Lease.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
             }
+            if (ViewModel.UnitId is int unitId && await _context.Leases.AnyAsync(l => l.UnitId == unitId))
+                ModelState.AddModelError("ViewModel.UnitId", "This unit already has a lease summary. Edit the existing summary instead.");
             
             if (!ModelState.IsValid)
             {

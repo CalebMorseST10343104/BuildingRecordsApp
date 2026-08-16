@@ -8,13 +8,13 @@ public class PersonFormViewModel
 {
     public int? PersonId { get; set; }
 
-    [Display(Name = "First Name")]
+    [Required, Display(Name = "First Name")]
     public string? FirstName { get; set; }
 
-    [Display(Name = "Last Name")]
+    [Required, Display(Name = "Last Name")]
     public string? LastName { get; set; }
 
-    [Display(Name = "Email Address")]
+    [EmailAddress, Display(Name = "Email Address")]
     public string? Email { get; set; }
 
     [Display(Name = "Postal Address")]
@@ -23,6 +23,6 @@ public class PersonFormViewModel
     [Display(Name = "ID Number")]
     public string? IdNumber { get; set; }
 
-    [Display(Name = "Phone Number")]
+    [Phone, Display(Name = "Phone Number")]
     public string? PhoneNumber { get; set; }
 }

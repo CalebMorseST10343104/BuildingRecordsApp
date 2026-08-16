@@ -53,6 +53,10 @@ namespace BuildingRecordsApp.Pages.Occupancies
             if (ViewModel.UnitId == null)
                 ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
 
+            if (ViewModel.UnitId is int unitId && ViewModel.OccupantId is int personId && await _context.Occupancies.AnyAsync(
+                o => o.OccupancyId != ViewModel.OccupancyId && o.UnitId == unitId && o.OccupantId == personId))
+                ModelState.AddModelError("ViewModel.OccupantId", "This person is already recorded as an occupant of the unit.");
+
             if (!ModelState.IsValid)
             {
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOccupancy);

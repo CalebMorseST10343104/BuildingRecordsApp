@@ -1,21 +1,29 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.OwnershipFormViewModel
 
-<div>
-    <label asp-for="UnitId"></label>
-    <select asp-for="UnitId" asp-items="@Model.UnitSelectList"></select>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="OwnershipId" type="hidden" />
+
+<div class="mb-3">
+    <label asp-for="UnitId" class="form-label">Unit</label>
+    <select asp-for="UnitId" asp-items="Model.UnitSelectList" class="form-select">
+        <option value="">Select unit</option>
+    </select>
     <span asp-validation-for="UnitId" class="text-danger"></span>
 </div>
-<div class="form-group">
-    <label asp-for="OwnershipType" class="control-label"></label>
-    <select asp-for="OwnershipType" class="form-control">
-        <option value="">-- Select Ownership Type --</option>
+<div class="mb-3">
+    <label asp-for="OwnershipType" class="form-label"></label>
+    <select asp-for="OwnershipType" class="form-select">
+        <option value="">Select ownership type</option>
         <option value="Natural">Natural</option>
         <option value="Juristic">Juristic</option>
     </select>
     <span asp-validation-for="OwnershipType" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="OrganizationId"></label>
-    <select asp-for="OrganizationId" asp-items="@Model.CompanyTrustSelectList"></select>
+<div class="mb-3">
+    <label asp-for="OrganizationId" class="form-label">Company or trust</label>
+    <select asp-for="OrganizationId" asp-items="Model.OrganizationSelectList" class="form-select">
+        <option value="">None</option>
+    </select>
     <span asp-validation-for="OrganizationId" class="text-danger"></span>
+    <div class="form-text">Required for juristic ownership; leave blank for natural ownership.</div>
 </div>

@@ -9,10 +9,14 @@ public class OccupancyFormViewModel
 {
     public int? OccupancyId { get; set; }
 
-    [Display(Name = "Occupation Type")]
+    [Required, Display(Name = "Occupation Type")]
     public string? OccupationType { get; set; } // e.g., "OwnershipContact", "Short-Term Rental", "Long-Term Rental"
+
+    public IReadOnlyList<string> OccupationTypes { get; set; } = Models.OccupancyTypes.All;
     
+    [Required, Display(Name = "Unit")]
     public int? UnitId { get; set; } // Foreign key for Unit
+    [Required, Display(Name = "Occupant")]
     public int? OccupantId { get; set; } // Foreign key for Person
     public SelectList UnitSelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
     public SelectList PersonSelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());

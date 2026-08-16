@@ -3,7 +3,7 @@ namespace BuildingRecordsApp.Enums;
 public enum UsageContext
 {
     All,
-    ForTagRemoteRecord,
+    ForAccessDeviceCount,
     ForLease,
     ForOccupancy,
     ForOwnership

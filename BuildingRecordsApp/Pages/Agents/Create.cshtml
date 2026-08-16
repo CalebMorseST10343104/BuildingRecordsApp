@@ -6,15 +6,15 @@
     ViewData["Title"] = "Create Agent";
 }
 
-<h1 class="mb-4">Create New Agent</h1>
+<h1>Add letting agent</h1>
 
-<form method="post" class="needs-validation" novalidate>
+<form method="post" class="crud-form mt-4">
 
-    @await Html.PartialAsync("_Form", Model.ViewModel)
+    <partial name="_Form" for="ViewModel" />
 
     <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Create</button>
-        <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    <button type="submit" class="btn btn-primary">Save new record</button>
+    <a asp-page="./Index" class="btn btn-outline-secondary">Cancel</a>
     </div>
 </form>
 

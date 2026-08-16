@@ -5,20 +5,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BuildingRecordsApp.Models.FormViewModels;
 
-public class LeaseFormViewModel
+public class LeaseFormViewModel : IValidatableObject
 {
     public int? LeaseId { get; set; }
 
     [Display(Name = "Lease Holder Name")]
     public string? LeaseHolderName { get; set; }
 
-    [Display(Name = "Start Date")]
+    [DataType(DataType.Date), Display(Name = "Start Date")]
     public DateTime? StartDate { get; set; }
 
-    [Display(Name = "End Date")]
+    [DataType(DataType.Date), Display(Name = "End Date")]
     public DateTime? EndDate { get; set; }
 
-    [Display(Name = "Number of Occupants")]
+    [Range(0, int.MaxValue), Display(Name = "Number of Occupants")]
     public int? DeclaredOccupantCount { get; set; }
 
     [Display(Name = "Signed Conduct Rules?")]
@@ -32,4 +32,10 @@ public class LeaseFormViewModel
 
     public int? UnitId { get; set; } // Foreign key to Unit
     public SelectList UnitSelectList { get; set; } = new SelectList(Enumerable.Empty<SelectListItem>());
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (StartDate.HasValue && EndDate.HasValue && EndDate < StartDate)
+            yield return new ValidationResult("The lease end date cannot be before its start date.", [nameof(EndDate)]);
+    }
 }

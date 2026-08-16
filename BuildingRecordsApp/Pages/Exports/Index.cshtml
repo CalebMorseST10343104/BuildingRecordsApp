@@ -1,0 +1,50 @@
+@page
+@model BuildingRecordsApp.Pages.Exports.IndexModel
+@{
+    ViewData["Title"] = "Export register";
+}
+
+<h1>Export register</h1>
+<p class="text-muted">Download a current Excel workbook for an entire property or selected buildings.</p>
+
+<div class="alert alert-secondary">
+    The workbook contains personal and contact information. Store and share exported copies securely.
+</div>
+
+<form method="post" class="card shadow-sm" data-export-scope-form>
+    <div class="card-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-4">
+            <label asp-for="PropertyId" class="form-label">Property</label>
+            <select asp-for="PropertyId" asp-items="Model.Properties" class="form-select" data-export-property>
+                <option value="">Select a property</option>
+            </select>
+            <span asp-validation-for="PropertyId" class="text-danger"></span>
+        </div>
+
+        <fieldset>
+            <legend class="h5">Buildings</legend>
+            <p class="text-muted small">Leave every building unticked to export the whole property.</p>
+            <div class="row g-2" data-export-buildings>
+                @foreach (var building in Model.Buildings)
+                {
+                    <div class="col-md-6" data-property-id="@building.PropertyId">
+                        <div class="form-check border rounded p-3 ps-5">
+                            <input class="form-check-input" type="checkbox" name="BuildingIds" value="@building.BuildingId" id="building-@building.BuildingId" checked="@Model.BuildingIds.Contains(building.BuildingId)" />
+                            <label class="form-check-label" for="building-@building.BuildingId">@building.Name</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </fieldset>
+    </div>
+    <div class="card-footer d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-file-earmark-excel me-1"></i>Download Excel workbook</button>
+    </div>
+</form>
+
+<div class="mt-4">
+    <h2 class="h5">Included worksheets</h2>
+    <p class="text-muted">MAIN, PEOPLE, NATURAL OWNERSHIP, JURISTIC OWNERSHIP, AGENTS, OCCUPANTS, LEASES, VEHICLES, TAG AND REMOTE, and BASEMENT.</p>
+</div>

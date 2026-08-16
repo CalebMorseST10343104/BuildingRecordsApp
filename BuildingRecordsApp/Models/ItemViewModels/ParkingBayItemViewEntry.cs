@@ -9,11 +9,15 @@ public class ParkingBayItemViewEntry : ItemViewEntry
     [DisplayMode("Full")]
     public int? ParkingBayId { get; set; }
 
+    [Display(Name = "Property")]
+    [DisplayMode("Extended")]
+    public string? PropertyName { get; set; }
+
     [Display(Name = "Parking Bay Number")]
     [DisplayMode("Basic")]
     public string? ParkingBayNumber { get; set; }
 
-    [Display(Name = "Is Near Entrance")]
+    [Display(Name = "Near Entrance")]
     [DisplayMode("Detailed")]
     public bool? IsNearEntrance { get; set; }
 
@@ -23,7 +27,7 @@ public class ParkingBayItemViewEntry : ItemViewEntry
 
     [Display(Name = "Unit Number")]
     [DisplayMode("Extended")]
-    public int? UnitNumber { get; set; }
+    public string? UnitNumber { get; set; }
 
     public override int GetId()
     {

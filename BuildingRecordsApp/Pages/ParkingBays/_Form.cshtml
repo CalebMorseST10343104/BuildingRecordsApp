@@ -1,25 +1,38 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.ParkingBayFormViewModel
 
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="ParkingBayId" type="hidden" />
+
 <div class="mb-3">
-    <label asp-for="PropertyId">Property</label>
-    <select asp-for="PropertyId" asp-items="Model.PropertySelectList">
+    <label asp-for="PropertyId" class="form-label">Property</label>
+    <select asp-for="PropertyId" asp-items="Model.PropertySelectList" class="form-select" data-allocation-property>
         <option value="">Select property</option>
     </select>
+    <span asp-validation-for="PropertyId" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="ParkingBayNumber"></label>
-    <input asp-for="ParkingBayNumber" />
+<div class="mb-3">
+    <label asp-for="ParkingBayNumber" class="form-label"></label>
+    <input asp-for="ParkingBayNumber" class="form-control" />
     <span asp-validation-for="ParkingBayNumber" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="UnitID"></label>
-    <select asp-for="UnitID" asp-items="@Model.UnitSelectList">
-        <option value="">Select Unit</option>
+<div class="mb-3">
+    <label asp-for="UnitID" class="form-label">Allocated unit</label>
+    <select asp-for="UnitID" asp-items="Model.UnitSelectList" class="form-select" data-allocation-unit>
+        <option value="">Not currently allocated</option>
     </select>
     <span asp-validation-for="UnitID" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="IsNearEntrance"></label>
-    <input asp-for="IsNearEntrance" type="checkbox" />
+<div class="form-check mb-3">
+    <input asp-for="IsNearEntrance" class="form-check-input" />
+    <label asp-for="IsNearEntrance" class="form-check-label"></label>
     <span asp-validation-for="IsNearEntrance" class="text-danger"></span>
 </div>
+<script>
+    document.querySelector('[data-allocation-property]')?.addEventListener('change', async event => {
+        const target = document.querySelector('[data-allocation-unit]');
+        target.innerHTML = '<option value="">Not currently allocated</option>';
+        if (!event.target.value) return;
+        const response = await fetch(`${location.pathname}?handler=Units&propertyId=${encodeURIComponent(event.target.value)}`);
+        for (const item of await response.json()) target.add(new Option(item.text, item.value));
+    });
+</script>

@@ -43,7 +43,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
 
             ViewModel = _mapper.Map<OwnershipFormViewModel>(ownership);
             ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
-            ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
+            ViewModel.OrganizationSelectList = await _selectListService.GetOrganizationSelectListAsync();
 
             return Page();
         }
@@ -54,12 +54,12 @@ namespace BuildingRecordsApp.Pages.Ownerships
                 ModelState.AddModelError("ViewModel", "Ownership details are required.");
             
             if (ViewModel.UnitId == null)
-                ModelState.AddModelError("Ownership.UnitId", "Unit is required.");
+                ModelState.AddModelError("ViewModel.UnitId", "Unit is required.");
 
             if (!ModelState.IsValid)
             {
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
-                ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
+                ViewModel.OrganizationSelectList = await _selectListService.GetOrganizationSelectListAsync();
                 return Page();
             }
 
@@ -81,7 +81,7 @@ namespace BuildingRecordsApp.Pages.Ownerships
             {
                 ModelState.AddModelError(string.Empty, exception.Message);
                 ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForOwnership);
-                ViewModel.CompanyTrustSelectList = await _selectListService.GetCompanyTrustSelectListAsync();
+                ViewModel.OrganizationSelectList = await _selectListService.GetOrganizationSelectListAsync();
                 return Page();
             }
 

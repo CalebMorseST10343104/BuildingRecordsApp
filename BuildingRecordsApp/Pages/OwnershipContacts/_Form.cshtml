@@ -1,0 +1,20 @@
+﻿@model BuildingRecordsApp.Models.FormViewModels.OwnershipContactFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="OwnershipContactId" type="hidden" />
+
+<div class="mb-3">
+    <label asp-for="PersonId" class="form-label"></label>
+    <select asp-for="PersonId" asp-items="Model.PersonSelectList" class="form-select">
+        <option value="">Select person</option>
+    </select>
+    <span asp-validation-for="PersonId" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="OwnershipId" class="form-label"></label>
+    <select asp-for="OwnershipId" asp-items="Model.OwnershipSelectList" class="form-select">
+        <option value="">Select ownership</option>
+    </select>
+    <span asp-validation-for="OwnershipId" class="text-danger"></span>
+    <div class="form-text">Only units with an ownership record appear here. You can add ownership from the unit page first.</div>
+</div>

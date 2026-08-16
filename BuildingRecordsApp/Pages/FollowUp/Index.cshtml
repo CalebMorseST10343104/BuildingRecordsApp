@@ -1,0 +1,144 @@
+@page
+@model BuildingRecordsApp.Pages.FollowUp.IndexModel
+@using BuildingRecordsApp.Services
+@{
+    ViewData["Title"] = "Records needing follow-up";
+    string RecordTypeLabel(RegisterRecordType type) => type switch
+    {
+        RegisterRecordType.AgentCompany => "Agent company",
+        RegisterRecordType.AccessDeviceCount => "Tag and remote record",
+        _ => type.ToString()
+    };
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+        <h1 class="mb-1">Records needing follow-up</h1>
+        <p class="text-muted mb-0">Missing or incomplete information that matters for managing the property.</p>
+    </div>
+    @if (Model.TotalCount > 0)
+    {
+        <div class="d-flex gap-2" aria-label="Follow-up totals">
+            <span class="badge text-bg-danger fs-6">@Model.UrgentCount urgent</span>
+            <span class="badge text-bg-warning fs-6">@Model.ImportantCount important</span>
+        </div>
+    }
+</div>
+
+@if (Model.TotalCount == 0)
+{
+    <div class="card border-success">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-check-circle-fill text-success display-4" aria-hidden="true"></i>
+            <h2 class="h4 mt-3">Everything is up to date</h2>
+            <p class="text-muted mb-0">No records need follow-up right now.</p>
+        </div>
+    </div>
+}
+else
+{
+    <form method="get" class="card card-body mb-4">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label asp-for="PropertyId" class="form-label">Property</label>
+                <select asp-for="PropertyId" class="form-select">
+                    <option value="">All properties</option>
+                    @foreach (var option in Model.Properties) { <option value="@option.Id">@option.Label</option> }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="BuildingId" class="form-label">Building</label>
+                <select asp-for="BuildingId" class="form-select">
+                    <option value="">All buildings</option>
+                    @foreach (var option in Model.Buildings) { <option value="@option.Id">@option.Label</option> }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="RecordType" class="form-label">Record type</label>
+                <select asp-for="RecordType" class="form-select">
+                    <option value="">All types</option>
+                    @foreach (var type in Enum.GetValues<RegisterRecordType>()) { <option value="@type">@RecordTypeLabel(type)</option> }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Severity" class="form-label">Importance</label>
+                <select asp-for="Severity" class="form-select">
+                    <option value="">All</option>
+                    <option value="Urgent">Urgent</option>
+                    <option value="Important">Important</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Apply</button>
+                @if (Model.FiltersApplied) { <a asp-page="./Index" class="btn btn-outline-secondary">Clear</a> }
+            </div>
+        </div>
+    </form>
+
+    @if (Model.FilteredCount == 0)
+    {
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-funnel text-secondary display-5" aria-hidden="true"></i>
+                <h2 class="h4 mt-3">No items match these filters</h2>
+                <p class="text-muted">There are still @Model.TotalCount follow-up items elsewhere in the register.</p>
+                <a asp-page="./Index" class="btn btn-outline-primary">Clear filters</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">Showing @Model.FilteredCount of @Model.TotalCount follow-up item@(Model.TotalCount == 1 ? "" : "s"). Urgent items appear first within each unit.</p>
+
+        @foreach (var group in Model.UnitGroups)
+        {
+            <section class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="h5 mb-0">Unit @group.UnitNumber</h2>
+                        <span class="text-muted small">@string.Join(" · ", new[] { group.PropertyName, group.BuildingName }.Where(value => !string.IsNullOrWhiteSpace(value)))</span>
+                    </div>
+                    <span class="badge text-bg-secondary">@group.Issues.Count item@(group.Issues.Count == 1 ? "" : "s")</span>
+                </div>
+                <div class="list-group list-group-flush">
+                    @foreach (var issue in group.Issues)
+                    {
+                        <div class="list-group-item follow-up-issue @(issue.Severity == CompletenessSeverity.Urgent ? "follow-up-urgent" : "")">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                                <div>
+                                    <span class="badge @(issue.Severity == CompletenessSeverity.Urgent ? "text-bg-danger" : "text-bg-warning") me-1">@issue.Severity</span>
+                                    <span class="badge text-bg-light">@RecordTypeLabel(issue.RecordType)</span>
+                                    <p class="mb-0 mt-2">@issue.Summary</p>
+                                </div>
+                                <a href="@issue.ActionUrl" class="btn btn-sm btn-outline-primary">Fix this record</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+        @if (Model.OtherIssues.Count > 0)
+        {
+            <section class="card mb-4">
+                <div class="card-header"><h2 class="h5 mb-0">Other records</h2></div>
+                <div class="list-group list-group-flush">
+                    @foreach (var issue in Model.OtherIssues)
+                    {
+                        <div class="list-group-item follow-up-issue @(issue.Severity == CompletenessSeverity.Urgent ? "follow-up-urgent" : "")">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                                <div>
+                                    <span class="badge @(issue.Severity == CompletenessSeverity.Urgent ? "text-bg-danger" : "text-bg-warning") me-1">@issue.Severity</span>
+                                    <span class="badge text-bg-light">@RecordTypeLabel(issue.RecordType)</span>
+                                    <strong class="ms-1">@issue.RecordLabel</strong>
+                                    <p class="mb-0 mt-2">@issue.Summary</p>
+                                </div>
+                                <a href="@issue.ActionUrl" class="btn btn-sm btn-outline-primary">Fix this record</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+    }
+}

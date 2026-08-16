@@ -25,6 +25,7 @@ namespace BuildingRecordsApp.Pages.Units
         {
             List<UnitItemViewEntry> unitItems = await _context.Units
                 .Include(u => u.Building)
+                .ThenInclude(b => b!.Property)
                 .AsNoTracking()
                 .Select(u => _mapper.Map<UnitItemViewEntry>(u))
                 .ToListAsync();

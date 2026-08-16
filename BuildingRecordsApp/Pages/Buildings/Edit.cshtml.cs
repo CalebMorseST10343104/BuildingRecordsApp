@@ -49,6 +49,10 @@ namespace BuildingRecordsApp.Pages.Buildings
             if (!await _context.Properties.AnyAsync(p => p.PropertyId == ViewModel.PropertyId))
                 ModelState.AddModelError("ViewModel.PropertyId", "Property is required.");
 
+            var name = ViewModel.Name?.Trim();
+            if (await _context.Buildings.AnyAsync(b => b.BuildingId != ViewModel.BuildingId && b.PropertyId == ViewModel.PropertyId && b.Name == name))
+                ModelState.AddModelError("ViewModel.Name", "That building name is already in use in this property.");
+
             if (ViewModel.BuildingId is int buildingId && await _context.Units
                 .Where(u => u.BuildingId == buildingId)
                 .AnyAsync(u => u.ParkingBays.Any(p => p.PropertyId != ViewModel.PropertyId)
@@ -64,6 +68,7 @@ namespace BuildingRecordsApp.Pages.Buildings
             }
 
             var building = _mapper.Map<Building>(ViewModel);
+            building.Name = name ?? string.Empty;
             _context.Attach(building).State = EntityState.Modified;
 
             try

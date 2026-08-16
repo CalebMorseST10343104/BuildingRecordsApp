@@ -9,13 +9,17 @@ public class OwnershipItemViewEntry : ItemViewEntry
     [DisplayMode("Full")]
     public int? OwnershipId { get; set; }
 
+    [Display(Name = "Property")]
+    [DisplayMode("Extended")]
+    public string? PropertyName { get; set; }
+
     [Display(Name = "Building Name")]
     [DisplayMode("Extended")]
     public string? BuildingName { get; set; }
 
     [Display(Name = "Unit Number")]
     [DisplayMode("Extended")]
-    public int? UnitNumber { get; set; }
+    public string? UnitNumber { get; set; }
 
     [Display(Name = "Company Name")]
     [DisplayMode("Extended")]

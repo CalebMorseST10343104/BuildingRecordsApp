@@ -23,6 +23,7 @@ namespace BuildingRecordsApp.Pages.Buildings
         public async Task OnGetAsync()
         {
             List<BuildingItemViewEntry> buildingItems = await _context.Buildings
+                .Include(b => b.Property)
                 .AsNoTracking()
                 .Select(b => _mapper.Map<BuildingItemViewEntry>(b))
                 .ToListAsync();

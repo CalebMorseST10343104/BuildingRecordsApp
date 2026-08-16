@@ -14,7 +14,9 @@ public sealed class UnitService(BuildingContext context) : IUnitService
             throw new BusinessRuleException("A unit number is required.");
 
         unit.UnitNumber = unit.UnitNumber.Trim();
-        unit.TagRemoteRecord ??= new TagRemoteRecord();
+        if (await context.Units.AnyAsync(u => u.BuildingId == unit.BuildingId && u.UnitNumber == unit.UnitNumber, cancellationToken))
+            throw new BusinessRuleException("That unit number is already in use in this building.");
+        unit.AccessDeviceCount ??= new AccessDeviceCount();
 
         await using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
         context.Units.Add(unit);

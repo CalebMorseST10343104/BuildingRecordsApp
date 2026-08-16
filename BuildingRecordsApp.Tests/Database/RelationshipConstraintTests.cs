@@ -29,11 +29,11 @@ public class RelationshipConstraintTests
         var ownership = new Ownership { Unit = unit, OwnershipType = "Natural" };
         var first = EntityFactory.Person("Alex");
         var second = EntityFactory.Person("Sam");
-        db.Context.Owners.AddRange(
+        db.Context.OwnershipContacts.AddRange(
             new() { Ownership = ownership, Person = first },
             new() { Ownership = ownership, Person = second });
         await db.Context.SaveChangesAsync();
-        db.Context.Owners.Add(new() { OwnershipId = ownership.OwnershipId, PersonId = first.PersonId });
+        db.Context.OwnershipContacts.Add(new() { OwnershipId = ownership.OwnershipId, PersonId = first.PersonId });
         await Assert.ThrowsAsync<DbUpdateException>(() => db.Context.SaveChangesAsync());
     }
 
@@ -54,7 +54,7 @@ public class RelationshipConstraintTests
         await Assert.ThrowsAsync<DbUpdateException>(() => db.Context.SaveChangesAsync());
         db.Context.ChangeTracker.Clear();
 
-        db.Context.TagRemoteRecords.AddRange(new() { UnitId = unit.UnitId }, new() { UnitId = unit.UnitId });
+        db.Context.AccessDeviceCounts.AddRange(new() { UnitId = unit.UnitId }, new() { UnitId = unit.UnitId });
         await Assert.ThrowsAsync<DbUpdateException>(() => db.Context.SaveChangesAsync());
     }
 

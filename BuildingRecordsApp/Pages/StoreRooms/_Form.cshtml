@@ -1,20 +1,33 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.StoreRoomFormViewModel
 
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="StoreRoomId" type="hidden" />
+
 <div class="mb-3">
-    <label asp-for="PropertyId">Property</label>
-    <select asp-for="PropertyId" asp-items="Model.PropertySelectList">
+    <label asp-for="PropertyId" class="form-label">Property</label>
+    <select asp-for="PropertyId" asp-items="Model.PropertySelectList" class="form-select" data-allocation-property>
         <option value="">Select property</option>
     </select>
+    <span asp-validation-for="PropertyId" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="StoreRoomNumber"></label>
-    <input asp-for="StoreRoomNumber" />
+<div class="mb-3">
+    <label asp-for="StoreRoomNumber" class="form-label"></label>
+    <input asp-for="StoreRoomNumber" class="form-control" />
     <span asp-validation-for="StoreRoomNumber" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="UnitId"></label>
-    <select asp-for="UnitId" asp-items="@Model.UnitSelectList">
-        <option value="">Select Unit</option>
+<div class="mb-3">
+    <label asp-for="UnitId" class="form-label">Allocated unit</label>
+    <select asp-for="UnitId" asp-items="Model.UnitSelectList" class="form-select" data-allocation-unit>
+        <option value="">Not currently allocated</option>
     </select>
     <span asp-validation-for="UnitId" class="text-danger"></span>
 </div>
+<script>
+    document.querySelector('[data-allocation-property]')?.addEventListener('change', async event => {
+        const target = document.querySelector('[data-allocation-unit]');
+        target.innerHTML = '<option value="">Not currently allocated</option>';
+        if (!event.target.value) return;
+        const response = await fetch(`${location.pathname}?handler=Units&propertyId=${encodeURIComponent(event.target.value)}`);
+        for (const item of await response.json()) target.add(new Option(item.text, item.value));
+    });
+</script>

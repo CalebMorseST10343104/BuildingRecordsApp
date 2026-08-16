@@ -16,6 +16,44 @@ namespace BuildingRecordsApp.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
 
+            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.AccessDeviceCount", b =>
+                {
+                    b.Property<int>("AccessDeviceCountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AgentRemoteCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AgentTagCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OccupantRemoteCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OccupantTagCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OwnershipContactRemoteCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OwnershipContactTagCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AccessDeviceCountId");
+
+                    b.HasIndex("UnitId")
+                        .IsUnique();
+
+                    b.ToTable("AccessDeviceCounts", t =>
+                        {
+                            t.HasCheckConstraint("CK_AccessDeviceCount_NonnegativeCounts", "(OwnershipContactTagCount IS NULL OR OwnershipContactTagCount >= 0) AND (OwnershipContactRemoteCount IS NULL OR OwnershipContactRemoteCount >= 0) AND (OccupantTagCount IS NULL OR OccupantTagCount >= 0) AND (OccupantRemoteCount IS NULL OR OccupantRemoteCount >= 0) AND (AgentTagCount IS NULL OR AgentTagCount >= 0) AND (AgentRemoteCount IS NULL OR AgentRemoteCount >= 0)");
+                        });
+                });
+
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Agent", b =>
                 {
                     b.Property<int>("AgentId")
@@ -182,7 +220,7 @@ namespace BuildingRecordsApp.Migrations
 
                     b.HasKey("OrganizationId");
 
-                    b.ToTable("CompanyTrusts");
+                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Ownership", b =>
@@ -233,7 +271,7 @@ namespace BuildingRecordsApp.Migrations
                     b.HasIndex("OwnershipId", "PersonId")
                         .IsUnique();
 
-                    b.ToTable("Owners");
+                    b.ToTable("OwnershipContacts");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.ParkingBay", b =>
@@ -348,48 +386,13 @@ namespace BuildingRecordsApp.Migrations
                     b.ToTable("StoreRooms");
                 });
 
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.TagRemoteRecord", b =>
-                {
-                    b.Property<int>("TagRemoteRecordId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("RemotesAgent")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("RemotesOccupant")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("RemotesOwner")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TagsAgent")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TagsOccupant")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TagsOwner")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UnitId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("TagRemoteRecordId");
-
-                    b.HasIndex("UnitId")
-                        .IsUnique();
-
-                    b.ToTable("TagRemoteRecords", t =>
-                        {
-                            t.HasCheckConstraint("CK_TagRemoteRecord_NonnegativeCounts", "(TagsOwner IS NULL OR TagsOwner >= 0) AND (RemotesOwner IS NULL OR RemotesOwner >= 0) AND (TagsOccupant IS NULL OR TagsOccupant >= 0) AND (RemotesOccupant IS NULL OR RemotesOccupant >= 0) AND (TagsAgent IS NULL OR TagsAgent >= 0) AND (RemotesAgent IS NULL OR RemotesAgent >= 0)");
-                        });
-                });
-
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Unit", b =>
                 {
                     b.Property<int>("UnitId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AccessDeviceCountId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("AgentId")
@@ -423,9 +426,6 @@ namespace BuildingRecordsApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("SublettingAllowed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TagRemoteRecordId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("UnitNumber")
@@ -477,6 +477,17 @@ namespace BuildingRecordsApp.Migrations
                         .IsUnique();
 
                     b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.AccessDeviceCount", b =>
+                {
+                    b.HasOne("BuildingRecordsApp.Models.Entities.Unit", "Unit")
+                        .WithOne("AccessDeviceCount")
+                        .HasForeignKey("BuildingRecordsApp.Models.Entities.AccessDeviceCount", "UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Agent", b =>
@@ -612,17 +623,6 @@ namespace BuildingRecordsApp.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("BuildingRecordsApp.Models.Entities.TagRemoteRecord", b =>
-                {
-                    b.HasOne("BuildingRecordsApp.Models.Entities.Unit", "Unit")
-                        .WithOne("TagRemoteRecord")
-                        .HasForeignKey("BuildingRecordsApp.Models.Entities.TagRemoteRecord", "UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Unit");
-                });
-
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Unit", b =>
                 {
                     b.HasOne("BuildingRecordsApp.Models.Entities.Agent", "Agent")
@@ -706,6 +706,8 @@ namespace BuildingRecordsApp.Migrations
 
             modelBuilder.Entity("BuildingRecordsApp.Models.Entities.Unit", b =>
                 {
+                    b.Navigation("AccessDeviceCount");
+
                     b.Navigation("Lease");
 
                     b.Navigation("Occupants");
@@ -715,8 +717,6 @@ namespace BuildingRecordsApp.Migrations
                     b.Navigation("ParkingBays");
 
                     b.Navigation("StoreRooms");
-
-                    b.Navigation("TagRemoteRecord");
 
                     b.Navigation("Vehicles");
                 });

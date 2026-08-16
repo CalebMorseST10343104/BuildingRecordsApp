@@ -1,0 +1,58 @@
+@page
+@model BuildingRecordsApp.Pages.Backups.IndexModel
+@{
+    ViewData["Title"] = "Backups";
+}
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1>Database backups</h1>
+        <p class="text-muted mb-0">Create a safe copy of the complete current register before major changes.</p>
+    </div>
+    <form method="post" asp-page-handler="Create">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-database-add me-1"></i>Create backup
+        </button>
+    </form>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+{
+    <div class="alert alert-info" role="status">@Model.StatusMessage</div>
+}
+
+<div class="alert alert-secondary">
+    Backups contain the entire register, including personal and contact information. Store downloaded copies securely.
+</div>
+
+@if (Model.Backups.Count == 0)
+{
+    <div class="card"><div class="card-body text-muted">No backups have been created yet.</div></div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Created</th><th>File</th><th>Size</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var backup in Model.Backups)
+            {
+                <tr>
+                    <td>@backup.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td><code>@backup.FileName</code></td>
+                    <td>@FormatSize(backup.SizeBytes)</td>
+                    <td class="text-end">
+                        <a asp-page-handler="Download" asp-route-fileName="@backup.FileName" class="btn btn-sm btn-outline-primary">Download</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
+@functions {
+    private static string FormatSize(long bytes) => bytes >= 1024 * 1024
+        ? $"{bytes / 1024d / 1024d:0.0} MB"
+        : $"{Math.Max(1, bytes / 1024d):0.0} KB";
+}

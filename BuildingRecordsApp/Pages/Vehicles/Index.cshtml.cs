@@ -25,6 +25,7 @@ namespace BuildingRecordsApp.Pages.Vehicles
             List<VehicleItemViewEntry> vehicleItems = await _context.Vehicles
                 .Include(v => v.Unit)
                 .ThenInclude(u => u!.Building)
+                .ThenInclude(b => b!.Property)
                 .AsNoTracking()
                 .Select(v => _mapper.Map<VehicleItemViewEntry>(v))
                 .ToListAsync();

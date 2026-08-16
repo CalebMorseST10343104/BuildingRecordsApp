@@ -1,23 +1,49 @@
 using Microsoft.EntityFrameworkCore;
 using BuildingRecordsApp.Services;
 using BuildingRecordsApp.Data;
+using Microsoft.Data.Sqlite;
 
 
-internal class Program
+public partial class Program
 {
-    private static void Main(string[] args)
+    public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
 
         // Add services to the container.
-        builder.Services.AddRazorPages();
+        builder.Services.AddRazorPages(options =>
+        {
+            foreach (var action in new[] { "Index", "Create", "Edit", "Delete" })
+            {
+                options.Conventions.AddPageRoute($"/Organizations/{action}", $"/CompanyTrusts/{action}");
+                options.Conventions.AddPageRoute($"/OwnershipContacts/{action}", $"/Owners/{action}");
+                options.Conventions.AddPageRoute($"/AccessDeviceCounts/{action}", $"/TagRemoteRecords/{action}");
+            }
+
+            options.Conventions.AddPageRoute("/Organizations/Index", "/CompanyTrusts");
+            options.Conventions.AddPageRoute("/OwnershipContacts/Index", "/Owners");
+            options.Conventions.AddPageRoute("/AccessDeviceCounts/Index", "/TagRemoteRecords");
+        });
         
+        var configuredConnection = builder.Configuration.GetConnectionString("BuildingContext")
+            ?? throw new InvalidOperationException("ConnectionStrings:BuildingContext is required.");
+        var connectionSettings = new SqliteConnectionStringBuilder(configuredConnection);
+        if (!Path.IsPathRooted(connectionSettings.DataSource) && connectionSettings.DataSource != ":memory:")
+            connectionSettings.DataSource = Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, connectionSettings.DataSource));
+        var resolvedConnection = connectionSettings.ToString();
+
         builder.Services.AddDbContext<BuildingContext>(options =>
         {
-            var connectionString = builder.Configuration.GetConnectionString("BuildingContext");
-            options.UseSqlite(connectionString);
+            options.UseSqlite(resolvedConnection);
         });
+        builder.Services.Configure<DatabaseBackupOptions>(builder.Configuration.GetSection("DatabaseBackups"));
+        builder.Services.Configure<DesktopDeploymentOptions>(builder.Configuration.GetSection("DesktopDeployment"));
+        builder.Services.AddScoped<IDatabaseBackupService, DatabaseBackupService>();
+        builder.Services.AddSingleton<IDatabaseErrorTranslator, DatabaseErrorTranslator>();
+        builder.Services.AddSingleton(TimeProvider.System);
+        builder.Services.AddScoped<IRegisterCompletenessService, RegisterCompletenessService>();
+        builder.Services.AddScoped<IRegisterExportService, RegisterExportService>();
         
         builder.Services.AddScoped<ISelectListService, SelectListService>();
         builder.Services.AddScoped<IUnitService, UnitService>();
@@ -29,9 +55,11 @@ internal class Program
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
+        // Always use the friendly error surface. Technical exception details are
+        // logged server-side and must never be rendered into a browser response.
+        app.UseExceptionHandler("/Error");
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
@@ -42,7 +70,16 @@ internal class Program
             var context = services.GetRequiredService<BuildingContext>();
             try
             {
-                DbInitializer.Initialize(context);
+                var databasePath = new SqliteConnectionStringBuilder(resolvedConnection).DataSource;
+                var databaseExisted = databasePath != ":memory:" && File.Exists(databasePath);
+                if (databaseExisted && context.Database.GetPendingMigrations().Any())
+                {
+                    var backupService = services.GetRequiredService<IDatabaseBackupService>();
+                    backupService.CreateAsync("pre-migration").GetAwaiter().GetResult();
+                }
+                DbInitializer.Initialize(
+                    context,
+                    builder.Configuration.GetValue("Database:SeedSampleData", false));
             }
             catch (Exception ex)
             {
@@ -51,7 +88,8 @@ internal class Program
             }
         }
 
-        app.UseHttpsRedirection();
+        if (builder.Configuration.GetValue("DesktopDeployment:UseHttpsRedirection", true))
+            app.UseHttpsRedirection();
 
         app.UseRouting();
 

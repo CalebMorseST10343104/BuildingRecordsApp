@@ -17,8 +17,8 @@ public class UnitServiceTests
         var unit = await new UnitService(db.Context).CreateAsync(EntityFactory.Unit(building, " 101 "));
 
         Assert.Equal("101", unit.UnitNumber);
-        Assert.Equal(1, await db.Context.TagRemoteRecords.CountAsync(t => t.UnitId == unit.UnitId));
-        Assert.Null(unit.TagRemoteRecord!.TagsOwner);
+        Assert.Equal(1, await db.Context.AccessDeviceCounts.CountAsync(t => t.UnitId == unit.UnitId));
+        Assert.Null(unit.AccessDeviceCount!.OwnershipContactTagCount);
     }
 
     [Fact]

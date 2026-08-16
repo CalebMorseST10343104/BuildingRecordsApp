@@ -24,6 +24,7 @@ namespace BuildingRecordsApp.Pages.StoreRooms
         public async Task OnGetAsync()
         {
             List<StoreRoomItemViewEntry> storeRoomItems = await _context.StoreRooms
+                .Include(s => s.Property)
                 .Include(s => s.Unit)
                 .ThenInclude(u => u!.Building)
                 .AsNoTracking()

@@ -1,62 +1,75 @@
 ﻿@model BuildingRecordsApp.Models.FormViewModels.UnitFormViewModel
 
-<div>
-    <label asp-for="BuildingId"></label>
-    <select asp-for="BuildingId" asp-items="@Model.BuildingSelectList">
-        <option value="">Select Building</option>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<input asp-for="UnitId" type="hidden" />
+
+@if (!Model.UnitId.HasValue)
+{
+<div class="mb-3">
+    <label asp-for="PropertyId" class="form-label"></label>
+    <select asp-for="PropertyId" asp-items="Model.PropertySelectList" class="form-select" data-dependent-source="property">
+        <option value="">Select property</option>
+    </select>
+    <span asp-validation-for="PropertyId" class="text-danger"></span>
+</div>
+}
+<div class="mb-3">
+    <label asp-for="BuildingId" class="form-label">Building</label>
+    <select asp-for="BuildingId" asp-items="Model.BuildingSelectList" class="form-select" data-dependent-target="building">
+        <option value="">Select building</option>
     </select>
     <span asp-validation-for="BuildingId" class="text-danger"></span>
 </div>
-<div>
-    <label asp-for="PrimaryContactPersonId">Primary Contact</label>
-    <select asp-for="PrimaryContactPersonId" asp-items="Model.PersonSelectList">
+<div class="mb-3">
+    <label asp-for="PrimaryContactPersonId" class="form-label">Primary contact</label>
+    <select asp-for="PrimaryContactPersonId" asp-items="Model.PersonSelectList" class="form-select">
         <option value="">No primary contact</option>
     </select>
 </div>
-<div>
-    <label asp-for="AgentId">Letting Agent</label>
-    <select asp-for="AgentId" asp-items="Model.AgentSelectList">
+<div class="mb-3">
+    <label asp-for="AgentId" class="form-label">Letting agent</label>
+    <select asp-for="AgentId" asp-items="Model.AgentSelectList" class="form-select">
         <option value="">No letting agent</option>
     </select>
 </div>
-<div>
-    <label asp-for="UnitNumber"></label>
-    <input asp-for="UnitNumber" />
+<div class="mb-3">
+    <label asp-for="UnitNumber" class="form-label"></label>
+    <input asp-for="UnitNumber" class="form-control" />
     <span asp-validation-for="UnitNumber" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="Bedrooms"></label>
-    <input asp-for="Bedrooms" />
+<div class="mb-3">
+    <label asp-for="Bedrooms" class="form-label"></label>
+    <input asp-for="Bedrooms" class="form-control" />
     <span asp-validation-for="Bedrooms" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="DbInverter"></label>
-    <input asp-for="DbInverter" type="checkbox" />
+<div class="form-check mb-3">
+    <input asp-for="DbInverter" class="form-check-input" />
+    <label asp-for="DbInverter" class="form-check-label"></label>
     <span asp-validation-for="DbInverter" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="Housekeeping"></label>
-    <input asp-for="Housekeeping" type="checkbox" />
+<div class="form-check mb-3">
+    <input asp-for="Housekeeping" class="form-check-input" />
+    <label asp-for="Housekeeping" class="form-check-label"></label>
     <span asp-validation-for="Housekeeping" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="PetFriendly"></label>
-    <input asp-for="PetFriendly" type="checkbox" />
+<div class="form-check mb-3">
+    <input asp-for="PetFriendly" class="form-check-input" />
+    <label asp-for="PetFriendly" class="form-check-label"></label>
     <span asp-validation-for="PetFriendly" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="SublettingAllowed"></label>
-    <input asp-for="SublettingAllowed" type="checkbox" />
+<div class="form-check mb-3">
+    <input asp-for="SublettingAllowed" class="form-check-input" />
+    <label asp-for="SublettingAllowed" class="form-check-label"></label>
     <span asp-validation-for="SublettingAllowed" class="text-danger"></span>
 </div>
 
-<div>
-    <label asp-for="AirconditioningUnits"></label>
-    <input asp-for="AirconditioningUnits" />
+<div class="mb-3">
+    <label asp-for="AirconditioningUnits" class="form-label"></label>
+    <input asp-for="AirconditioningUnits" class="form-control" />
     <span asp-validation-for="AirconditioningUnits" class="text-danger"></span>
 </div>

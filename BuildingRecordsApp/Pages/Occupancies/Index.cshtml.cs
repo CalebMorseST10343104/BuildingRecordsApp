@@ -27,6 +27,7 @@ namespace BuildingRecordsApp.Pages.Occupancies
                 .Include(o => o.Occupant)
                 .Include(o => o.Unit)
                 .ThenInclude(u => u!.Building)
+                .ThenInclude(b => b!.Property)
                 .AsNoTracking()
                 .Select(o => _mapper.Map<OccupancyItemViewEntry>(o))
                 .ToListAsync();

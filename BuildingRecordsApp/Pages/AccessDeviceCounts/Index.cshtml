@@ -1,0 +1,59 @@
+@page
+@model BuildingRecordsApp.Pages.AccessDeviceCounts.IndexModel
+@{
+    ViewData["Title"] = "Tag and remote counts";
+}
+
+<h1>Tag and remote counts</h1>
+
+<p>
+    <a asp-page="./Create" class="btn btn-primary">Add count record</a>
+</p>
+
+<div class="table-responsive filtered-index" data-filtered-index>
+    <table class="table table-striped table-bordered align-middle">
+        <thead>
+            <tr>
+                <th rowspan="2" class="align-middle">Building</th>
+                <th rowspan="2" class="align-middle">Unit</th>
+                <th colspan="2" class="text-center">Ownership contacts</th>
+                <th colspan="2" class="text-center">Occupants</th>
+                <th colspan="2" class="text-center">Agent</th>
+                <th rowspan="2" class="index-actions-heading"><span class="visually-hidden">Actions</span></th>
+            </tr>
+            <tr>
+                <th>Tags</th><th>Remotes</th>
+                <th>Tags</th><th>Remotes</th>
+                <th>Tags</th><th>Remotes</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr class="table-light column-filter-row">
+            <td><input type="search" class="form-control form-control-sm" placeholder="Filter" aria-label="Filter by building" data-column-filter="0" /></td>
+            <td><input type="search" class="form-control form-control-sm" placeholder="Filter" aria-label="Filter by unit" data-column-filter="1" /></td>
+            <td colspan="6" class="text-muted small align-middle">Filter by building or unit</td>
+            <td class="index-actions-cell"></td>
+        </tr>
+        @foreach (var entry in Model.ViewModel.Entries)
+        {
+            string Count(int? value) => value?.ToString() ?? "Unknown";
+            <tr data-record-row="@entry.AccessDeviceCountId">
+                <td data-filter-value="@entry.BuildingName?.ToLowerInvariant()">@entry.BuildingName</td>
+                <td data-filter-value="@entry.UnitNumber?.ToLowerInvariant()">@entry.UnitNumber</td>
+                <td>@Count(entry.OwnershipContactTagCount)</td>
+                <td>@Count(entry.OwnershipContactRemoteCount)</td>
+                <td>@Count(entry.OccupantTagCount)</td>
+                <td>@Count(entry.OccupantRemoteCount)</td>
+                <td>@Count(entry.AgentTagCount)</td>
+                <td>@Count(entry.AgentRemoteCount)</td>
+                <td class="index-actions-cell" data-record-actions="@entry.AccessDeviceCountId"><a asp-page="./Edit" asp-route-id="@entry.AccessDeviceCountId" class="btn btn-sm btn-outline-primary">Edit</a></td>
+            </tr>
+        }
+        @if (Model.ViewModel.Entries.Count == 0)
+        {
+            <tr><td colspan="9" class="text-muted text-center">No count records have been added.</td></tr>
+        }
+        <tr data-no-filter-results hidden><td colspan="9" class="text-muted text-center">No count records match these filters.</td></tr>
+        </tbody>
+    </table>
+</div>

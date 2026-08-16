@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using BuildingRecordsApp.Services
+@using Microsoft.Extensions.Options
+@inject IOptions<DesktopDeploymentOptions> DesktopDeployment
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,18 +27,30 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item"></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/FollowUp/Index">Follow-up</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Letting/Index">Letting</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Billing/Index">Billing</a>
                         </li>
-                        <li class="nav-item"></li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Queries/Index">Queries</a>
                         </li>
-                        <li class="nav-item"></li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Backups/Index">Backups</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Exports/Index">Export</a>
+                        </li>
+                        @if (DesktopDeployment.Value.AllowBrowserShutdown)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" asp-area="" asp-page="/System/Index">Close application</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

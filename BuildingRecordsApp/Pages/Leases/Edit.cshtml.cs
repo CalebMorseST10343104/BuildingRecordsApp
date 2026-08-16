@@ -38,7 +38,7 @@ namespace BuildingRecordsApp.Pages.Leases
                 return NotFound();
 
             ViewModel = _mapper.Map<LeaseFormViewModel>(lease);
-            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
+            ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
 
             return Page();
         }
@@ -53,12 +53,22 @@ namespace BuildingRecordsApp.Pages.Leases
 
             if (!ModelState.IsValid)
             {
-                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync(Enums.UsageContext.ForLease);
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
                 return Page();
             }
 
-            var lease = _mapper.Map<Lease>(ViewModel);
-            _context.Attach(lease).State = EntityState.Modified;
+            var lease = await _context.Leases.SingleOrDefaultAsync(l => l.LeaseId == ViewModel.LeaseId);
+            if (lease is null)
+                return NotFound();
+            if (lease.UnitId != ViewModel.UnitId)
+            {
+                ModelState.AddModelError("ViewModel.UnitId", "A lease summary cannot be moved to another unit.");
+                ViewModel.UnitId = lease.UnitId;
+                ViewModel.UnitSelectList = await _selectListService.GetUnitSelectListAsync();
+                return Page();
+            }
+
+            _mapper.Map(ViewModel, lease);
 
             try
             {
@@ -72,7 +82,7 @@ namespace BuildingRecordsApp.Pages.Leases
                 throw;
             }
 
-            return RedirectToPage("/Leases/Index");
+            return RedirectToPage("/Units/Details", new { id = lease.UnitId });
         }
 
         private bool LeaseExists(int id)
